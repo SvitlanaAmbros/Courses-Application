@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ActionBtnComponent } from './action-btn.component';
+import { ActionBtnComponent } from '@shared/components/action-btn/action-btn.component';
 
 describe('ActionBtnComponent', () => {
   let component: ActionBtnComponent;

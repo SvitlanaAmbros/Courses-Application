@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
-import { LogoComponent } from './logo/logo.component';
+
+import { HeaderComponent } from '@core/header/header.component';
+import { FooterComponent } from '@core/footer/footer.component';
+import { LogoComponent } from '@core/logo/logo.component';
 
 @NgModule({
   declarations: [
