@@ -1,5 +1,10 @@
 @import 'color';
 
+//.courses {
+//  color: $white-color;
+//}
 .courses {
-  color: $white-color;
+  &-wrap {
+    background: $pale-grey-color;
+  }
 }
