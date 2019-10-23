@@ -1,0 +1,36 @@
+@import 'color';
+
+.courses {
+    padding: 25px 85px 80px;
+
+    &-search {
+        display: flex;
+        // justify-content: space-between;
+        align-items: center;
+
+        &__box {
+            background: $white-color;
+        }
+
+        &__field {
+            margin: 0 6px;
+            border: none;
+
+            &:before {
+                content: '12333';
+                display: block;
+            }
+        }
+    
+        &__btn {
+            width: 100px;
+            height: 48px;
+            border-radius: 3px;
+            background: $action-btn-color;
+            color: $white-color;
+            font-weight: 600;
+            border: none;
+        }
+    }
+
+}
