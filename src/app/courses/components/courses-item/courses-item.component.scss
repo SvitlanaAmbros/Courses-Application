@@ -6,6 +6,7 @@
   vertical-align: center;
   padding: 24px;
   background: $white-color;
+  border-radius: 8px;
   box-shadow: 0 1px 24px 0 rgba(18, 21, 35, 0.08);
 
   &__info {
@@ -17,11 +18,32 @@
     font-weight: 600;
   }
 
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   &__content {
     padding: 8px 0 0;
     font-size: 14px;
     line-height: 1.71;
-    color: $slate-grey;
+    color: $slate-grey-color;
+  }
+}
+
+.date {
+  display: flex;
+  color: $cloudy-blue;
+  font-size: 12px;
+
+  &__item {
+    margin-left: 16px;
+  }
+
+  &__icon {
+    padding: 0 8px;
+    font-size: 16px;
   }
 }
 

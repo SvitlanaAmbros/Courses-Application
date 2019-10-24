@@ -5,10 +5,11 @@
         {{ item.title }}
       </div>
       <div class="item__date date">
-        <div class="date__duration">
+        <div class="date__item date__item_duration ">
+          <i class="fa fa-history date__icon"></i>{{ item.duration }}
         </div>
-        <div class="date__creation">
-
+        <div class="date__item date__item_creation">
+          <i class="fa fa-calendar date__icon"></i>{{ item.creationDate | date:'d MMM, YYYY'}}
         </div>
       </div>
     </div>
@@ -18,10 +19,10 @@
   </div>
   <div class="item__buttons actions">
     <button class="actions__btn">
-      <i class="fa fa-history"></i>Edit
+      <i class="fa fa-edit"></i>Edit
     </button>
     <button class="actions__btn">
-      <i class="fa fa-calendar"></i>Delete
+      <i class="fa fa-trash"></i>Delete
     </button>
   </div>
 </div>

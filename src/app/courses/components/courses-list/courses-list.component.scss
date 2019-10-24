@@ -32,4 +32,22 @@
         }
     }
 
+  &-list {
+
+  }
+
+  &-add {
+    display: flex;
+    justify-content: flex-end;
+
+    &__btn {
+      margin: 12px 0;
+      padding: 8px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 3px;
+      background: $cyan-btn-color;
+      color: $white-color;
+    }
+  }
 }
