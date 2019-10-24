@@ -1,10 +1,13 @@
 <div class="courses">
     <div class="courses-search">
-        <div class="courses-search__box">
+        <label class="courses-search__box">
             <img src="assets/images/ic-search.svg" alt="search">
-            <input type="text" class="courses-search__field">
-        </div>
-            <button class="courses-search__btn">Search</button>
+            <input type="text" 
+              [(ngModel)]="search"
+              class="courses-search__field" 
+              placeholder="Text to search">
+        </label>
+            <button class="courses-search__btn" (click)="searchCourses()">Search</button>
     </div>
   <div class="courses-list-wrap">
     <div class="courses-add">
@@ -14,7 +17,15 @@
       </button>
     </div>
     <div class="courses-list">
-      <app-courses-item class="courses-list__item"></app-courses-item>
+      <div *ngFor="let item of courses" class="courses-list__item">
+        <app-courses-item 
+          [item]="item"
+          (edited)="editCourse($event)"
+          (deleted)="deleteCourse($event)"></app-courses-item>
+      </div>
+      <div class="load-more" *ngIf="!item" (click)="loadMore()">
+        Load more
+      </div>
     </div>
   </div>
 </div>

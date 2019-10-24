@@ -1,7 +1,7 @@
 @import 'color';
 
 .courses {
-    padding: 25px 85px 80px;
+    padding: 25px 85px 130px;
 
     &-search {
         display: flex;
@@ -9,31 +9,44 @@
         align-items: center;
 
         &__box {
-            background: $white-color;
+          padding: 12px;
+          width: 360px;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          background: $white-color;
+          border-radius: 3px;
+          border: solid 1px #d9dbe3;
+          cursor: pointer;
         }
 
         &__field {
             margin: 0 6px;
             border: none;
-
-            &:before {
-                content: '12333';
-                display: block;
-            }
+            width: 100%;
         }
 
         &__btn {
+            margin: 0 6px;
             width: 100px;
             height: 48px;
             border-radius: 3px;
             background: $green-btn-color;
             color: $white-color;
             font-weight: 600;
+
+            &:hover {
+              background: $green-dark-btn-color;
+            }
         }
     }
 
   &-list {
-
+    &__item {
+      // &:not(:last-child) {
+        margin-bottom: 25px;
+      // }
+    }
   }
 
   &-add {
@@ -50,4 +63,18 @@
       color: $white-color;
     }
   }
+}
+
+.load-more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 48px;
+  color: $soft-blue-color;
+  text-decoration: underline;
+  text-transform: uppercase;
+  background: $white-color;
+  border-radius: 8px;
+  box-shadow: 0 1px 24px 0 rgba(18, 21, 35, 0.08);
+  cursor: pointer;
 }

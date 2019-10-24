@@ -9,9 +9,20 @@ body {
 
 button {
   border: none;
+  cursor: pointer;
 }
 
 .container {
   margin: 0 auto;
   width: 1280px;
+}
+
+input:focus {
+  outline:none;
+}
+
+@media screen and (max-width: 1280px) {
+  .container {
+    width: 100%;
+  }
 }

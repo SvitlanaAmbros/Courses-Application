@@ -1,28 +1,33 @@
-<div class="item">
-  <div class="item__info">
-    <div class="item__header">
-      <div class="item__title">
-        {{ item.title }}
+<div class="card">
+  <div *ngIf="!!item" class="card__item item">
+    <div class="item__info">
+      <div class="item__header">
+        <div class="item__title">
+          {{ item.title }}
+        </div>
+        <div class="item__date date">
+          <div class="date__item date__item_duration ">
+            <i class="fa fa-history date__icon"></i>{{ item.duration }}
+          </div>
+          <div class="date__item date__item_creation">
+            <i class="fa fa-calendar date__icon"></i>{{ item.creationDate | date:'d MMM, yyyy'}}
+          </div>
+        </div>
       </div>
-      <div class="item__date date">
-        <div class="date__item date__item_duration ">
-          <i class="fa fa-history date__icon"></i>{{ item.duration }}
-        </div>
-        <div class="date__item date__item_creation">
-          <i class="fa fa-calendar date__icon"></i>{{ item.creationDate | date:'d MMM, YYYY'}}
-        </div>
+      <div class="item__content">
+        {{ item.description }}
       </div>
     </div>
-    <div class="item__content">
-      {{ item.description }}
+    <div class="item__buttons actions">
+      <button class="actions__btn" (click)="editCourse()">
+        <i class="fa fa-edit"></i>Edit
+      </button>
+      <button class="actions__btn" (click)="deleteCourse()">
+        <i class="fa fa-trash"></i>Delete
+      </button>
     </div>
   </div>
-  <div class="item__buttons actions">
-    <button class="actions__btn">
-      <i class="fa fa-edit"></i>Edit
-    </button>
-    <button class="actions__btn">
-      <i class="fa fa-trash"></i>Delete
-    </button>
+  <div class="card__no-items" *ngIf="!item">
+    Load more
   </div>
 </div>
