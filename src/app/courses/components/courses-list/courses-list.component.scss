@@ -21,15 +21,14 @@
                 display: block;
             }
         }
-    
+
         &__btn {
             width: 100px;
             height: 48px;
             border-radius: 3px;
-            background: $action-btn-color;
+            background: $green-btn-color;
             color: $white-color;
             font-weight: 600;
-            border: none;
         }
     }
 

@@ -1,1 +1,27 @@
-<p>courses-item works!</p>
+<div class="item">
+  <div class="item__info">
+    <div class="item__header">
+      <div class="item__title">
+        {{ item.title }}
+      </div>
+      <div class="item__date date">
+        <div class="date__duration">
+        </div>
+        <div class="date__creation">
+
+        </div>
+      </div>
+    </div>
+    <div class="item__content">
+      {{ item.description }}
+    </div>
+  </div>
+  <div class="item__buttons actions">
+    <button class="actions__btn">
+      <i class="fa fa-history"></i>Edit
+    </button>
+    <button class="actions__btn">
+      <i class="fa fa-calendar"></i>Delete
+    </button>
+  </div>
+</div>
