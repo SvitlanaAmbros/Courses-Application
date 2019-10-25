@@ -1,4 +1,12 @@
-import {Component, Input, OnInit, Output, EventEmitter, OnChanges, ChangeDetectionStrategy} from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  OnChanges,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
 import {Course} from '@courses/models/course.model';
 
@@ -18,9 +26,9 @@ export class CoursesItemComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
   }
-
+  
   ngOnChanges(): void {
-    console.log('Input was changes', this.item);
+    console.log('Ng on changes, Input was changes', this.item);
   }
 
   public editCourse(): void {

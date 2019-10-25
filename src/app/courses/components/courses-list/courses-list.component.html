@@ -7,7 +7,10 @@
               class="courses-search__field" 
               placeholder="Text to search">
         </label>
-            <button class="courses-search__btn" (click)="searchCourses()">Search</button>
+        <div class="courses-search__btn">
+          <app-action-btn [title]="'Search'" (clicked)="searchCourses()">
+          </app-action-btn>
+        </div>
     </div>
   <div class="courses-list-wrap">
     <div class="courses-add">
