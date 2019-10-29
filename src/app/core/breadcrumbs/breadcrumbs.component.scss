@@ -1,0 +1,12 @@
+@import "color";
+
+.breadcrumbs {
+  padding: 20px 85px;
+  font-size: 14px;
+  font-weight: 600;
+
+  &__delimiter {
+    padding: 0 4px;
+    color: $dark-sky-blue-color;
+  }
+}

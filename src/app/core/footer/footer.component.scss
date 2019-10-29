@@ -1,0 +1,17 @@
+@import 'color';
+
+.footer {
+  padding: 20px 85px;
+  font-size: 14px;
+  display: flex;
+  justify-content: flex-end;
+  color: $pale-grey-color;
+  
+  &-wrap {
+    background: $footer-color;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+  }
+}

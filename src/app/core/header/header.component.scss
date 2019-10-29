@@ -1,0 +1,35 @@
+@import 'color';
+
+.header {
+  padding: 0 40px 0 85px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $pale-grey-color;
+
+  &-wrap {
+    background: $footer-color;
+  }
+
+  &__logo {
+    width: 140px;
+    height: 64px;
+    object-fit: contain;
+  }
+
+  &__login {
+    display: flex;
+    justify-content: space-around;
+  }
+}
+
+.login {
+  &__icon {
+    margin-right: 10px;
+  }
+
+  &__item {
+    margin-left: 25px;
+  }
+}

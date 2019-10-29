@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CoursesPageComponent implements OnInit {
 
+  public fullPath: string[] = ['Courses'];
   constructor() { }
 
   ngOnInit() {

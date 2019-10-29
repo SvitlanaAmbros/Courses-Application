@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
-
+  public message = 'Copyright © Videocourses. All rights reserved';
+  
   constructor() { }
 
   ngOnInit() {
