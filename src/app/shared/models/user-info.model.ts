@@ -12,7 +12,6 @@ export class UserInfo implements User {
     }
 
     public getFullUserName(): string {
-        return this.firstName + this.lastName;
+        return `${this.firstName} ${this.lastName}`;
     }
-
 }
