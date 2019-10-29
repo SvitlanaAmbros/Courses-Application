@@ -1,29 +1,32 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CoursesItemComponent } from '@courses/components/courses-item/courses-item.component';
-import {By} from '@angular/platform-browser';
-import {DebugElement} from '@angular/core';
-import {COURSES} from '@courses/mock/courses.mock';
+import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
+import { COURSES } from '@courses/mock/courses.mock';
 
 describe('CoursesItemComponent', () => {
   let component: CoursesItemComponent;
   let fixture: ComponentFixture<CoursesItemComponent>;
   let editButton: DebugElement;
+  let deleteButton: DebugElement;
   // let deleteButton: DebugElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CoursesItemComponent ]
+      declarations: [CoursesItemComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(CoursesItemComponent);
+    component = fixture.componentInstance;
+
     editButton = fixture.debugElement.query(By.css('#edit'));
-    // deleteButton = fixture.debugElement.query(By.css('button[textContent=delete]'));
+    deleteButton = fixture.debugElement.query(By.css('#delete'));
+
   }));
 
   beforeEach(() => {
-    component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
@@ -31,15 +34,41 @@ describe('CoursesItemComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should emit edit with id', () => {
-    fixture.whenStable().then(() => {
-      component.item = COURSES[0];
-      let res;
-      const id = COURSES[0].id;
-      component.edited.subscribe(result => res = result);
+  it('should be edit button title', () => {
+    component.item = COURSES[0];
+    fixture.detectChanges();
 
-      editButton.triggerEventHandler('click', null);
-      // expect(res).toBe(id);
-    });
+    expect(editButton.nativeElement.textContent).toContain('Edit');
+  });
+
+  it('should emit edit with id', () => {
+    component.item = COURSES[0];
+    let res;
+    const id = COURSES[0].id;
+
+    fixture.detectChanges();
+    component.edited.subscribe(result => res = result);
+
+    editButton.triggerEventHandler('click', null);
+    expect(res).toBe(id);
+  });
+
+  it('should be delete button title', () => {
+    component.item = COURSES[0];
+    fixture.detectChanges();
+
+    expect(deleteButton.nativeElement.textContent).toContain('Delete');
+  });
+
+  it('should emit delete with id', () => {
+    component.item = COURSES[0];
+    let res;
+    const id = COURSES[0].id;
+
+    fixture.detectChanges();
+    component.deleted.subscribe(result => res = result);
+
+    deleteButton.triggerEventHandler('click', null);
+    expect(res).toBe(id);
   });
 });

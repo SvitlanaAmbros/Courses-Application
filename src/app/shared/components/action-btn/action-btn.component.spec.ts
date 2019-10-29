@@ -29,28 +29,28 @@ describe('ActionBtnComponent', () => {
   });
 
   it('should be empty button title', () => {
-    fixture.whenStable().then(() => {
+    // fixture.whenStable().then(() => {
       expect(button.nativeElement.textContent).toContain('');
-    });
+    // });
   });
 
   it('should change button title', () => {
-    fixture.whenStable().then(() => {
+    // fixture.whenStable().then(() => {
       const btnTitle = 'Btn';
       component.title = btnTitle;
       fixture.detectChanges();
 
       expect(button.nativeElement.textContent).toContain(btnTitle);
-    });
+    // });
   });
 
   it('should emit click event with empty data', () => {
-    fixture.whenStable().then(() => {
+    // fixture.whenStable().then(() => {
       let res;
       component.clicked.subscribe(result => res = result);
 
       button.triggerEventHandler('click', null);
       expect(res).toBeUndefined();
-    });
+    // });
   });
 });

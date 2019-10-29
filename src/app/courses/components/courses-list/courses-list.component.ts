@@ -22,10 +22,7 @@ import { COURSES } from '@courses/mock/courses.mock';
   styleUrls: ['./courses-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CoursesListComponent implements OnInit,
-    AfterContentInit, AfterContentChecked,
-    AfterViewInit, AfterViewChecked,
-    OnDestroy {
+export class CoursesListComponent implements OnInit {
   public courses: Course[] = [];
   public allCourses: Course[] = COURSES;
   public search = '';
@@ -34,26 +31,6 @@ export class CoursesListComponent implements OnInit,
 
   ngOnInit() {
     this.courses = COURSES;
-  }
-
-  ngAfterContentInit(): void {
-    console.log('After content init');
-  }
-
-  ngAfterContentChecked(): void {
-    console.log('After content checked');
-  }
-
-  ngAfterViewInit(): void {
-    console.log('After view init');
-  }
-
-  ngAfterViewChecked(): void {
-    console.log('After view checked');
-  }
-
-  ngOnDestroy(): void {
-    console.log('On destroy');
   }
 
   public searchCourses(): void {
