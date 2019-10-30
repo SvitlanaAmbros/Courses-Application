@@ -26,9 +26,9 @@ export class CoursesItemComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
   }
-  
+
   ngOnChanges(): void {
-    console.log('Ng on changes, Input was changes', this.item);
+    console.log('Ng on changes, Input was changed', this.item);
   }
 
   public editCourse(): void {
