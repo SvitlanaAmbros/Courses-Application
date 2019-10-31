@@ -74,7 +74,6 @@ describe('CoursesItemComponent', () => {
   it('should call on change', () => {
     component.item = COURSES[1];
 
-    // @ts-ignore
     component.ngOnChanges({
       item: new SimpleChange(null,
         component.item, false)

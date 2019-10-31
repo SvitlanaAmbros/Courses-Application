@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {DebugElement} from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
 
 import { ActionBtnComponent } from '@shared/components/action-btn/action-btn.component';
 
@@ -11,9 +11,9 @@ describe('ActionBtnComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ActionBtnComponent ]
+      declarations: [ActionBtnComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ActionBtnComponent);
     button = fixture.debugElement.query(By.css('button'));
@@ -29,28 +29,22 @@ describe('ActionBtnComponent', () => {
   });
 
   it('should be empty button title', () => {
-    // fixture.whenStable().then(() => {
-      expect(button.nativeElement.textContent).toContain('');
-    // });
+    expect(button.nativeElement.textContent).toContain('');
   });
 
   it('should change button title', () => {
-    // fixture.whenStable().then(() => {
-      const btnTitle = 'Btn';
-      component.title = btnTitle;
-      fixture.detectChanges();
+    const btnTitle = 'Btn';
+    component.title = btnTitle;
+    fixture.detectChanges();
 
-      expect(button.nativeElement.textContent).toContain(btnTitle);
-    // });
+    expect(button.nativeElement.textContent).toContain(btnTitle);
   });
 
   it('should emit click event with empty data', () => {
-    // fixture.whenStable().then(() => {
-      let res;
-      component.clicked.subscribe(result => res = result);
+    let res;
+    component.clicked.subscribe(result => res = result);
 
-      button.triggerEventHandler('click', null);
-      expect(res).toBeUndefined();
-    // });
+    button.triggerEventHandler('click', null);
+    expect(res).toBeUndefined();
   });
 });
