@@ -80,6 +80,8 @@ describe('CoursesItemComponent', () => {
     });
 
     fixture.detectChanges();
-    expect(component.item).toEqual(COURSES[1]);
+    fixture.whenStable().then(() => {
+      expect(component.item).toEqual(COURSES[1]);
+    });
   });
 });

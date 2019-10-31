@@ -46,7 +46,7 @@ describe('CoursesListComponent', () => {
 
   it('should filter courses by search params', () => {
     component.search = COURSES[0].id;
-    component.searchCourses()
+    component.searchCourses();
 
     expect(component.courses).toEqual([COURSES[0]]);
   });
@@ -56,33 +56,39 @@ describe('CoursesListComponent', () => {
   });
 
   it('should load more courses', () => {
-    component.courses = COURSES;
     fixture.detectChanges();
-    component.loadMore();
-    fixture.detectChanges();
-
-    expect(component.courses).toEqual(COURSES_MORE);
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      component.courses = COURSES;
+      component.loadMore();
+      expect(component.courses).toEqual(COURSES_MORE);
+    });
   });
 
   it('should edit popup', () => {
     // const openPopupSpy = spyOn(component, 'openPopup').and.returnValue(null);
-    const courseId = '2';
-    component.courses = COURSES;
     fixture.detectChanges();
-    component.editCourse(courseId);
-    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      const courseId = '2';
+      component.courses = COURSES;
+      // fixture.detectChanges();
+      component.editCourse(courseId);
+      // expect(component.editedCourse).toBe(COURSES[courseId]);
+      // expect(openPopupSpy()).toHaveBeenCalled();
+    });
 
-    // expect(component.editedCourse).toBe(COURSES[courseId]);
-    // expect(openPopupSpy()).toHaveBeenCalled();
   });
 
   it('should delete item from list by id', () => {
-    const courseId = '4';
-    component.courses = COURSES_MORE;
     fixture.detectChanges();
-    component.deleteCourse(courseId);
-    fixture.detectChanges();
-
-    // expect(component.courses).toEqual(COURSES);
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      const courseId = '4';
+      component.courses = COURSES_MORE;
+      component.deleteCourse(courseId);
+  
+      // expect(component.courses).toEqual(COURSES);
+    });
   });
 });
