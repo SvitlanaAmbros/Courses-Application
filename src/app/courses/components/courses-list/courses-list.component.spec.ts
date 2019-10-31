@@ -4,9 +4,8 @@ import {DebugElement, NO_ERRORS_SCHEMA} from '@angular/core';
 
 import { CoursesListComponent } from '@courses/components/courses-list/courses-list.component';
 
-import {COURSES} from '@courses/mock/courses.mock';
-import {arraysAreEqual} from 'tslint/lib/utils';
-import {COURSES_CHANGED, COURSES_MORE} from '@courses/mock/courses.test-mock';
+import { COURSES } from '@courses/mock/courses.mock';
+import { COURSES_MORE } from '@courses/mock/courses.test-mock';
 
 describe('CoursesListComponent', () => {
   let component: CoursesListComponent;
@@ -45,10 +44,14 @@ describe('CoursesListComponent', () => {
   });
 
   it('should filter courses by search params', () => {
-    component.search = COURSES[0].id;
-    component.searchCourses();
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      component.search = COURSES[0].id;
+      component.searchCourses();
 
-    expect(component.courses).toEqual([COURSES[0]]);
+      expect(component.courses).toEqual([COURSES[0]]);
+    });
   });
 
   it('should be load more button', () => {
@@ -59,25 +62,24 @@ describe('CoursesListComponent', () => {
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
-      component.courses = COURSES;
       component.loadMore();
+
       expect(component.courses).toEqual(COURSES_MORE);
     });
   });
 
   it('should edit popup', () => {
+    //example if edit button open popup and set current course to editedCourse
     // const openPopupSpy = spyOn(component, 'openPopup').and.returnValue(null);
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       const courseId = '2';
-      component.courses = COURSES;
-      // fixture.detectChanges();
       component.editCourse(courseId);
+
       // expect(component.editedCourse).toBe(COURSES[courseId]);
       // expect(openPopupSpy()).toHaveBeenCalled();
     });
-
   });
 
   it('should delete item from list by id', () => {
@@ -85,9 +87,8 @@ describe('CoursesListComponent', () => {
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       const courseId = '4';
-      component.courses = COURSES_MORE;
       component.deleteCourse(courseId);
-  
+
       // expect(component.courses).toEqual(COURSES);
     });
   });
