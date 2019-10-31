@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CoursesItemComponent } from '@courses/components/courses-item/courses-item.component';
 import { By } from '@angular/platform-browser';
-import {DebugElement, SimpleChange, SimpleChanges} from '@angular/core';
+import {DebugElement, SimpleChange} from '@angular/core';
 import { COURSES } from '@courses/mock/courses.mock';
 
 describe('CoursesItemComponent', () => {

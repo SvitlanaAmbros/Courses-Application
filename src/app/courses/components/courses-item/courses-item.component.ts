@@ -6,6 +6,8 @@ import {
   OnInit,
   OnChanges,
   ChangeDetectionStrategy,
+  SimpleChange,
+  SimpleChanges,
 } from '@angular/core';
 
 import {Course} from '@courses/models/course.model';
@@ -27,7 +29,7 @@ export class CoursesItemComponent implements OnInit, OnChanges {
   ngOnInit(): void {
   }
 
-  ngOnChanges(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     console.log('Ng on changes, Input was changed', this.item);
   }
 
