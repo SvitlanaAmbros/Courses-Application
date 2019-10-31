@@ -4,8 +4,9 @@ import {DebugElement, NO_ERRORS_SCHEMA} from '@angular/core';
 
 import { CoursesListComponent } from '@courses/components/courses-list/courses-list.component';
 
-import {COURSES, COURSES_MORE} from '@courses/mock/courses.mock';
+import {COURSES} from '@courses/mock/courses.mock';
 import {arraysAreEqual} from 'tslint/lib/utils';
+import {COURSES_CHANGED, COURSES_MORE} from '@courses/mock/courses.test-mock';
 
 describe('CoursesListComponent', () => {
   let component: CoursesListComponent;
@@ -37,7 +38,6 @@ describe('CoursesListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-
   it('check that courses was initialized', () => {
     const loadedCourses = COURSES;
 
@@ -51,23 +51,38 @@ describe('CoursesListComponent', () => {
     expect(component.courses).toEqual([COURSES[0]]);
   });
 
-  it('should be delete button title', () => {
+  it('should be load more button', () => {
     expect(loadButton.nativeElement.textContent).toContain('Load more');
   });
 
-  it('should emit edit with id', () => {
-    let loadMore = spyOn(component, 'loadMore');
-    loadButton.triggerEventHandler('click', null);
+  it('should load more courses', () => {
+    component.courses = COURSES;
+    fixture.detectChanges();
+    component.loadMore();
     fixture.detectChanges();
 
-    expect(loadMore).toHaveBeenCalled();
-    // expect(component.courses).toEqual(COURSES_MORE);
+    expect(component.courses).toEqual(COURSES_MORE);
   });
 
-  // @ts-ignore
-  it('should call edit method', () => {
-    // loadButton.triggerEventHandler('click', null);
+  it('should edit popup', () => {
+    // const openPopupSpy = spyOn(component, 'openPopup').and.returnValue(null);
+    const courseId = '2';
+    component.courses = COURSES;
+    fixture.detectChanges();
+    component.editCourse(courseId);
+    fixture.detectChanges();
 
+    // expect(component.editedCourse).toBe(COURSES[courseId]);
+    // expect(openPopupSpy()).toHaveBeenCalled();
+  });
 
+  it('should delete item from list by id', () => {
+    const courseId = '4';
+    component.courses = COURSES_MORE;
+    fixture.detectChanges();
+    component.deleteCourse(courseId);
+    fixture.detectChanges();
+
+    // expect(component.courses).toEqual(COURSES);
   });
 });

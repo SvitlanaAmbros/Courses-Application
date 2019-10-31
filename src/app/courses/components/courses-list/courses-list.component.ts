@@ -5,7 +5,8 @@ import {
 } from '@angular/core';
 
 import { Course } from '@courses/models/course.model';
-import {COURSES, COURSES_MORE} from '@courses/mock/courses.mock';
+import { COURSES } from '@courses/mock/courses.mock';
+import {COURSES_MORE} from '@courses/mock/courses.test-mock';
 
 @Component({
   selector: 'app-courses-list',
@@ -26,7 +27,7 @@ export class CoursesListComponent implements OnInit {
 
   public searchCourses(): void {
     console.log('Search value = ', this.search);
-    
+
     this.courses = this.allCourses
       .filter((item: Course) => item.title.includes(this.search));
   }
@@ -43,6 +44,4 @@ export class CoursesListComponent implements OnInit {
   public deleteCourse(id: string): void {
     console.log('delete, id in parent component = ', id);
   }
-
-
 }

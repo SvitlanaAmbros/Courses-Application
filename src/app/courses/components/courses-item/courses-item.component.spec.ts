@@ -10,7 +10,6 @@ describe('CoursesItemComponent', () => {
   let fixture: ComponentFixture<CoursesItemComponent>;
   let editButton: DebugElement;
   let deleteButton: DebugElement;
-  // let deleteButton: DebugElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
