@@ -1,20 +1,12 @@
 import {
   Component,
-  Input,
-  Output,
-  EventEmitter,
   OnInit,
-  OnChanges,
   ChangeDetectionStrategy,
-  AfterContentInit,
-  AfterViewInit,
-  OnDestroy,
-  AfterContentChecked,
-  AfterViewChecked
 } from '@angular/core';
 
 import { Course } from '@courses/models/course.model';
 import { COURSES } from '@courses/mock/courses.mock';
+import {COURSES_MORE} from '@courses/mock/courses.test-mock';
 
 @Component({
   selector: 'app-courses-list',
@@ -22,10 +14,7 @@ import { COURSES } from '@courses/mock/courses.mock';
   styleUrls: ['./courses-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CoursesListComponent implements OnInit,
-    AfterContentInit, AfterContentChecked,
-    AfterViewInit, AfterViewChecked,
-    OnDestroy {
+export class CoursesListComponent implements OnInit {
   public courses: Course[] = [];
   public allCourses: Course[] = COURSES;
   public search = '';
@@ -36,37 +25,16 @@ export class CoursesListComponent implements OnInit,
     this.courses = COURSES;
   }
 
-  ngAfterContentInit(): void {
-    console.log('After content init');
-  }
-
-  ngAfterContentChecked(): void {
-    console.log('After content checked');
-  }
-
-  ngAfterViewInit(): void {
-    console.log('After view init');
-  }
-
-  ngAfterViewChecked(): void {
-    console.log('After view checked');
-  }
-
-  ngOnDestroy(): void {
-    console.log('On destroy');
-  }
-
   public searchCourses(): void {
     console.log('Search value = ', this.search);
 
-    // testing ngOnChanges in child component
     this.courses = this.allCourses
-      .filter((item: Course) => item.title.includes(this.search))
-      .map((item: Course) => { return {...item }});
+      .filter((item: Course) => item.title.includes(this.search));
   }
 
   public loadMore(): void {
     console.log('Load more');
+    this.courses = COURSES_MORE;
   }
 
   public editCourse(id: string): void {

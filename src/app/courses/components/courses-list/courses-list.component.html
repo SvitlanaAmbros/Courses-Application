@@ -2,9 +2,9 @@
     <div class="courses-search">
         <label class="courses-search__box">
             <img src="assets/images/ic-search.svg" alt="search">
-            <input type="text" 
+            <input type="text"
               [(ngModel)]="search"
-              class="courses-search__field" 
+              class="courses-search__field"
               placeholder="Text to search">
         </label>
         <div class="courses-search__btn">
@@ -21,12 +21,12 @@
     </div>
     <div class="courses-list">
       <div *ngFor="let item of courses" class="courses-list__item">
-        <app-courses-item 
+        <app-courses-item
           [item]="item"
           (edited)="editCourse($event)"
           (deleted)="deleteCourse($event)"></app-courses-item>
       </div>
-      <div class="load-more" *ngIf="!item" (click)="loadMore()">
+      <div class="load-more" (click)="loadMore()" id="load">
         Load more
       </div>
     </div>

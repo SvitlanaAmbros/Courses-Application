@@ -1,28 +1,28 @@
 <div class="card">
-  <div *ngIf="!!item" class="card__item item">
+  <div class="card__item item">
     <div class="item__info">
       <div class="item__header">
         <div class="item__title">
-          {{ item.title }}
+          {{ item?.title }}
         </div>
         <div class="item__date date">
           <div class="date__item date__item_duration ">
-            <i class="fa fa-history date__icon"></i>{{ item.duration }}
+            <i class="fa fa-history date__icon"></i>{{ item?.duration }}
           </div>
           <div class="date__item date__item_creation">
-            <i class="fa fa-calendar date__icon"></i>{{ item.creationDate | date:'d MMM, yyyy'}}
+            <i class="fa fa-calendar date__icon"></i>{{ item?.creationDate | date:'d MMM, yyyy'}}
           </div>
         </div>
       </div>
       <div class="item__content">
-        {{ item.description }}
+        {{ item?.description }}
       </div>
     </div>
     <div class="item__buttons actions">
-      <button class="actions__btn" (click)="editCourse()">
+      <button class="actions__btn" (click)="editCourse()" id="edit">
         <i class="fa fa-edit"></i>Edit
       </button>
-      <button class="actions__btn" (click)="deleteCourse()">
+      <button class="actions__btn" (click)="deleteCourse()" id="delete">
         <i class="fa fa-trash"></i>Delete
       </button>
     </div>
