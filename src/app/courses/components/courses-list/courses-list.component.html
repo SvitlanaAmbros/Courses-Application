@@ -20,7 +20,8 @@
       </button>
     </div>
     <div class="courses-list">
-      <div *ngFor="let item of courses" class="courses-list__item">
+      <div *ngFor="let item of courses" class="courses-list__item" 
+          [appBorderColor]="item.creationDate">
         <app-courses-item
           [item]="item"
           (edited)="editCourse($event)"

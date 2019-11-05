@@ -2,7 +2,7 @@ export const COURSES = [
     {
         id: '1',
         title: 'Video Course 1. Name tag',
-        creationDate: new Date(),
+        creationDate: new Date('2017-09-10'),
         duration: '1hr',
         description: 'Learn about where you can find course descriptions,' +
             ' what information they include, how they work, and details ' +

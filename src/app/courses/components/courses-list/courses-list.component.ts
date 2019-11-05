@@ -21,6 +21,7 @@ export class CoursesListComponent implements OnInit {
 
   constructor() { }
 
+  public testDate = 'blue';
   ngOnInit() {
     this.courses = COURSES;
   }
