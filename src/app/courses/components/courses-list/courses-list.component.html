@@ -1,17 +1,14 @@
 <div class="courses">
-    <div class="courses-search">
-        <label class="courses-search__box">
-            <img src="assets/images/ic-search.svg" alt="search">
-            <input type="text"
-              [(ngModel)]="search"
-              class="courses-search__field"
-              placeholder="Text to search">
-        </label>
-        <div class="courses-search__btn">
-          <app-action-btn [title]="'Search'" (clicked)="searchCourses()">
-          </app-action-btn>
-        </div>
+  <div class="courses-search">
+    <label class="courses-search__box">
+      <img src="assets/images/ic-search.svg" alt="search">
+      <input type="text" [(ngModel)]="search" class="courses-search__field" placeholder="Text to search">
+    </label>
+    <div class="courses-search__btn">
+      <app-action-btn [title]="'Search'" (clicked)="searchCourses()">
+      </app-action-btn>
     </div>
+  </div>
   <div class="courses-list-wrap">
     <div class="courses-add">
       <button class="courses-add__btn">
@@ -20,16 +17,20 @@
       </button>
     </div>
     <div class="courses-list">
-      <div *ngFor="let item of courses" class="courses-list__item" 
-          [appBorderColor]="item.creationDate">
-        <app-courses-item
-          [item]="item"
-          (edited)="editCourse($event)"
-          (deleted)="deleteCourse($event)"></app-courses-item>
+      <div *ngIf="courses.length != 0; else nocourses">
+        <div *ngFor="let item of courses" class="courses-list__item" [appBorderColor]="item.creationDate">
+          <app-courses-item [item]="item" (edited)="editCourse($event)" (deleted)="deleteCourse($event)">
+          </app-courses-item>
+        </div>
+        <div class="courses__action-btn link" (click)="loadMore()" id="load">
+          Load more
+        </div>
       </div>
-      <div class="load-more" (click)="loadMore()" id="load">
-        Load more
-      </div>
+      <ng-template #nocourses>
+        <div class="courses__action-btn">
+          No courses. You can add courses
+        </div>
+      </ng-template>
     </div>
   </div>
 </div>

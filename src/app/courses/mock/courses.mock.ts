@@ -10,7 +10,8 @@ export const COURSES = [
             'report information about a university or college\'s classes. They\'re ' +
             'published both in course catalogs that outline degree requirements and ' +
             'in course schedules that contain descriptions for all courses offered ' +
-            'during a particular semester.'
+            'during a particular semester.',
+        topRated: true
     },
     {
         id: '2',
@@ -23,12 +24,13 @@ export const COURSES = [
             'report information about a university or college\'s classes. They\'re ' +
             'published both in course catalogs that outline degree requirements and ' +
             'in course schedules that contain descriptions for all courses offered ' +
-            'during a particular semester.'
+            'during a particular semester.',
+            topRated: false
     },
     {
         id: '3',
         title: 'Video Course 3. Name tag',
-        creationDate: new Date(),
+        creationDate: new Date('2020-01-01'),
         duration: '1hr',
         description: 'Learn about where you can find course descriptions,' +
             ' what information they include, how they work, and details ' +
@@ -36,6 +38,7 @@ export const COURSES = [
             'report information about a university or college\'s classes. They\'re ' +
             'published both in course catalogs that outline degree requirements and ' +
             'in course schedules that contain descriptions for all courses offered ' +
-            'during a particular semester.'
+            'during a particular semester.',
+        topRated: true
     }
 ];

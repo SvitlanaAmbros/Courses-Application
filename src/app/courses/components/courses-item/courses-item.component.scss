@@ -3,6 +3,7 @@
 .card {
   background: $white-color;
   box-shadow: 0 1px 24px 0 rgba(18, 21, 35, 0.08);
+  border-radius: 8px;
 }
 
 .item {
@@ -16,9 +17,13 @@
     width: 70%;
   }
 
-  &__title {
+  &__title-wrap {
     font-size: 24px;
     font-weight: 600;
+  }
+
+  &__title {
+    background-color: $star-color;
   }
 
   &__header {
@@ -32,6 +37,12 @@
     font-size: 14px;
     line-height: 1.71;
     color: $slate-grey-color;
+  }
+
+  &__rate {
+    display: inline-block;
+    margin: 0 5px;
+    color: $star-color;
   }
 }
 
