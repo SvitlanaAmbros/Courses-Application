@@ -7,6 +7,7 @@ import {
 import { Course } from '@courses/models/course.model';
 import { COURSES } from '@courses/mock/courses.mock';
 import {COURSES_MORE} from '@courses/mock/courses.test-mock';
+import { SortByDatePipe } from '@shared/pipes/sort-by-date.pipe';
 
 @Component({
   selector: 'app-courses-list',
@@ -19,23 +20,24 @@ export class CoursesListComponent implements OnInit {
   public allCourses: Course[] = COURSES;
   public search = '';
 
-  constructor() { }
+  constructor(private sortByDatePipe: SortByDatePipe) { }
 
   public testDate = 'blue';
   ngOnInit() {
-    this.courses = COURSES;
+    this.courses = this.sortByDatePipe.transform(COURSES);
   }
 
   public searchCourses(): void {
     console.log('Search value = ', this.search);
 
-    this.courses = this.allCourses
-      .filter((item: Course) => item.title.includes(this.search));
+    this.courses = this.sortByDatePipe
+      .transform(this.allCourses
+      .filter((item: Course) => item.title.toLowerCase().includes(this.search)));
   }
 
   public loadMore(): void {
     console.log('Load more');
-    this.courses = COURSES_MORE;
+    this.courses = this.sortByDatePipe.transform(COURSES_MORE);
   }
 
   public editCourse(id: string): void {

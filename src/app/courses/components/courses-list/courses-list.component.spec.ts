@@ -3,9 +3,9 @@ import {By} from '@angular/platform-browser';
 import {DebugElement, NO_ERRORS_SCHEMA} from '@angular/core';
 
 import { CoursesListComponent } from '@courses/components/courses-list/courses-list.component';
-
 import { COURSES } from '@courses/mock/courses.mock';
 import { COURSES_MORE } from '@courses/mock/courses.test-mock';
+import { SortByDatePipe } from '@shared/pipes/sort-by-date.pipe';
 
 describe('CoursesListComponent', () => {
   let component: CoursesListComponent;
@@ -14,6 +14,9 @@ describe('CoursesListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      providers: [
+        SortByDatePipe
+      ],
       declarations: [
         CoursesListComponent
       ],
@@ -23,8 +26,6 @@ describe('CoursesListComponent', () => {
 
     fixture = TestBed.createComponent(CoursesListComponent);
     component = fixture.componentInstance;
-
-    loadButton = fixture.debugElement.query(By.css('#load'));
   }));
 
   beforeEach(() => {
@@ -55,6 +56,8 @@ describe('CoursesListComponent', () => {
   });
 
   it('should be load more button', () => {
+    loadButton = fixture.debugElement.query(By.css('#load'));
+    fixture.detectChanges();
     expect(loadButton.nativeElement.textContent).toContain('Load more');
   });
 
@@ -69,7 +72,7 @@ describe('CoursesListComponent', () => {
   });
 
   it('should edit popup', () => {
-    //example if edit button open popup and set current course to editedCourse
+    // example if edit button open popup and set current course to editedCourse
     // const openPopupSpy = spyOn(component, 'openPopup').and.returnValue(null);
     fixture.detectChanges();
     fixture.whenStable().then(() => {
