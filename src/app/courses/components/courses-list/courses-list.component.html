@@ -19,7 +19,7 @@
     <div class="courses-list">
       <div *ngIf="courses.length != 0; else nocourses">
         <div *ngFor="let item of courses" class="courses-list__item" [appBorderColor]="item?.creationDate">
-          <app-courses-item [item]="item" (edited)="editCourse($event)" (deleted)="deleteCourse($event)">
+          <app-courses-item [item]="item" (edited)="editCourse($event)" (deleted)="deleteClicked($event)">
           </app-courses-item>
         </div>
         <div class="courses__action-btn link" (click)="loadMore()" id="load">
@@ -34,3 +34,15 @@
     </div>
   </div>
 </div>
+<app-popup 
+  #popup
+  *ngIf="popupControls.isOpened" 
+  [header]="'Are you sure you want to delete this course?'"
+  [buttonAction]="'Yes'" 
+  [buttonCancel]="'No'" 
+  (onAction)="deleteCourse()"
+  (onClose)="closePopup()">
+</app-popup>
+
+
+

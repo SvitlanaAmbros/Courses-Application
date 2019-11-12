@@ -6,9 +6,10 @@ import {
 
 import { CoursesService } from '@courses/services/courses.service';
 import { Course } from '@courses/models/course.model';
-import { COURSES } from '@courses/mock/courses.mock';
+
 import {COURSES_MORE} from '@courses/mock/courses.test-mock';
 import { SortByDatePipe } from '@shared/pipes/sort-by-date.pipe';
+import { PopupService, PopupControls } from '@shared/services/popup.service';
 
 @Component({
   selector: 'app-courses-list',
@@ -21,13 +22,24 @@ export class CoursesListComponent implements OnInit {
   public allCourses: Course[];
   public search = '';
 
-  constructor(private sortByDatePipe: SortByDatePipe, 
-    private coursesService: CoursesService) { }
+  public popupControls: PopupControls;
+  public deletedItemId: string;
+
+  constructor(private sortByDatePipe: SortByDatePipe,
+    private coursesService: CoursesService,
+    private popupService: PopupService) { }
 
   public testDate = 'blue';
+
   ngOnInit() {
-    this.courses = this.sortByDatePipe.transform(this.coursesService.getCourses());
+    this.initPopup();
+
     this.allCourses = this.coursesService.getCourses();
+    this.courses = this.sortByDatePipe.transform(this.coursesService.getCourses());
+  }
+
+  private initPopup(): void {
+    this.popupControls = this.popupService.create();
   }
 
   public searchCourses(): void {
@@ -47,7 +59,24 @@ export class CoursesListComponent implements OnInit {
     console.log('edit, id in parent component = ', id);
   }
 
-  public deleteCourse(id: string): void {
-    console.log('delete, id in parent component = ', id);
+  public deleteClicked(id: string): void {
+    this.deletedItemId = id;
+    this.openPopup();
+  }
+
+  public deleteCourse(): void {
+    console.log('id', this.deletedItemId);
+    this.coursesService.deleteCourse(this.deletedItemId);
+    this.allCourses = this.coursesService.getCourses();
+    this.courses = this.coursesService.getCourses();
+    this.closePopup();
+  }
+
+  public openPopup(): void {
+    this.popupControls.open();
+  }
+
+  public closePopup(): void {
+    this.popupControls.close();
   }
 }
