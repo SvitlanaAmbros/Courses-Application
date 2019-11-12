@@ -3,7 +3,7 @@ export const COURSES_MORE = [
     id: '1',
     title: 'Video Course 1. Name tag',
     creationDate: new Date(),
-    duration: '1hr',
+    duration: 70,
     description: 'Learn about where you can find course descriptions,' +
       ' what information they include, how they work, and details ' +
       'about various components of a course description. Course descriptions ' +
@@ -15,8 +15,8 @@ export const COURSES_MORE = [
   {
     id: '2',
     title: 'Video Course 2. Name tag',
-    creationDate: new Date(),
-    duration: '1hr',
+    creationDate: new Date('2020-09-10'),
+    duration: 150,
     description: 'Learn about where you can find course descriptions,' +
       ' what information they include, how they work, and details ' +
       'about various components of a course description. Course descriptions ' +
@@ -28,8 +28,8 @@ export const COURSES_MORE = [
   {
     id: '3',
     title: 'Video Course 3. Name tag',
-    creationDate: new Date(),
-    duration: '1hr',
+    creationDate: new Date('2017-01-01'),
+    duration: 30,
     description: 'Learn about where you can find course descriptions,' +
       ' what information they include, how they work, and details ' +
       'about various components of a course description. Course descriptions ' +
@@ -42,7 +42,7 @@ export const COURSES_MORE = [
     id: '4',
     title: 'Video Course 4. Name tag',
     creationDate: new Date(),
-    duration: '1hr',
+    duration: 25,
     description: 'Learn about where you can find course descriptions,' +
       ' what information they include, how they work, and details ' +
       'about various components of a course description. Course descriptions ' +

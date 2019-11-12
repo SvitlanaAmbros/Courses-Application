@@ -2,12 +2,13 @@
   <div class="card__item item">
     <div class="item__info">
       <div class="item__header">
-        <div class="item__title">
-          {{ item?.title }}
+        <div class="item__title-wrap">
+          <label [ngClass]="item?.topRated ? 'item__title': ''">{{ item?.title | uppercase }}</label>
+          <i *ngIf="item?.topRated" class="fa fa-star item__rate"></i>
         </div>
         <div class="item__date date">
           <div class="date__item date__item_duration ">
-            <i class="fa fa-history date__icon"></i>{{ item?.duration }}
+            <i class="fa fa-history date__icon"></i>{{ item?.duration | duration }}
           </div>
           <div class="date__item date__item_creation">
             <i class="fa fa-calendar date__icon"></i>{{ item?.creationDate | date:'d MMM, yyyy'}}

@@ -4,6 +4,7 @@ import { CoursesItemComponent } from '@courses/components/courses-item/courses-i
 import { By } from '@angular/platform-browser';
 import {DebugElement, SimpleChange} from '@angular/core';
 import { COURSES } from '@courses/mock/courses.mock';
+import { SharedModule } from '@app/shared/shared.module';
 
 describe('CoursesItemComponent', () => {
   let component: CoursesItemComponent;
@@ -13,7 +14,12 @@ describe('CoursesItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CoursesItemComponent]
+      imports: [
+        SharedModule
+      ],
+      declarations: [
+        CoursesItemComponent
+      ]
     })
       .compileComponents();
 
