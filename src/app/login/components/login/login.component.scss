@@ -1,0 +1,83 @@
+@import 'color';
+
+.login {
+    min-height: 85vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+
+    &-form {
+        padding: 24px;
+        width: 370px;
+        border-radius: 6px;
+        box-shadow: 0 1px 24px 0 rgba(18, 21, 35, 0.08);
+        background-color: $white-color;
+
+        &__header {
+            margin-bottom: 24px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        &__row {
+            margin-bottom: 13px;
+        }
+
+        &__label {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        &__label-title {
+            color: $slate-grey-color;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        &__label-required {
+            color: $battleship-grey-color;
+            font-size: 12px;
+        }
+
+        &__input {
+            padding: 0 12px;
+            width: 100%;
+            height: 36px;
+            border-radius: 3px;
+            border: solid 1px $pale2-grey-color;
+            box-sizing: border-box;
+        }
+
+        &__action {
+            margin-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        &__forgot-password {
+            font-size: 12px;
+            text-decoration: underline;
+            color: $soft-blue-two-color;
+        }
+
+        &__login {
+            padding: 12px 18px;
+            border-radius: 3px;
+
+            &_active {
+                font-weight: bold;
+                background: $cyan-btn-color;
+                color: $white-color; 
+            }
+
+            &_notactive {
+                font-weight: bold;
+                background: $pale2-grey-color;
+                color: $battleship-grey-color; 
+            }
+        }
+    }
+}
