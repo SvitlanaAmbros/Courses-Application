@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthService } from '@login/services/auth.service';
+import { AuthService } from '@app/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -9,11 +9,16 @@ import { AuthService } from '@login/services/auth.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  public isAuthenticated = true;
+  public isAuthenticated = false;
   constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
-    this.isAuthenticated = this.authService.isAuthenticated();
+    this.authService.isAuthenticated()
+      .subscribe((res: boolean) => {
+        this.isAuthenticated = res;
+        console.log('Changed', res);
+      }
+      );
   }
 
   public logoff(): void {
