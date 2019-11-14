@@ -7,6 +7,7 @@ import { BorderColorDirective } from '@shared/directives/border-color.directive'
 import { DurationPipe } from '@shared/pipes/duration.pipe';
 import { SortByDatePipe } from '@shared/pipes/sort-by-date.pipe';
 import { PopupService } from '@shared/services/popup.service';
+import { LocalStorageService } from '@shared/services/local-storage.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { PopupService } from '@shared/services/popup.service';
   ],
   providers: [
     SortByDatePipe,
-    PopupService
+    PopupService,
+    LocalStorageService
   ],
   imports: [
     CommonModule

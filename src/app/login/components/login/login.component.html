@@ -6,19 +6,19 @@
                 <label class="login-form__label-title">E-mail:</label>
                 <label class="login-form__label-required">*required</label>
             </div>
-            <input type="text" class="login-form__input" [(ngModel)]="login">
+            <input type="text" class="login-form__input" [(ngModel)]="user.login">
         </div>
         <div class="login-form__row">
             <div class="login-form__label">
                 <label class="login-form__label-title">Password:</label>
                 <label class="login-form__label-required">*required</label>
             </div>
-            <input type="password" class="login-form__input" [(ngModel)]="password">
+            <input type="password" class="login-form__input" [(ngModel)]="user.password">
         </div>
         <div class="login-form__action">
             <label class="login-form__forgot-password">Forgot password?</label>
             <button class="login-form__login"
-                [ngClass]="!!login && !!password ? 
+                [ngClass]="!!user.login && !!user.password ? 
                     'login-form__login_active' : 'login-form__login_notactive'"
                 (click)="logIn()">Login</button>
         </div>

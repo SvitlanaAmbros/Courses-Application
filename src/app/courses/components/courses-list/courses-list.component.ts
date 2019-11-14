@@ -7,9 +7,9 @@ import {
 import { CoursesService } from '@courses/services/courses.service';
 import { Course } from '@courses/models/course.model';
 
-import {COURSES_MORE} from '@courses/mock/courses.test-mock';
 import { SortByDatePipe } from '@shared/pipes/sort-by-date.pipe';
 import { PopupService, PopupControls } from '@shared/services/popup.service';
+import {COURSES_MORE} from '@courses/mock/courses.test-mock';
 
 @Component({
   selector: 'app-courses-list',
@@ -26,8 +26,8 @@ export class CoursesListComponent implements OnInit {
   public deletedItemId: string;
 
   constructor(private sortByDatePipe: SortByDatePipe,
-    private coursesService: CoursesService,
-    private popupService: PopupService) { }
+              private coursesService: CoursesService,
+              private popupService: PopupService) { }
 
   public testDate = 'blue';
 
@@ -65,7 +65,6 @@ export class CoursesListComponent implements OnInit {
   }
 
   public deleteCourse(): void {
-    console.log('id', this.deletedItemId);
     this.coursesService.deleteCourse(this.deletedItemId);
     this.allCourses = this.coursesService.getCourses();
     this.courses = this.coursesService.getCourses();

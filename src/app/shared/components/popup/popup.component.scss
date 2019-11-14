@@ -48,19 +48,23 @@ button {
 }
 
 .popup {
+    padding: 25px;
     width: 50%;
     min-height: 110px;
     max-height: 90vh;
+    border-radius: 6px;
     background-color: $white-color;
     box-shadow: 0 3px 14px rgba(80, 80, 80, 0.5);
     position: relative;
-    padding: 20px 40px;
 
     &__header {
+        margin: -25px;
+        padding: 25px;
+        border-radius: 6px 6px 0 0;
+        background-color: #eaedf5;
         font-size: 17px;
         font-weight: 600;
         text-align: center;
-        padding-bottom: 8px;
 
         &-wrap {
             margin-bottom: 25px;
@@ -82,7 +86,7 @@ button {
         -webkit-box-pack: end;
             -ms-flex-pack: end;
                 justify-content: flex-end;
-        margin-top: 14px;
+        margin-top: 45px;
     }
 }
 
@@ -98,23 +102,11 @@ button {
     &_cancel {
         border: 2px solid $cyan-btn-color;
         background: #fff;
-
-        // &:hover {
-        //     // border: 2px solid $dark-accent-color;
-        // }
     }
 
     &_action {
         background:  $cyan-btn-color;
         color: #fff;
         border: none;
-
-        // &:hover {
-        //     background: $dark-accent-color;
-        // }
-
-        // &:disabled {
-        //     background: $grey-color;
-        // }
     }
 }
