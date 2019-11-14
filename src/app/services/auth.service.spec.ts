@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AuthService } from '@login/services/auth.service';
+import { AuthService } from '@app/services/auth.service';
 
 describe('AuthService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
