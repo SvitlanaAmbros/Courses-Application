@@ -4,9 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { LocalStorageService } from '@shared/services/local-storage.service';
 import { LoginUser } from '@shared/models/user.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AuthService {
   public isUserAuthenticated: BehaviorSubject<boolean>;
   constructor(private localStorageService: LocalStorageService) { }

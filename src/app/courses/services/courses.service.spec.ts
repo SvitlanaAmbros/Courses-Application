@@ -1,9 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CoursesService } from './courses.service';
+import { CoursesService } from '@courses/services/courses.service';
 
 describe('CoursesService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  beforeEach(() => TestBed.configureTestingModule({
+    providers: [
+      CoursesService
+    ]
+  }));
 
   it('should be created', () => {
     const service: CoursesService = TestBed.get(CoursesService);

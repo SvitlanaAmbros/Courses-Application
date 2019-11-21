@@ -16,9 +16,11 @@ import {Course} from '@courses/models/course.model';
   selector: 'app-courses-item',
   templateUrl: './courses-item.component.html',
   styleUrls: ['./courses-item.component.scss'],
+  // adding onPush strategy. 
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CoursesItemComponent implements OnInit, OnChanges {
+  // Dump component
   @Input() item: Course;
 
   @Output() edited: EventEmitter<string> = new EventEmitter();
@@ -30,14 +32,16 @@ export class CoursesItemComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // console.log('Ng on changes, Input was changed', this.item);
+    console.log('Ng on changes, Input was changed', this.item);
   }
 
+  // Dump component
   public editCourse(): void {
     console.log('Edit', this.item.id);
     this.edited.emit(this.item.id);
   }
 
+  // Dump component
   public deleteCourse(): void {
     console.log('Delete', this.item.id);
     this.deleted.emit(this.item.id);

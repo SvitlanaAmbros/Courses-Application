@@ -6,6 +6,8 @@ import { CoursesListComponent } from '@courses/components/courses-list/courses-l
 import { COURSES } from '@courses/mock/courses.mock';
 import { COURSES_MORE } from '@courses/mock/courses.test-mock';
 import { SortByDatePipe } from '@shared/pipes/sort-by-date.pipe';
+import { PopupService } from '@app/shared/services/popup.service';
+import { CoursesService } from '@app/courses/services/courses.service';
 
 describe('CoursesListComponent', () => {
   let component: CoursesListComponent;
@@ -15,7 +17,9 @@ describe('CoursesListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [
-        SortByDatePipe
+        SortByDatePipe,
+        CoursesService,
+        PopupService
       ],
       declarations: [
         CoursesListComponent
@@ -88,9 +92,9 @@ describe('CoursesListComponent', () => {
   it('should delete item from list by id', () => {
     fixture.detectChanges();
     fixture.whenStable().then(() => {
+      component.deletedItemId = '4';
       fixture.detectChanges();
-      const courseId = '4';
-      component.deleteCourse(courseId);
+      component.deleteCourse();
 
       // expect(component.courses).toEqual(COURSES);
     });
