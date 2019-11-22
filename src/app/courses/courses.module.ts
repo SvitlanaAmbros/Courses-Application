@@ -9,12 +9,14 @@ import { CoursesPageComponent } from '@courses/components/courses-page/courses-p
 import { CoursesItemComponent } from '@courses/components/courses-item/courses-item.component';
 import { CoursesListComponent } from '@courses/components/courses-list/courses-list.component';
 import { CoursesService } from '@courses/services/courses.service';
+import { AddCourseComponent } from './components/add-course/add-course.component';
 
 @NgModule({
   declarations: [
     CoursesPageComponent,
     CoursesItemComponent,
-    CoursesListComponent
+    CoursesListComponent,
+    AddCourseComponent
   ],
   imports: [
     CommonModule,
