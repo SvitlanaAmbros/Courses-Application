@@ -31,5 +31,9 @@
 
   &__item {
     margin-left: 25px;
+
+    &_log-off {
+      cursor: pointer;
+    }
   }
 }

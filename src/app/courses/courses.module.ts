@@ -8,6 +8,7 @@ import { CoursesRoutingModule } from '@courses/courses-routing.module';
 import { CoursesPageComponent } from '@courses/components/courses-page/courses-page.component';
 import { CoursesItemComponent } from '@courses/components/courses-item/courses-item.component';
 import { CoursesListComponent } from '@courses/components/courses-list/courses-list.component';
+import { CoursesService } from '@courses/services/courses.service';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,9 @@ import { CoursesListComponent } from '@courses/components/courses-list/courses-l
     CoreModule,
     SharedModule,
     CoursesRoutingModule
+  ],
+  providers: [
+    CoursesService
   ],
   exports: [
     CoursesPageComponent

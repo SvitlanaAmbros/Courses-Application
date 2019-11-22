@@ -1,0 +1,34 @@
+<div class="popup-wrap center-center" (click)="close()">
+    <div class="popup-background "></div>
+    <div class="popup" (click)="$event.stopPropagation()">
+        <div class="popup__close" (click)="close()">
+            <i class="fa fa-times"></i>
+        </div>
+        <!-- header -->
+        <div *ngIf="header" class="popup__header-wrap">
+            <div class="popup__header">
+                {{ header }}
+            </div>
+        </div>
+        <!-- EOF header -->
+
+        <!-- content -->
+        <div class="popup__content">
+            <ng-content select=".content"></ng-content>
+        </div>
+        <!-- EOF content -->
+
+        <!-- buttons -->
+        <div class="popup__footer align-bottom" *ngIf="!!buttonAction || !!buttonCancel">
+            <div class="popup__buttons">
+                <button *ngIf="buttonCancel" class="button button_cancel" (click)="close()">
+                    {{ buttonCancel }}
+                </button>
+                <button *ngIf="buttonAction" class="button button_action" [disabled]="isDisabled" (click)="action()">
+                    {{ buttonAction }}
+                </button>
+            </div>
+        </div>
+        <!-- EOF buttons -->
+    </div>
+</div>
