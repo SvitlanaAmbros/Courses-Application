@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {DebugElement, NO_ERRORS_SCHEMA} from '@angular/core';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { CoursesListComponent } from '@courses/components/courses-list/courses-list.component';
 import { COURSES } from '@courses/mock/courses.mock';
@@ -16,6 +17,9 @@ describe('CoursesListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule
+      ],
       providers: [
         SortByDatePipe,
         CoursesService,
