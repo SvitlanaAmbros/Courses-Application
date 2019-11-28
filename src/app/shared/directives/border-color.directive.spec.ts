@@ -33,7 +33,7 @@ describe('BorderColorDirective', () => {
   });
 
   it('should add green border', () => {
-    component.changeDate(new Date('2019-11-05'));
+    component.changeDate(new Date('2019-11-17'));
     fixture.detectChanges();
 
     expect(inputEl.nativeElement.style.border).toBe('2px solid green');

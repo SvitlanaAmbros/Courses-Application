@@ -1,0 +1,11 @@
+.duration {
+    display: flex;
+
+    &__input {
+        width: 150px;
+    } 
+
+    &__period {
+        margin: 8px 10px 0;
+    }
+}

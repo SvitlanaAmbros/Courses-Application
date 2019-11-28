@@ -1,34 +1,31 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { FormsModule } from '@angular/forms';
 
-import { HeaderComponent } from '@core/header/header.component';
-import { AuthService } from '@app/services/auth.service';
+import { SharedModule } from '@shared/shared.module';
+import { AddCourseComponent } from '@courses/components/add-course/add-course.component';
 
-describe('HeaderComponent', () => {
-  let component: HeaderComponent;
-  let fixture: ComponentFixture<HeaderComponent>;
-  let service: AuthService;
+describe('AddCourseComponent', () => {
+  let component: AddCourseComponent;
+  let fixture: ComponentFixture<AddCourseComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        FormsModule,
+        SharedModule,
         RouterTestingModule
       ],
       declarations: [ 
-        HeaderComponent 
-      ],
-      providers: [
-        AuthService
+        AddCourseComponent 
       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HeaderComponent);
+    fixture = TestBed.createComponent(AddCourseComponent);
     component = fixture.componentInstance;
-    service = TestBed.get(AuthService);
-
     fixture.detectChanges();
   });
 

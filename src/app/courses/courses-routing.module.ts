@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { CoursesPageComponent } from '@courses/components/courses-page/courses-page.component';
 import {CoursesListComponent} from '@courses/components/courses-list/courses-list.component';
-import {CoursesItemComponent} from '@courses/components/courses-item/courses-item.component';
+import { AddCourseComponent } from '@courses/components/add-course/add-course.component';
 
 const routes: Routes = [
     {
@@ -16,7 +16,11 @@ const routes: Routes = [
           },
           {
             path: 'add',
-            component: CoursesItemComponent
+            component: AddCourseComponent
+          },
+          {
+            path: 'edit/:id',
+            component: AddCourseComponent
           }
         ]
     },

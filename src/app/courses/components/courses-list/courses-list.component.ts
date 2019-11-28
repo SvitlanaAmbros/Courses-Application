@@ -3,13 +3,13 @@ import {
   OnInit,
   ChangeDetectionStrategy,
 } from '@angular/core';
-
-import { CoursesService } from '@courses/services/courses.service';
-import { Course } from '@courses/models/course.model';
+import { Router } from '@angular/router';
 
 import { SortByDatePipe } from '@shared/pipes/sort-by-date.pipe';
 import { PopupService, PopupControls } from '@shared/services/popup.service';
-import {COURSES_MORE} from '@courses/mock/courses.test-mock';
+import { CoursesService } from '@courses/services/courses.service';
+import { Course } from '@courses/models/course.model';
+import { COURSES_MORE } from '@courses/mock/courses.test-mock';
 
 @Component({
   selector: 'app-courses-list',
@@ -27,7 +27,8 @@ export class CoursesListComponent implements OnInit {
 
   constructor(private sortByDatePipe: SortByDatePipe,
               private coursesService: CoursesService,
-              private popupService: PopupService) { }
+              private popupService: PopupService,
+              private router: Router) { }
 
   public testDate = 'blue';
 
@@ -38,36 +39,35 @@ export class CoursesListComponent implements OnInit {
     this.courses = this.sortByDatePipe.transform(this.coursesService.getCourses());
   }
 
-  private initPopup(): void {
-    this.popupControls = this.popupService.create();
-  }
-
+  // courses list with sort logic
   public searchCourses(): void {
-    console.log('Search value = ', this.search);
-
     this.courses = this.sortByDatePipe
       .transform(this.allCourses
       .filter((item: Course) => item.title.toLowerCase().includes(this.search)));
   }
 
   public loadMore(): void {
-    console.log('Load more');
     this.courses = this.sortByDatePipe.transform(COURSES_MORE);
   }
 
+  // courses list with editing logic from child component
   public editCourse(id: string): void {
     console.log('edit, id in parent component = ', id);
+    this.router.navigate(['courses', 'edit', id]);
   }
 
+  // courses list with editing logic from child component
   public deleteClicked(id: string): void {
     this.deletedItemId = id;
     this.openPopup();
   }
 
+  // courses list with editing logic from child component
   public deleteCourse(): void {
     this.coursesService.deleteCourse(this.deletedItemId);
     this.allCourses = this.coursesService.getCourses();
     this.courses = this.coursesService.getCourses();
+
     this.closePopup();
   }
 
@@ -77,5 +77,9 @@ export class CoursesListComponent implements OnInit {
 
   public closePopup(): void {
     this.popupControls.close();
+  }
+
+  private initPopup(): void {
+    this.popupControls = this.popupService.create();
   }
 }

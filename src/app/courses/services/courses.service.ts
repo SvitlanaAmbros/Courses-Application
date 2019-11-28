@@ -17,7 +17,7 @@ export class CoursesService {
   }
 
   public getCourseById(id: string): Course {
-    return this.courseList.filter((course: Course) => course.id === id)[0];
+    return this.courseList.find((item: Course) => item.id === id)
   }
 
   public updateCourse(course: Course): void {
@@ -25,9 +25,7 @@ export class CoursesService {
     updatedElement = course;
   }
 
-  public deleteCourse(id: string): Course[] {
+  public deleteCourse(id: string): void{
     this.courseList = this.courseList.filter((item: Course) => item.id !== id);
-
-    return this.courseList;
   }
 }

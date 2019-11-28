@@ -2,7 +2,7 @@ import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { AppComponent } from '@app/app.component';
-
+import { AuthService } from '@app/services/auth.service';
 import {CoreModule} from '@core/core.module';
 
 describe('AppComponent', () => {
@@ -15,6 +15,9 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
+      providers: [
+        AuthService
+      ]
     }).compileComponents();
   }));
 
