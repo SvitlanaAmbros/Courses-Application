@@ -25,9 +25,9 @@ import { AddCourseComponent } from './components/add-course/add-course.component
     SharedModule,
     CoursesRoutingModule
   ],
-  providers: [
-    CoursesService
-  ],
+  // providers: [
+  //   CoursesService
+  // ],
   exports: [
     CoursesPageComponent
   ]

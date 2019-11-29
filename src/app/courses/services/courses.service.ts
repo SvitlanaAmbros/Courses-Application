@@ -3,16 +3,21 @@ import { Injectable } from '@angular/core';
 import { Course } from '@courses/models/course.model';
 import { COURSES } from '@courses/mock/courses.mock';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class CoursesService {
   private courseList: Course[] = COURSES;
-  constructor() { }
+  constructor() {}
 
   public getCourses(): Course[] {
     return this.courseList;
   }
 
   public createCourse(course: Course): void {
+    const sortedArray = this.courseList.sort((a:Course, b: Course) => +a.id - +b.id);
+    course.id = (+sortedArray[sortedArray.length - 1].id + 1).toString();
+    
     this.courseList.push(course);
   }
 

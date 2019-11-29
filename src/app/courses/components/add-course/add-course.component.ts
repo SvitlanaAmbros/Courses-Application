@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
 import { Course } from '@courses/models/course.model';
@@ -10,19 +10,15 @@ import {CoursesService} from "@courses/services/courses.service";
   styleUrls: ['./add-course.component.scss']
 })
 export class AddCourseComponent implements OnInit {
+  public pageType: 'edit' | 'add';
   public course: Course
-  //   = {
-  //   title: 'Title',
-  //   creationDate: new Date(),
-  //   duration: 70,
-  //   description: 'description',
-  //   authors: ['Author 1', 'Author 2']
-  // };
-  constructor(private router: Router, private  activatedRoute: ActivatedRoute, private courseService: CoursesService) { }
+  constructor(private router: Router, private  activatedRoute: ActivatedRoute, 
+    private courseService: CoursesService) { }
 
   ngOnInit() {
     const courseId = this.activatedRoute.snapshot.params.id;
     if (courseId) {
+      this.pageType = 'edit';
       this.course = this.courseService.getCourseById(courseId) || {
         title: '',
         creationDate: new Date(),
@@ -30,8 +26,8 @@ export class AddCourseComponent implements OnInit {
         description: '',
         authors: []
       };
-      console.log(this.course);
     } else {
+      this.pageType = 'add';
       this.course = {
           title: '',
           creationDate: new Date(),
@@ -43,17 +39,23 @@ export class AddCourseComponent implements OnInit {
   }
 
   public saveCourse(): void {
-    console.log('Save Course', this.course);
-    this.courseService.updateCourse(this.course);
+    if (this.pageType === 'edit') {
+      this.courseService.updateCourse(this.course);
+    } else {
+      this.courseService.createCourse(this.course);
+    }
     this.navigateToBaseCoursesPage();
   }
 
   public cancel(): void {
-    console.log('Cancel');
     this.navigateToBaseCoursesPage();
   }
 
   public navigateToBaseCoursesPage(): void {
     this.router.navigateByUrl('courses');
+  }
+
+  public dateChanged(value): void {
+    this.course.creationDate = new Date(value);
   }
 }

@@ -15,6 +15,7 @@ export class AuthService {
   }
 
   public logout(): void {
+    // alredy implemented clearing user
     this.localStorageService.deleteUserFromStorage();
     this.updateAuthentication(false);
   }

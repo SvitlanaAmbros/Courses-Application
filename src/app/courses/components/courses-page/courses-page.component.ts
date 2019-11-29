@@ -6,8 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./courses-page.component.scss']
 })
 export class CoursesPageComponent implements OnInit {
-
-  public fullPath: string[] = ['Courses'];
   constructor() { }
 
   ngOnInit() {
