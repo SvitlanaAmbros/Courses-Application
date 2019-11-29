@@ -21,10 +21,15 @@ export class AddCourseComponent implements OnInit {
   constructor(private router: Router, private  activatedRoute: ActivatedRoute, private courseService: CoursesService) { }
 
   ngOnInit() {
-    console.log();
     const courseId = this.activatedRoute.snapshot.params.id;
     if (courseId) {
-      this.course = this.courseService.getCourseById(courseId);
+      this.course = this.courseService.getCourseById(courseId) || {
+        title: '',
+        creationDate: new Date(),
+        duration: 0,
+        description: '',
+        authors: []
+      };
       console.log(this.course);
     } else {
       this.course = {
