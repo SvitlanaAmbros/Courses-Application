@@ -17,7 +17,7 @@ export class CoursesService {
   }
 
   public getCourseById(id: string): Course {
-    return this.courseList.find((item: Course) => item.id === id)
+    return this.courseList.find((item: Course) => item.id === id);
   }
 
   public updateCourse(course: Course): void {

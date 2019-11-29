@@ -12,14 +12,16 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            component: CoursesListComponent
+            // redirectTo: 'new',
+            component: CoursesListComponent,
+            // pathMatch: 'full',
           },
           {
-            path: 'add',
+            path: 'courses/new',
             component: AddCourseComponent
           },
           {
-            path: 'edit/:id',
+            path: 'courses/:id',
             component: AddCourseComponent
           }
         ]

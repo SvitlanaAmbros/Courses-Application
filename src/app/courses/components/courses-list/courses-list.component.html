@@ -11,7 +11,7 @@
   </div>
   <div class="courses-list-wrap">
     <div class="courses-add">
-      <button class="courses-add__btn">
+      <button class="courses-add__btn" (click)="addNewCourse()">
         <i class="fa fa-plus"></i>
         Add course
       </button>
@@ -34,12 +34,12 @@
     </div>
   </div>
 </div>
-<app-popup 
+<app-popup
   #popup
-  *ngIf="popupControls.isOpened" 
+  *ngIf="popupControls.isOpened"
   [header]="'Are you sure you want to delete this course?'"
-  [buttonAction]="'Yes'" 
-  [buttonCancel]="'No'" 
+  [buttonAction]="'Yes'"
+  [buttonCancel]="'No'"
   (onAction)="deleteCourse()"
   (onClose)="closePopup()">
 </app-popup>

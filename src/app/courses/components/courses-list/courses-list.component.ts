@@ -50,10 +50,14 @@ export class CoursesListComponent implements OnInit {
     this.courses = this.sortByDatePipe.transform(COURSES_MORE);
   }
 
+  public addNewCourse(): void {
+    this.router.navigate(['courses', 'new']);
+  }
+
   // courses list with editing logic from child component
   public editCourse(id: string): void {
     console.log('edit, id in parent component = ', id);
-    this.router.navigate(['courses', 'edit', id]);
+    this.router.navigate(['courses', id]);
   }
 
   // courses list with editing logic from child component
