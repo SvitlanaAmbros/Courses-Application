@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthService } from '@app/core/services/auth.service';
+import { AuthService } from '@core/services/auth.service';
 import { LoginUser } from '@shared/models/user.model';
 
 @Component({
@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   }
 
   public logIn(): void {
+    // set user data to local storage and navigate to courses page
     this.authService.login(this.user);
     this.router.navigateByUrl('/courses');
   }

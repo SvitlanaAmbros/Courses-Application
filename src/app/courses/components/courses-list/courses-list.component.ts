@@ -57,7 +57,6 @@ export class CoursesListComponent implements OnInit {
 
   // courses list with editing logic from child component
   public editCourse(id: string): void {
-    console.log('edit, id in parent component = ', id);
     this.router.navigate(['courses', id]);
   }
 

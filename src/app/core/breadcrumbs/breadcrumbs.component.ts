@@ -1,10 +1,12 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ChangeDetectorRef} from '@angular/core';
 import {ActivatedRoute, Router, NavigationEnd, PRIMARY_OUTLET} from '@angular/router';
-import { BreadCrumb } from '../models/breadcrumb.model';
-import { filter, map } from 'rxjs/operators';
-import { isNullOrUndefined } from 'util';
+import { filter } from 'rxjs/operators';
 
-const ROUTE_DATA_BREADCRUMB: string = "breadcrumb";
+import { BreadCrumb } from '@core/models/breadcrumb.model';
+import { CoursesService } from '@courses/services/courses.service';
+import { Course } from '@courses/models/course.model';
+
+const ROUTE_DATA_BREADCRUMB: string = 'breadcrumb';
 
 @Component({
   selector: 'app-breadcrumbs',
@@ -16,23 +18,20 @@ export class BreadcrumbsComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
     private router: Router,
-    private cdref: ChangeDetectorRef) {}
+    private cdref: ChangeDetectorRef,
+    private coursesService: CoursesService) {}
 
   ngOnInit() {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
         let root: ActivatedRoute = this.activatedRoute.root;
-        console.log('Activated route', root);
         this.breadcrumbsList = this.getBreadcrumbs(root);
-        console.log(this.breadcrumbsList);
     })
-   
-
   }
 
 
-  private getBreadcrumbs(route: ActivatedRoute, url: string="", breadcrumbs: BreadCrumb[]=[]): BreadCrumb[] {
+  private getBreadcrumbs(route: ActivatedRoute, url: string='', breadcrumbs: BreadCrumb[]=[]): BreadCrumb[] {
     const children: ActivatedRoute[] = route.children;
 
     if (children.length === 0) {
@@ -40,13 +39,12 @@ export class BreadcrumbsComponent implements OnInit {
     }
 
     for (const child of children) {
-      console.log('!!!', child.snapshot.params.id);
       const routeURL: string = child.snapshot.url.map(segment => segment.path).join('/');
       if (!!child.snapshot.params.id) {
-        breadcrumbs.push({ label: child.snapshot.params.id, url: routeURL });
+        const currentCourse:Course = this.coursesService.getCourseById(child.snapshot.params.id);
+        breadcrumbs.push({ label: currentCourse.title, url: routeURL });
       } else {
-        console.log('Shapshot', child.snapshot.data.breadcrumb);
-        if (!!child.snapshot.data.breadcrumb) {
+        if (!!child.snapshot.data[ROUTE_DATA_BREADCRUMB]) {
           breadcrumbs.push({label: child.snapshot.data.breadcrumb, url: routeURL });
         }
       }

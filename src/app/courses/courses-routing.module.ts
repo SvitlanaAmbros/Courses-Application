@@ -7,38 +7,37 @@ import {CoursesListComponent} from '@courses/components/courses-list/courses-lis
 import { AddCourseComponent } from '@courses/components/add-course/add-course.component';
 
 const routes: Routes = [
-    // {
-    //     path: '',
-    //     component: CoursesPageComponent,
-    //     canActivateChild: [AuthGuard],
-    //     data: {
-    //       breadcrumb: 'Course'
-    //     },
-    //     children: [
-    //       {
-    //         path: '',
-    //         component: CoursesListComponent,
-    //         data: {
-    //           breadcrumb: null
-    //         },
-    //       },
-    //       {
-    //         path: 'courses/new',
-    //         component: AddCourseComponent,
-    //         data: {
-    //           breadcrumb: 'New Course'
-    //         },
-    //       },
-    //       {
-    //         path: 'courses/:id',
-    //         component: AddCourseComponent,
-    //         data: {
-    //           breadcrumb: 'Id'
-    //         },
-    //       }
-    //     ]
-    // },
-        
+    {
+        path: 'courses',
+        component: CoursesPageComponent,
+        canActivateChild: [AuthGuard],
+        data: {
+          breadcrumb: 'Course'
+        },
+        children: [
+            {
+              path: '',
+              component: CoursesListComponent,
+              data: {
+                breadcrumb: null
+              }
+            },
+            {
+              path: 'new',
+              component: AddCourseComponent,
+              data: {
+                breadcrumb: 'New Course'
+              },
+            },
+            {
+              path: ':id',
+              component: AddCourseComponent,
+              data: {
+                breadcrumb: null
+              },
+            }
+          ]
+    },    
 ];
 
 @NgModule({

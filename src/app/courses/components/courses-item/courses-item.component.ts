@@ -37,13 +37,11 @@ export class CoursesItemComponent implements OnInit, OnChanges {
 
   // Dump component
   public editCourse(): void {
-    console.log('Edit', this.item.id);
     this.edited.emit(this.item.id);
   }
 
   // Dump component
   public deleteCourse(): void {
-    console.log('Delete', this.item.id);
     this.deleted.emit(this.item.id);
   }
 }

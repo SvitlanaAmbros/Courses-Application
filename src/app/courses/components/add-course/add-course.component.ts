@@ -4,46 +4,40 @@ import {ActivatedRoute, Router} from '@angular/router';
 import { Course } from '@courses/models/course.model';
 import {CoursesService} from "@courses/services/courses.service";
 
+export type FORM_TYPE = 'edit' | 'add';
+
 @Component({
   selector: 'app-add-course',
   templateUrl: './add-course.component.html',
   styleUrls: ['./add-course.component.scss']
 })
 export class AddCourseComponent implements OnInit {
-  public pageType: 'edit' | 'add';
+  public pageType: FORM_TYPE;
   public course: Course
   constructor(private router: Router, private  activatedRoute: ActivatedRoute, 
     private courseService: CoursesService) { }
 
   ngOnInit() {
+    const newCourse: Course = {
+      title: '',
+      creationDate: new Date(),
+      duration: 0,
+      description: '',
+      authors: []
+    };
     const courseId = this.activatedRoute.snapshot.params.id;
+
     if (courseId) {
       this.pageType = 'edit';
-      this.course = this.courseService.getCourseById(courseId) || {
-        title: '',
-        creationDate: new Date(),
-        duration: 0,
-        description: '',
-        authors: []
-      };
+      this.course = this.courseService.getCourseById(courseId) || newCourse;
     } else {
       this.pageType = 'add';
-      this.course = {
-          title: '',
-          creationDate: new Date(),
-          duration: 0,
-          description: '',
-          authors: []
-        };
+      this.course = newCourse;
     }
   }
 
   public saveCourse(): void {
-    if (this.pageType === 'edit') {
-      this.courseService.updateCourse(this.course);
-    } else {
-      this.courseService.createCourse(this.course);
-    }
+    this.pageType === 'edit' ? this.courseService.updateCourse(this.course) : this.courseService.createCourse(this.course);
     this.navigateToBaseCoursesPage();
   }
 

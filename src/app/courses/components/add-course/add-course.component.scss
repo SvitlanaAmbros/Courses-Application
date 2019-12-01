@@ -6,6 +6,10 @@
     display: flex;
     justify-content: center;
 
+    &-wrap {
+        background: $pale-grey-color;
+    }
+
     &-form {
         padding: 24px;
         width: 70%;
