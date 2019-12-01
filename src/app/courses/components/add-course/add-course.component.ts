@@ -13,7 +13,8 @@ export type FORM_TYPE = 'edit' | 'add';
 })
 export class AddCourseComponent implements OnInit {
   public pageType: FORM_TYPE;
-  public course: Course
+  public course: Course;
+  
   constructor(private router: Router, private  activatedRoute: ActivatedRoute, 
     private courseService: CoursesService) { }
 
