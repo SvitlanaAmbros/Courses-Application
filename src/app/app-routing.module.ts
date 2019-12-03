@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import {AuthGuard} from '@core/guards/auth.guard';
+import { NotFoundComponent } from '@shared/components/not-found/not-found.component';
+import {LoginComponent} from '@login/components/login/login.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -9,11 +13,17 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
+    component: LoginComponent
   },
   {
     path: 'courses',
-    loadChildren: () => import('./courses/courses.module').then(m => m.CoursesModule)
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    loadChildren: () => import('./courses/courses.module').then(m => m.CoursesModule),
+  },
+  {
+    path: '**',
+    component: NotFoundComponent
   }
 ];
 
@@ -22,3 +32,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+

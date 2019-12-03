@@ -3,8 +3,8 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AppRoutingModule } from '@app/app-routing.module';
 import { AppComponent } from '@app/app.component';
-import { AuthService } from '@app/services/auth.service';
 
+import { AuthService } from '@core/services/auth.service';
 import { CoreModule } from '@core/core.module';
 import { SharedModule } from '@shared/shared.module';
 import { LoginModule } from '@login/login.module';
@@ -22,7 +22,9 @@ import { CoursesModule } from '@courses/courses.module';
     SharedModule,
     LoginModule,
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

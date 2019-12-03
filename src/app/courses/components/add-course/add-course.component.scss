@@ -1,10 +1,14 @@
 @import 'color';
 
 .add {
-    padding: 20px 0;    
-    max-height: 71vh;
+    padding: 30px 0;
+    height: 80vh;
     display: flex;
     justify-content: center;
+
+    &-wrap {
+        background: $pale-grey-color;
+    }
 
     &-form {
         padding: 24px;

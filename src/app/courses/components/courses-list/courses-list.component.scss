@@ -4,6 +4,10 @@
     padding: 25px 85px 130px;
     min-height: 56vh;
 
+    &-wrap {
+      background: $pale-grey-color;
+    }
+
     &-search {
         display: flex;
         // justify-content: space-between;

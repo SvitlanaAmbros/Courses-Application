@@ -1,10 +1,10 @@
 <div class="breadcrumbs-wrap">
   <div class="container">
-    <div class="breadcrumbs">
-      <span class="breadcrumbs__item" *ngFor="let path of fullPath">
-        {{ path }}
-<!--        <span class="breadcrumbs__delimiter">/</span>-->
-      </span>
-    </div>
+      <div class="breadcrumbs">
+          <div *ngFor="let breadcrumb of breadcrumbsList; let lastInd = last" >
+            <a *ngIf="!lastInd" [routerLink]="[breadcrumb.url]">{{ breadcrumb.label }} / </a>
+            <label *ngIf="lastInd">{{ breadcrumb.label }}</label>
+          </div>
+      </div>
   </div>
 </div>

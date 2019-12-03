@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AuthService } from '@app/services/auth.service';
+import { AuthService } from '@core/services/auth.service';
 import { LocalStorageService } from '@shared/services/local-storage.service';
 
 describe('AuthService', () => {

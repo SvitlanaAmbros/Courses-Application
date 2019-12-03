@@ -12,6 +12,7 @@ import { DateComponent } from '@shared/components/date/date.component';
 import { DurationComponent } from '@shared/components/duration/duration.component';
 import { TagBoxComponent } from '@shared/components/tag-box/tag-box.component';
 import { FormsModule } from '@angular/forms';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { FormsModule } from '@angular/forms';
     PopupComponent,
     DateComponent,
     DurationComponent,
-    TagBoxComponent
+    TagBoxComponent,
+    NotFoundComponent
   ],
   providers: [
     SortByDatePipe,
@@ -41,7 +43,8 @@ import { FormsModule } from '@angular/forms';
     PopupComponent,
     DateComponent,
     DurationComponent,
-    TagBoxComponent
+    TagBoxComponent,
+    NotFoundComponent
   ]
 })
 export class SharedModule { }

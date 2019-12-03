@@ -15,7 +15,7 @@ import { COURSES_MORE } from '@courses/mock/courses.test-mock';
   selector: 'app-courses-list',
   templateUrl: './courses-list.component.html',
   styleUrls: ['./courses-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CoursesListComponent implements OnInit {
   public courses: Course[] = [];
@@ -28,13 +28,14 @@ export class CoursesListComponent implements OnInit {
   constructor(private sortByDatePipe: SortByDatePipe,
               private coursesService: CoursesService,
               private popupService: PopupService,
-              private router: Router) { }
+              private router: Router) {
+               }
 
   public testDate = 'blue';
 
   ngOnInit() {
     this.initPopup();
-
+    
     this.allCourses = this.coursesService.getCourses();
     this.courses = this.sortByDatePipe.transform(this.coursesService.getCourses());
   }
@@ -50,10 +51,13 @@ export class CoursesListComponent implements OnInit {
     this.courses = this.sortByDatePipe.transform(COURSES_MORE);
   }
 
+  public addNewCourse(): void {
+    this.router.navigate(['courses', 'new']);
+  }
+
   // courses list with editing logic from child component
   public editCourse(id: string): void {
-    console.log('edit, id in parent component = ', id);
-    this.router.navigate(['courses', 'edit', id]);
+    this.router.navigate(['courses', id]);
   }
 
   // courses list with editing logic from child component

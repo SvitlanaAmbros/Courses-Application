@@ -1,45 +1,48 @@
-<div class="courses">
-  <div class="courses-search">
-    <label class="courses-search__box">
-      <img src="assets/images/ic-search.svg" alt="search">
-      <input type="text" [(ngModel)]="search" class="courses-search__field" placeholder="Text to search">
-    </label>
-    <div class="courses-search__btn">
-      <app-action-btn [title]="'Search'" (clicked)="searchCourses()">
-      </app-action-btn>
-    </div>
-  </div>
-  <div class="courses-list-wrap">
-    <div class="courses-add">
-      <button class="courses-add__btn">
-        <i class="fa fa-plus"></i>
-        Add course
-      </button>
-    </div>
-    <div class="courses-list">
-      <div *ngIf="courses.length != 0; else nocourses">
-        <div *ngFor="let item of courses" class="courses-list__item" [appBorderColor]="item?.creationDate">
-          <app-courses-item [item]="item" (edited)="editCourse($event)" (deleted)="deleteClicked($event)">
-          </app-courses-item>
-        </div>
-        <div class="courses__action-btn link" (click)="loadMore()" id="load">
-          Load more
-        </div>
+<div class="courses-wrap">
+  <div class="courses">
+    <div class="courses-search">
+      <label class="courses-search__box">
+        <img src="assets/images/ic-search.svg" alt="search">
+        <input type="text" [(ngModel)]="search" class="courses-search__field" placeholder="Text to search">
+      </label>
+      <div class="courses-search__btn">
+        <app-action-btn [title]="'Search'" (clicked)="searchCourses()">
+        </app-action-btn>
       </div>
-      <ng-template #nocourses>
-        <div class="courses__action-btn">
-          No courses. You can add courses
+    </div>
+    <div class="courses-list-wrap">
+      <div class="courses-add">
+        <button class="courses-add__btn" (click)="addNewCourse()">
+          <i class="fa fa-plus"></i>
+          Add course
+        </button>
+      </div>
+      <div class="courses-list">
+        <div *ngIf="courses.length != 0; else nocourses">
+          <div *ngFor="let item of courses" class="courses-list__item" [appBorderColor]="item?.creationDate">
+            <app-courses-item [item]="item" (edited)="editCourse($event)" (deleted)="deleteClicked($event)">
+            </app-courses-item>
+          </div>
+          <div class="courses__action-btn link" (click)="loadMore()" id="load">
+            Load more
+          </div>
         </div>
-      </ng-template>
+        <ng-template #nocourses>
+          <div class="courses__action-btn">
+            No courses. You can add courses
+          </div>
+        </ng-template>
+      </div>
     </div>
   </div>
 </div>
-<app-popup 
+
+<app-popup
   #popup
-  *ngIf="popupControls.isOpened" 
+  *ngIf="popupControls.isOpened"
   [header]="'Are you sure you want to delete this course?'"
-  [buttonAction]="'Yes'" 
-  [buttonCancel]="'No'" 
+  [buttonAction]="'Yes'"
+  [buttonCancel]="'No'"
   (onAction)="deleteCourse()"
   (onClose)="closePopup()">
 </app-popup>

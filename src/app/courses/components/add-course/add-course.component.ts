@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 
 import { Course } from '@courses/models/course.model';
+import {CoursesService} from "@courses/services/courses.service";
+
+export type FORM_TYPE = 'edit' | 'add';
 
 @Component({
   selector: 'app-add-course',
@@ -9,24 +12,45 @@ import { Course } from '@courses/models/course.model';
   styleUrls: ['./add-course.component.scss']
 })
 export class AddCourseComponent implements OnInit {
-  public course: Course = {
-    title: 'Title',
-    creationDate: new Date(),
-    duration: 70,
-    description: 'description',
-    authors: ['Author 1', 'Author 2']
-  };
-  constructor(private router: Router) { }
+  public pageType: FORM_TYPE;
+  public course: Course;
+  
+  constructor(private router: Router, private  activatedRoute: ActivatedRoute, 
+    private courseService: CoursesService) { }
 
   ngOnInit() {
+    const newCourse: Course = {
+      title: '',
+      creationDate: new Date(),
+      duration: 0,
+      description: '',
+      authors: []
+    };
+    const courseId = this.activatedRoute.snapshot.params.id;
+
+    if (courseId) {
+      this.pageType = 'edit';
+      this.course = this.courseService.getCourseById(courseId) || newCourse;
+    } else {
+      this.pageType = 'add';
+      this.course = newCourse;
+    }
   }
 
   public saveCourse(): void {
-    console.log('Save Course', this.course);
+    this.pageType === 'edit' ? this.courseService.updateCourse(this.course) : this.courseService.createCourse(this.course);
+    this.navigateToBaseCoursesPage();
   }
 
   public cancel(): void {
-    console.log('Cancel');
+    this.navigateToBaseCoursesPage();
+  }
+
+  public navigateToBaseCoursesPage(): void {
     this.router.navigateByUrl('courses');
+  }
+
+  public dateChanged(value): void {
+    this.course.creationDate = new Date(value);
   }
 }

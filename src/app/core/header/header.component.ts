@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthService } from '@app/services/auth.service';
+import { AuthService } from '@core/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -16,12 +16,11 @@ export class HeaderComponent implements OnInit {
     this.authService.isAuthenticated()
       .subscribe((res: boolean) => {
         this.isAuthenticated = res;
-        console.log('Changed', res);
-      }
-      );
+      });
   }
 
   public logoff(): void {
+    // log out - clear store, crear auth data
     this.authService.logout();
     this.router.navigateByUrl('/login');
   }
