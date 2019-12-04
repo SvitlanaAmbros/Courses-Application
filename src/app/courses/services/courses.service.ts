@@ -1,17 +1,22 @@
 import { Injectable } from '@angular/core';
+import { HttpBackend, HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { Course } from '@courses/models/course.model';
 import { COURSES } from '@courses/mock/courses.mock';
+
+export const COURSES_URL = 'courses';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CoursesService {
   private courseList: Course[] = COURSES;
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  public getCourses(): Course[] {
-    return this.courseList;
+  public getCourses(startFrom: number, count: number): Observable<Course[]> {
+    return this.http.get<Course[]>(`${COURSES_URL}?start=${startFrom}&count=${count}`);
+    // return this.courseList;
   }
 
   public createCourse(course: Course): void {

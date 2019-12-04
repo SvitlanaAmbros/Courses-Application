@@ -22,6 +22,9 @@ export class CoursesListComponent implements OnInit {
   public allCourses: Course[];
   public search = '';
 
+  public startLoadingFromIndex = 0;
+  public countLoadingCourses = 2;
+
   public popupControls: PopupControls;
   public deletedItemId: string;
 
@@ -35,9 +38,12 @@ export class CoursesListComponent implements OnInit {
 
   ngOnInit() {
     this.initPopup();
-    
-    this.allCourses = this.coursesService.getCourses();
-    this.courses = this.sortByDatePipe.transform(this.coursesService.getCourses());
+    this.coursesService.getCourses(this.startLoadingFromIndex, this.countLoadingCourses).subscribe(res => {
+      this.courses = res;
+      console.log(this.courses);
+    });
+    // this.allCourses = this.coursesService.getCourses();
+    // this.courses = this.sortByDatePipe.transform(this.coursesService.getCourses());
   }
 
   // courses list with sort logic
@@ -48,7 +54,13 @@ export class CoursesListComponent implements OnInit {
   }
 
   public loadMore(): void {
-    this.courses = this.sortByDatePipe.transform(COURSES_MORE);
+    this.startLoadingFromIndex = this.startLoadingFromIndex + this.countLoadingCourses;
+    this.coursesService.getCourses(this.startLoadingFromIndex, this.countLoadingCourses)
+      .subscribe(res => {
+        this.courses = this.courses.concat(res);
+        console.log(this.courses);
+      });
+    // this.courses = this.sortByDatePipe.transform(COURSES_MORE);
   }
 
   public addNewCourse(): void {
@@ -69,8 +81,8 @@ export class CoursesListComponent implements OnInit {
   // courses list with editing logic from child component
   public deleteCourse(): void {
     this.coursesService.deleteCourse(this.deletedItemId);
-    this.allCourses = this.coursesService.getCourses();
-    this.courses = this.coursesService.getCourses();
+    // this.allCourses = this.coursesService.getCourses();
+    // this.courses = this.coursesService.getCourses();
 
     this.closePopup();
   }
