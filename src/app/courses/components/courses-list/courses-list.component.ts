@@ -38,10 +38,11 @@ export class CoursesListComponent implements OnInit {
 
   ngOnInit() {
     this.initPopup();
-    this.coursesService.getCourses(this.startLoadingFromIndex, this.countLoadingCourses).subscribe(res => {
-      this.courses = res;
-      console.log(this.courses);
-    });
+    this.loadCoursesFromServer(this.startLoadingFromIndex, this.countLoadingCourses);
+    // this.coursesService.getCourses(this.startLoadingFromIndex, this.countLoadingCourses).subscribe(res => {
+    //   this.courses = res;
+    //   console.log(this.courses);
+    // });
     // this.allCourses = this.coursesService.getCourses();
     // this.courses = this.sortByDatePipe.transform(this.coursesService.getCourses());
   }
@@ -54,13 +55,18 @@ export class CoursesListComponent implements OnInit {
   }
 
   public loadMore(): void {
-    this.startLoadingFromIndex = this.startLoadingFromIndex + this.countLoadingCourses;
-    this.coursesService.getCourses(this.startLoadingFromIndex, this.countLoadingCourses)
-      .subscribe(res => {
-        this.courses = this.courses.concat(res);
-        console.log(this.courses);
-      });
+    console.log('!!!!!!!!!!!!!', this.startLoadingFromIndex, this.countLoadingCourses);
+    this.loadCoursesFromServer(this.startLoadingFromIndex, this.countLoadingCourses);
     // this.courses = this.sortByDatePipe.transform(COURSES_MORE);
+  }
+  
+  public loadCoursesFromServer(startInd:number, count: number): void {
+    this.coursesService.getCourses(startInd, count)
+    .subscribe(res => {
+      this.courses = this.courses.concat(res);
+      console.log('loaded courses', this.courses);
+      this.startLoadingFromIndex = this.courses.length;
+      });
   }
 
   public addNewCourse(): void {
@@ -80,7 +86,13 @@ export class CoursesListComponent implements OnInit {
 
   // courses list with editing logic from child component
   public deleteCourse(): void {
-    this.coursesService.deleteCourse(this.deletedItemId);
+    this.coursesService.deleteCourse(this.deletedItemId).subscribe(res => {
+      console.log(this.startLoadingFromIndex, this.countLoadingCourses);
+      let ind = this.courses.length;
+      this.courses = [];
+      this.loadCoursesFromServer(0, ind);
+      // this.coursesService.getCourses
+    });
     // this.allCourses = this.coursesService.getCourses();
     // this.courses = this.coursesService.getCourses();
 

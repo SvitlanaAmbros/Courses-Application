@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpBackend, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { Course } from '@courses/models/course.model';
 import { COURSES } from '@courses/mock/courses.mock';
+import { CourseDB } from '@courses/models/course-db.model';
+import { CourseInfo } from '@courses/models/course-info.model';
 
 export const COURSES_URL = 'courses';
 
@@ -15,7 +18,12 @@ export class CoursesService {
   constructor(private http: HttpClient) {}
 
   public getCourses(startFrom: number, count: number): Observable<Course[]> {
-    return this.http.get<Course[]>(`${COURSES_URL}?start=${startFrom}&count=${count}`);
+    return this.http.get<CourseDB[]>(`${COURSES_URL}?start=${startFrom}&count=${count}`)
+      .pipe(
+        map((res: CourseDB[]) => {
+          return res.map((courseDb: CourseDB) => new CourseInfo(courseDb));
+        })
+      );
     // return this.courseList;
   }
 
@@ -35,7 +43,8 @@ export class CoursesService {
     updatedElement = course;
   }
 
-  public deleteCourse(id: string): void{
-    this.courseList = this.courseList.filter((item: Course) => item.id !== id);
+  public deleteCourse(id: string): Observable<any>{
+    return this.http.delete(`${COURSES_URL}/${id}`);
+    // this.courseList = this.courseList.filter((item: Course) => item.id !== id);
   }
 }

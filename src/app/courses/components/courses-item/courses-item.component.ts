@@ -23,8 +23,8 @@ export class CoursesItemComponent implements OnInit, OnChanges {
   // Dump component
   @Input() item: Course;
 
-  @Output() edited: EventEmitter<string> = new EventEmitter();
-  @Output() deleted: EventEmitter<string> = new EventEmitter();
+  @Output() edited: EventEmitter<string | number> = new EventEmitter();
+  @Output() deleted: EventEmitter<string | number> = new EventEmitter();
 
   constructor() { }
 
@@ -42,6 +42,7 @@ export class CoursesItemComponent implements OnInit, OnChanges {
 
   // Dump component
   public deleteCourse(): void {
+    console.log('delete with id', this.item.id)
     this.deleted.emit(this.item.id);
   }
 }

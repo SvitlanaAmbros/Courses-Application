@@ -1,20 +1,20 @@
 import { Course } from '@courses/models/course.model';
+import { CourseDB } from '@courses/models/course-db.model';
 
 export class CourseInfo implements Course {
-    id: string;
+    id: string | number;
     title: string;
     creationDate: Date;
     duration: number | string;
     description: string;
     topRated: boolean;
 
-    constructor(id: string, title: string, creationDate: Date,
-                duration: (number | string), description: string, topRated: boolean) {
-        this.id = id;
-        this.title = title;
-        this.creationDate = creationDate;
-        this.duration = duration;
-        this.description = description;
-        this.topRated = topRated;
+    constructor(courseDb: CourseDB) {
+        this.id = courseDb.id;
+        this.title = courseDb.name;
+        this.creationDate = new Date(courseDb.date);
+        this.duration = courseDb.length;
+        this.description = courseDb.description;
+        this.topRated = courseDb.isTopRated;
     }
 }
