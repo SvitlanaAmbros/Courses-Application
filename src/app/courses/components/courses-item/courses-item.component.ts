@@ -16,7 +16,6 @@ import {Course} from '@courses/models/course.model';
   selector: 'app-courses-item',
   templateUrl: './courses-item.component.html',
   styleUrls: ['./courses-item.component.scss'],
-  // adding onPush strategy. 
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CoursesItemComponent implements OnInit, OnChanges {

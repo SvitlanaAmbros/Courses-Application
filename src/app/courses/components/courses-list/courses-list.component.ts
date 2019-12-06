@@ -49,19 +49,26 @@ export class CoursesListComponent implements OnInit {
 
   // courses list with sort logic
   public searchCourses(): void {
-    this.courses = this.sortByDatePipe
-      .transform(this.allCourses
-      .filter((item: Course) => item.title.toLowerCase().includes(this.search)));
+    // if (this.search.trim().length > 0) {
+      // this.loadCoursesFromServer(0, 2);
+      // this.coursesService.searchCourseByParam(this.search)
+      //   .subscribe(res => this.courses = res);
+      // this.courses = this.sortByDatePipe
+      //   .transform(this.allCourses
+      //   .filter((item: Course) => item.title.toLowerCase().includes(this.search)));
+    // } else {
+      this.courses = [];
+      this.loadCoursesFromServer(0, 2, this.search);
+    // }
   }
 
   public loadMore(): void {
-    console.log('!!!!!!!!!!!!!', this.startLoadingFromIndex, this.countLoadingCourses);
-    this.loadCoursesFromServer(this.startLoadingFromIndex, this.countLoadingCourses);
+    this.loadCoursesFromServer(this.startLoadingFromIndex, this.countLoadingCourses, this.search);
     // this.courses = this.sortByDatePipe.transform(COURSES_MORE);
   }
-  
-  public loadCoursesFromServer(startInd:number, count: number): void {
-    this.coursesService.getCourses(startInd, count)
+
+  public loadCoursesFromServer(startInd: number, count: number, textFragment: string = ''): void {
+    this.coursesService.getCourses(startInd, count, textFragment)
     .subscribe(res => {
       this.courses = this.courses.concat(res);
       console.log('loaded courses', this.courses);
@@ -88,9 +95,9 @@ export class CoursesListComponent implements OnInit {
   public deleteCourse(): void {
     this.coursesService.deleteCourse(this.deletedItemId).subscribe(res => {
       console.log(this.startLoadingFromIndex, this.countLoadingCourses);
-      let ind = this.courses.length;
+      const ind = this.courses.length;
       this.courses = [];
-      this.loadCoursesFromServer(0, ind);
+      this.loadCoursesFromServer(0, ind, this.search);
       // this.coursesService.getCourses
     });
     // this.allCourses = this.coursesService.getCourses();

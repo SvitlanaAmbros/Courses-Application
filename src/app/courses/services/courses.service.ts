@@ -17,8 +17,12 @@ export class CoursesService {
   private courseList: Course[] = COURSES;
   constructor(private http: HttpClient) {}
 
-  public getCourses(startFrom: number, count: number): Observable<Course[]> {
-    return this.http.get<CourseDB[]>(`${COURSES_URL}?start=${startFrom}&count=${count}`)
+  public getCourses(startFrom: number, count: number, textFragment?: string): Observable<Course[]> {
+    let getCoursesUrl = `${COURSES_URL}?start=${startFrom}&count=${count}`;
+    if (!!textFragment && textFragment.trim().length > 0) {
+      getCoursesUrl = getCoursesUrl + `&textFragment=${textFragment}`;
+    }
+    return this.http.get<CourseDB[]>(getCoursesUrl)
       .pipe(
         map((res: CourseDB[]) => {
           return res.map((courseDb: CourseDB) => new CourseInfo(courseDb));
@@ -27,10 +31,19 @@ export class CoursesService {
     // return this.courseList;
   }
 
+  // public searchCourseByParam(textFragment: string): Observable<Course[]> {
+  //   return this.http.get<CourseDB[]>(`${COURSES_URL}?textFragment=${textFragment}`)
+  //     .pipe(
+  //       map((res: CourseDB[]) => {
+  //         return res.map((courseDb: CourseDB) => new CourseInfo(courseDb));
+  //       })
+  //     );
+  // }
+
   public createCourse(course: Course): void {
-    const sortedArray = this.courseList.sort((a:Course, b: Course) => +a.id - +b.id);
+    const sortedArray = this.courseList.sort((a: Course, b: Course) => +a.id - +b.id);
     course.id = (+sortedArray[sortedArray.length - 1].id + 1).toString();
-    
+
     this.courseList.push(course);
   }
 
