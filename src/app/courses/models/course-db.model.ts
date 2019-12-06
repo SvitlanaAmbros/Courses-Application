@@ -1,10 +1,9 @@
 import { Author } from '@courses/models/author.model';
 
 export interface CourseDB {
-    id?: string;
+    id?: number;
     name: string;
-    date: Date;
-    duration: number | string;
+    date: string;
     description: string;
     isTopRated?: boolean;
     authors?: Author[];

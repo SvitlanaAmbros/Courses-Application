@@ -1,9 +1,13 @@
+import {CourseDB} from '@courses/models/course-db.model';
+
 export interface Course {
-    id?: string | number;
+    id?: number;
     title: string;
     creationDate: Date;
-    duration: number | string;
+    duration: number;
     description: string;
     topRated?: boolean;
     authors?: string[];
+
+    getDbObj?(): CourseDB;
 }

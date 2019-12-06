@@ -24,7 +24,8 @@ export class LocalStorageService {
   public getUserFromStorage(): LoginUser {
     const user: LoginUser = {
       login: undefined,
-      password: undefined
+      password: undefined,
+      token: undefined
     };
 
     Object.keys(user).forEach(key => user[key] = localStorage.getItem(key));
@@ -34,7 +35,8 @@ export class LocalStorageService {
   public deleteUserFromStorage(): void {
     const user: LoginUser = {
       login: undefined,
-      password: undefined
+      password: undefined,
+      token: undefined
     };
 
     Object.keys(user).forEach(key => user[key] = localStorage.removeItem(key));

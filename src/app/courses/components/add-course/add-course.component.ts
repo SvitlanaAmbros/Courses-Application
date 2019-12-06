@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 import { Course } from '@courses/models/course.model';
 import {CoursesService} from "@courses/services/courses.service";
+import {CourseInfo} from "@courses/models/course-info.model";
 
 export type FORM_TYPE = 'edit' | 'add';
 
@@ -14,18 +15,12 @@ export type FORM_TYPE = 'edit' | 'add';
 export class AddCourseComponent implements OnInit {
   public pageType: FORM_TYPE;
   public course: Course;
-  
-  constructor(private router: Router, private  activatedRoute: ActivatedRoute, 
+
+  constructor(private router: Router, private  activatedRoute: ActivatedRoute,
     private courseService: CoursesService) { }
 
   ngOnInit() {
-    const newCourse: Course = {
-      title: '',
-      creationDate: new Date(),
-      duration: 0,
-      description: '',
-      authors: []
-    };
+    const newCourse: Course = new CourseInfo();
     const courseId = this.activatedRoute.snapshot.params.id;
 
     if (courseId) {
@@ -38,7 +33,9 @@ export class AddCourseComponent implements OnInit {
   }
 
   public saveCourse(): void {
-    this.pageType === 'edit' ? this.courseService.updateCourse(this.course) : this.courseService.createCourse(this.course);
+    // this.pageType === 'edit' ?
+    //   this.courseService.updateCourse(this.course) :
+    this.courseService.createCourse(this.course).subscribe(res => console.log('Create', res))
     this.navigateToBaseCoursesPage();
   }
 
