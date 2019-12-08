@@ -33,10 +33,12 @@ export class AddCourseComponent implements OnInit {
   }
 
   public saveCourse(): void {
-    // this.pageType === 'edit' ?
-    //   this.courseService.updateCourse(this.course) :
-    this.courseService.createCourse(this.course).subscribe(res => console.log('Create', res))
-    this.navigateToBaseCoursesPage();
+    if (this.pageType === 'add') {
+      this.courseService.createCourse(this.course).subscribe(res => console.log('Create', res))
+      this.navigateToBaseCoursesPage();
+    } else {
+      this.courseService.updateCourse(this.course);
+    }
   }
 
   public cancel(): void {

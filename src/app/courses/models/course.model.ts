@@ -1,4 +1,5 @@
 import {CourseDB} from '@courses/models/course-db.model';
+import { Author } from '@courses/models/author.model';
 
 export interface Course {
     id?: number;
@@ -7,7 +8,7 @@ export interface Course {
     duration: number;
     description: string;
     topRated?: boolean;
-    authors?: string[];
+    authors?: Author[];
 
     getDbObj?(): CourseDB;
 }

@@ -1,7 +1,6 @@
 import {
   Component,
-  OnInit,
-  ChangeDetectionStrategy,
+  OnInit
 } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -9,13 +8,11 @@ import { SortByDatePipe } from '@shared/pipes/sort-by-date.pipe';
 import { PopupService, PopupControls } from '@shared/services/popup.service';
 import { CoursesService } from '@courses/services/courses.service';
 import { Course } from '@courses/models/course.model';
-import { COURSES_MORE } from '@courses/mock/courses.test-mock';
 
 @Component({
   selector: 'app-courses-list',
   templateUrl: './courses-list.component.html',
-  styleUrls: ['./courses-list.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./courses-list.component.scss']
 })
 export class CoursesListComponent implements OnInit {
   public courses: Course[] = [];
@@ -39,39 +36,22 @@ export class CoursesListComponent implements OnInit {
   ngOnInit() {
     this.initPopup();
     this.loadCoursesFromServer(this.startLoadingFromIndex, this.countLoadingCourses);
-    // this.coursesService.getCourses(this.startLoadingFromIndex, this.countLoadingCourses).subscribe(res => {
-    //   this.courses = res;
-    //   console.log(this.courses);
-    // });
-    // this.allCourses = this.coursesService.getCourses();
-    // this.courses = this.sortByDatePipe.transform(this.coursesService.getCourses());
   }
 
   // courses list with sort logic
   public searchCourses(): void {
-    // if (this.search.trim().length > 0) {
-      // this.loadCoursesFromServer(0, 2);
-      // this.coursesService.searchCourseByParam(this.search)
-      //   .subscribe(res => this.courses = res);
-      // this.courses = this.sortByDatePipe
-      //   .transform(this.allCourses
-      //   .filter((item: Course) => item.title.toLowerCase().includes(this.search)));
-    // } else {
-      this.courses = [];
-      this.loadCoursesFromServer(0, 2, this.search);
-    // }
+    this.courses = [];
+    this.loadCoursesFromServer(0, 2, this.search);
   }
 
   public loadMore(): void {
     this.loadCoursesFromServer(this.startLoadingFromIndex, this.countLoadingCourses, this.search);
-    // this.courses = this.sortByDatePipe.transform(COURSES_MORE);
   }
 
   public loadCoursesFromServer(startInd: number, count: number, textFragment: string = ''): void {
     this.coursesService.getCourses(startInd, count, textFragment)
     .subscribe(res => {
       this.courses = this.courses.concat(res);
-      console.log('loaded courses', this.courses);
       this.startLoadingFromIndex = this.courses.length;
       });
   }
@@ -94,14 +74,10 @@ export class CoursesListComponent implements OnInit {
   // courses list with editing logic from child component
   public deleteCourse(): void {
     this.coursesService.deleteCourse(this.deletedItemId).subscribe(res => {
-      console.log(this.startLoadingFromIndex, this.countLoadingCourses);
       const ind = this.courses.length;
       this.courses = [];
       this.loadCoursesFromServer(0, ind, this.search);
-      // this.coursesService.getCourses
     });
-    // this.allCourses = this.coursesService.getCourses();
-    // this.courses = this.coursesService.getCourses();
 
     this.closePopup();
   }
