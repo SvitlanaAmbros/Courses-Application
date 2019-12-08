@@ -1,6 +1,6 @@
 export const COURSES = [
     {
-        id: '1',
+        id: 1,
         title: 'Video Course 1. Name tag',
         creationDate: new Date('2020-09-10'),
         duration: 70,
@@ -10,7 +10,7 @@ export const COURSES = [
         topRated: true
     },
     {
-        id: '2',
+        id: 2,
         title: 'Video Course 2. Name tag',
         creationDate: new Date(),
         duration: 150,
@@ -19,7 +19,7 @@ export const COURSES = [
             topRated: false
     },
     {
-        id: '3',
+        id: 3,
         title: 'Video Course 3. Name tag',
         creationDate: new Date('2017-01-01'),
         duration: 30,
@@ -33,7 +33,7 @@ export const COURSES = [
 
 export const COURSES_SORTED = [
     {
-        id: '3',
+        id: 3,
         title: 'Video Course 3. Name tag',
         creationDate: new Date('2017-01-01'),
         duration: 30,
@@ -44,7 +44,7 @@ export const COURSES_SORTED = [
         topRated: true
     },
     {
-        id: '2',
+        id: 2,
         title: 'Video Course 2. Name tag',
         creationDate: new Date(),
         duration: 150,
@@ -53,7 +53,7 @@ export const COURSES_SORTED = [
             topRated: false
     },
     {
-        id: '1',
+        id: 1,
         title: 'Video Course 1. Name tag',
         creationDate: new Date('2020-09-10'),
         duration: 70,

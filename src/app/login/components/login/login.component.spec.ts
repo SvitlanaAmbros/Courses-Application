@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { AuthService } from '@app/core/services/auth.service';
 import { LoginComponent } from '@login/components/login/login.component';
@@ -13,7 +14,8 @@ describe('LoginComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         FormsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        HttpClientTestingModule
       ],
       providers: [
         AuthService

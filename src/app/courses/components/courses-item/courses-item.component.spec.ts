@@ -1,10 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { CoursesItemComponent } from '@courses/components/courses-item/courses-item.component';
 import { By } from '@angular/platform-browser';
 import {DebugElement, SimpleChange} from '@angular/core';
+
+import { SharedModule } from '@shared/shared.module';
+import { CoursesItemComponent } from '@courses/components/courses-item/courses-item.component';
 import { COURSES } from '@courses/mock/courses.mock';
-import { SharedModule } from '@app/shared/shared.module';
 
 describe('CoursesItemComponent', () => {
   let component: CoursesItemComponent;
@@ -55,7 +55,7 @@ describe('CoursesItemComponent', () => {
     component.edited.subscribe(result => res = result);
 
     editButton.triggerEventHandler('click', null);
-    expect(res).toBe(id);
+    expect(res).toEqual(id);
   });
 
   it('should be delete button title', () => {
