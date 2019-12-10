@@ -18,14 +18,14 @@ import { CoursesItemComponent } from '@courses/components/courses-item/courses-i
 export class TestComponent {
     public item: Course;
 
-    public editId: string;
-    public deleteId: string;
+    public editId: number;
+    public deleteId: number;
 
-    public edit(id: string): void {
+    public edit(id: number): void {
         this.editId = id;
     }
 
-    public delete(id: string): void {
+    public delete(id: number): void {
         this.deleteId = id;
     }
 }
@@ -73,7 +73,7 @@ describe('TestCoursesItemComponent', () => {
         const editBtn = fixture.debugElement.query(By.css('#edit'));
         editBtn.triggerEventHandler('click', null);
 
-        expect(component.editId).toBe(COURSES[0].id);
+        expect(component.editId).toEqual(COURSES[0].id);
     });
 
     it('should call delete method', () => {
@@ -83,6 +83,6 @@ describe('TestCoursesItemComponent', () => {
         const editBtn = fixture.debugElement.query(By.css('#delete'));
         editBtn.triggerEventHandler('click', null);
 
-        expect(component.deleteId).toBe(COURSES[0].id);
+        expect(component.deleteId).toEqual(COURSES[0].id);
     });
 });

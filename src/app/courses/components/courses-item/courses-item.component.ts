@@ -16,15 +16,14 @@ import {Course} from '@courses/models/course.model';
   selector: 'app-courses-item',
   templateUrl: './courses-item.component.html',
   styleUrls: ['./courses-item.component.scss'],
-  // adding onPush strategy. 
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CoursesItemComponent implements OnInit, OnChanges {
   // Dump component
   @Input() item: Course;
 
-  @Output() edited: EventEmitter<string> = new EventEmitter();
-  @Output() deleted: EventEmitter<string> = new EventEmitter();
+  @Output() edited: EventEmitter<number> = new EventEmitter();
+  @Output() deleted: EventEmitter<number> = new EventEmitter();
 
   constructor() { }
 

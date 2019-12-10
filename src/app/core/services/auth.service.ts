@@ -1,17 +1,35 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {map} from 'rxjs/operators';
 
 import { LocalStorageService } from '@shared/services/local-storage.service';
-import { LoginUser } from '@shared/models/user.model';
+import {AuthResponse, LoginUser} from '@shared/models/user.model';
+
+export const LOGIN_URL = 'auth/login';
+export const USER_INFO_URL = 'auth/userinfo';
 
 @Injectable()
 export class AuthService {
   public isUserAuthenticated: BehaviorSubject<boolean>;
-  constructor(private localStorageService: LocalStorageService) { }
+  constructor(private localStorageService: LocalStorageService,
+              private http: HttpClient) { }
 
-  public login(user: LoginUser): void {
-    this.localStorageService.setUserToStorage(user);
-    this.updateAuthentication(true);
+  public login(user: LoginUser): Observable<AuthResponse> {
+    return this.http.post(LOGIN_URL, user)
+      .pipe(
+        map((res: AuthResponse) => {
+          user.token = res.token;
+          this.localStorageService.setUserToStorage(user);
+          this.updateAuthentication(true);
+
+          return res;
+        })
+      );
+  }
+
+  public getFullUserInfo(token: string): Observable<LoginUser> {
+    return this.http.post<LoginUser>(USER_INFO_URL, {token});
   }
 
   public logout(): void {
@@ -20,7 +38,7 @@ export class AuthService {
     this.updateAuthentication(false);
   }
 
-  public getUserInfo(): LoginUser {
+  public getUserInfoFromStorage(): LoginUser {
     return this.localStorageService.getUserFromStorage();
   }
 

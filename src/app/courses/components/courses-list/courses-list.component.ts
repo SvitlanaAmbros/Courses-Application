@@ -1,7 +1,6 @@
 import {
   Component,
-  OnInit,
-  ChangeDetectionStrategy,
+  OnInit
 } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -9,18 +8,19 @@ import { SortByDatePipe } from '@shared/pipes/sort-by-date.pipe';
 import { PopupService, PopupControls } from '@shared/services/popup.service';
 import { CoursesService } from '@courses/services/courses.service';
 import { Course } from '@courses/models/course.model';
-import { COURSES_MORE } from '@courses/mock/courses.test-mock';
 
 @Component({
   selector: 'app-courses-list',
   templateUrl: './courses-list.component.html',
-  styleUrls: ['./courses-list.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./courses-list.component.scss']
 })
 export class CoursesListComponent implements OnInit {
   public courses: Course[] = [];
   public allCourses: Course[];
   public search = '';
+
+  public startLoadingFromIndex = 0;
+  public countLoadingCourses = 2;
 
   public popupControls: PopupControls;
   public deletedItemId: string;
@@ -35,20 +35,25 @@ export class CoursesListComponent implements OnInit {
 
   ngOnInit() {
     this.initPopup();
-    
-    this.allCourses = this.coursesService.getCourses();
-    this.courses = this.sortByDatePipe.transform(this.coursesService.getCourses());
+    this.loadCoursesFromServer(this.startLoadingFromIndex, this.countLoadingCourses);
   }
 
   // courses list with sort logic
   public searchCourses(): void {
-    this.courses = this.sortByDatePipe
-      .transform(this.allCourses
-      .filter((item: Course) => item.title.toLowerCase().includes(this.search)));
+    this.courses = [];
+    this.loadCoursesFromServer(0, 2, this.search);
   }
 
   public loadMore(): void {
-    this.courses = this.sortByDatePipe.transform(COURSES_MORE);
+    this.loadCoursesFromServer(this.startLoadingFromIndex, this.countLoadingCourses, this.search);
+  }
+
+  public loadCoursesFromServer(startInd: number, count: number, textFragment: string = ''): void {
+    this.coursesService.getCourses(startInd, count, textFragment)
+    .subscribe(res => {
+      this.courses = this.courses.concat(res);
+      this.startLoadingFromIndex = this.courses.length;
+      });
   }
 
   public addNewCourse(): void {
@@ -68,9 +73,11 @@ export class CoursesListComponent implements OnInit {
 
   // courses list with editing logic from child component
   public deleteCourse(): void {
-    this.coursesService.deleteCourse(this.deletedItemId);
-    this.allCourses = this.coursesService.getCourses();
-    this.courses = this.coursesService.getCourses();
+    this.coursesService.deleteCourse(this.deletedItemId).subscribe(res => {
+      const ind = this.courses.length;
+      this.courses = [];
+      this.loadCoursesFromServer(0, ind, this.search);
+    });
 
     this.closePopup();
   }

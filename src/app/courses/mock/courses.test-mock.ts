@@ -1,6 +1,6 @@
 export const COURSES_MORE = [
   {
-    id: '1',
+    id: 1,
     title: 'Video Course 1. Name tag',
     creationDate: new Date(),
     duration: 70,
@@ -13,7 +13,7 @@ export const COURSES_MORE = [
       'during a particular semester.'
   },
   {
-    id: '2',
+    id: 2,
     title: 'Video Course 2. Name tag',
     creationDate: new Date('2020-09-10'),
     duration: 150,
@@ -26,7 +26,7 @@ export const COURSES_MORE = [
       'during a particular semester.'
   },
   {
-    id: '3',
+    id: 3,
     title: 'Video Course 3. Name tag',
     creationDate: new Date('2017-01-01'),
     duration: 30,
@@ -39,7 +39,7 @@ export const COURSES_MORE = [
       'during a particular semester.'
   },
   {
-    id: '4',
+    id: 4,
     title: 'Video Course 4. Name tag',
     creationDate: new Date(),
     duration: 25,
@@ -55,7 +55,7 @@ export const COURSES_MORE = [
 
 export const COURSES_CHANGED = [
   {
-    id: '1',
+    id: 1,
     title: 'Video Course 1. Name tag',
     creationDate: new Date(),
     duration: '1hr',
@@ -68,7 +68,7 @@ export const COURSES_CHANGED = [
       'during a particular semester.'
   },
   {
-    id: '2',
+    id: 2,
     title: 'Video Course 2. Name tag 2',
     creationDate: new Date(),
     duration: '1hr',
@@ -81,7 +81,7 @@ export const COURSES_CHANGED = [
       'during a particular semester.'
   },
   {
-    id: '3',
+    id: 3,
     title: 'Video Course 3. Name tag',
     creationDate: new Date(),
     duration: '1hr',
