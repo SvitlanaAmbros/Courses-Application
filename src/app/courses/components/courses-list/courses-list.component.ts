@@ -90,6 +90,10 @@ export class CoursesListComponent implements OnInit {
     this.popupControls.close();
   }
 
+  public onValueChanged(value): void {
+    console.log(value);
+  }
+
   private initPopup(): void {
     this.popupControls = this.popupService.create();
   }
