@@ -3,7 +3,8 @@
     <div class="courses-search">
       <label class="courses-search__box">
         <img src="assets/images/ic-search.svg" alt="search">
-        <input type="text" class="courses-search__field" placeholder="Text to search" (keyup)="onValueChanged($event.target.value)" #load>
+        <input type="text" class="courses-search__field" 
+          placeholder="Text to search" #searchValue>
       </label>
       <div class="courses-search__btn">
 <!--        [(ngModel)]="search"-->

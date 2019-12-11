@@ -1,8 +1,14 @@
 import {
   Component,
-  OnInit
+  OnInit,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+  OnDestroy
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable, fromEvent, Subscription } from 'rxjs';
+import { map, filter, startWith, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import { SortByDatePipe } from '@shared/pipes/sort-by-date.pipe';
 import { PopupService, PopupControls } from '@shared/services/popup.service';
@@ -14,7 +20,11 @@ import { Course } from '@courses/models/course.model';
   templateUrl: './courses-list.component.html',
   styleUrls: ['./courses-list.component.scss']
 })
-export class CoursesListComponent implements OnInit {
+export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('searchValue', {static: false}) searchValue: ElementRef;
+  public searchValueChanged$: Observable<string>;
+  public subscription: Subscription;
+
   public courses: Course[] = [];
   public allCourses: Course[];
   public search = '';
@@ -24,6 +34,8 @@ export class CoursesListComponent implements OnInit {
 
   public popupControls: PopupControls;
   public deletedItemId: string;
+
+  public emmiter;
 
   constructor(private sortByDatePipe: SortByDatePipe,
               private coursesService: CoursesService,
@@ -36,6 +48,32 @@ export class CoursesListComponent implements OnInit {
   ngOnInit() {
     this.initPopup();
     this.loadCoursesFromServer(this.startLoadingFromIndex, this.countLoadingCourses);
+
+  }
+  
+  ngAfterViewInit(): void {
+    this.searchValueChanged$ = fromEvent<any>(this.searchValue.nativeElement, 'keyup')
+      .pipe(
+        map(event => event.target.value),
+        startWith(''),
+        filter(res => res.length >= 3),
+        debounceTime(700),
+        distinctUntilChanged()
+      )
+    
+  
+    
+    // this.searchValueChanged = Observable.create(observer=> this.emmiter = observer);
+  
+    this.subscription = this.searchValueChanged$.subscribe(res => {
+      console.log('!!', res);
+      
+      // if (res.length >= 3) {
+      //   this.search = res;
+      //   this.searchCourses();
+      // }
+    });
+    
   }
 
   // courses list with sort logic
@@ -90,11 +128,18 @@ export class CoursesListComponent implements OnInit {
     this.popupControls.close();
   }
 
-  public onValueChanged(value): void {
-    console.log(value);
-  }
+  // public onSearchValueChanged(value): void {
+  //   console.log(value);
+  //   this.emmiter.next(value);
+  //   // this.searchValueChanged
+  //   // this.searchValueChanged.next(value);
+  // }
 
   private initPopup(): void {
     this.popupControls = this.popupService.create();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
