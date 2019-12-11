@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { BorderColorDirective } from '@shared/directives/border-color.directive';
 import { DurationPipe } from '@shared/pipes/duration.pipe';
@@ -11,8 +12,8 @@ import { PopupComponent } from '@shared/components/popup/popup.component';
 import { DateComponent } from '@shared/components/date/date.component';
 import { DurationComponent } from '@shared/components/duration/duration.component';
 import { TagBoxComponent } from '@shared/components/tag-box/tag-box.component';
-import { FormsModule } from '@angular/forms';
-import { NotFoundComponent } from './components/not-found/not-found.component';
+import { NotFoundComponent } from '@shared/components/not-found/not-found.component';
+import { LoadingComponent } from '@shared/components/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     DateComponent,
     DurationComponent,
     TagBoxComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    LoadingComponent
   ],
   providers: [
     SortByDatePipe,
@@ -44,7 +46,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     DateComponent,
     DurationComponent,
     TagBoxComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    LoadingComponent
   ]
 })
 export class SharedModule { }

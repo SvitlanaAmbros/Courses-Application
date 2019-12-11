@@ -7,10 +7,10 @@ import { AppComponent } from '@app/app.component';
 
 import { AuthService } from '@core/services/auth.service';
 import { CoreModule } from '@core/core.module';
+import { RequestHttpInterceptor } from '@core/interceptors/http-interceptor';
 import { SharedModule } from '@shared/shared.module';
 import { LoginModule } from '@login/login.module';
 import { CoursesModule } from '@courses/courses.module';
-import { RequestHttpInterceptor } from './core/interceptors/http-interceptor';
 
 @NgModule({
   declarations: [

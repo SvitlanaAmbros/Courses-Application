@@ -4,14 +4,16 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
-  OnDestroy
+  OnDestroy,
+  ChangeDetectorRef
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, fromEvent, Subscription } from 'rxjs';
-import { map, filter, startWith, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { map, filter, startWith, debounceTime, distinctUntilChanged, finalize, tap } from 'rxjs/operators';
 
 import { SortByDatePipe } from '@shared/pipes/sort-by-date.pipe';
 import { PopupService, PopupControls } from '@shared/services/popup.service';
+import { LoadingService } from '@shared/services/loading.service';
 import { CoursesService } from '@courses/services/courses.service';
 import { Course } from '@courses/models/course.model';
 
@@ -40,7 +42,9 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private sortByDatePipe: SortByDatePipe,
               private coursesService: CoursesService,
               private popupService: PopupService,
-              private router: Router) {
+              private router: Router,
+              private loadingService: LoadingService,
+              private cdref: ChangeDetectorRef) {
                }
 
   public testDate = 'blue';
@@ -48,7 +52,6 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.initPopup();
     this.loadCoursesFromServer(this.startLoadingFromIndex, this.countLoadingCourses);
-
   }
   
   ngAfterViewInit(): void {
@@ -60,18 +63,10 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
         debounceTime(700),
         distinctUntilChanged()
       )
-    
-  
-    
-    // this.searchValueChanged = Observable.create(observer=> this.emmiter = observer);
   
     this.subscription = this.searchValueChanged$.subscribe(res => {
-      console.log('!!', res);
-      
-      // if (res.length >= 3) {
-      //   this.search = res;
-      //   this.searchCourses();
-      // }
+      this.search = res;
+      this.searchCourses();
     });
     
   }
@@ -87,10 +82,14 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public loadCoursesFromServer(startInd: number, count: number, textFragment: string = ''): void {
+    this.loadingService.showLoadingWindow();
     this.coursesService.getCourses(startInd, count, textFragment)
-    .subscribe(res => {
-      this.courses = this.courses.concat(res);
-      this.startLoadingFromIndex = this.courses.length;
+      .pipe(
+        finalize(() => this.loadingService.hideLoadingWindow())
+      )
+      .subscribe(res => {
+        this.courses = this.courses.concat(res);
+        this.startLoadingFromIndex = this.courses.length;
       });
   }
 
@@ -111,11 +110,16 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // courses list with editing logic from child component
   public deleteCourse(): void {
-    this.coursesService.deleteCourse(this.deletedItemId).subscribe(res => {
-      const ind = this.courses.length;
-      this.courses = [];
-      this.loadCoursesFromServer(0, ind, this.search);
-    });
+    this.loadingService.showLoadingWindow();
+    this.coursesService.deleteCourse(this.deletedItemId)
+      .pipe(
+        finalize(() => this.loadingService.hideLoadingWindow())
+      )
+      .subscribe(res => {
+        const ind = this.courses.length;
+        this.courses = [];
+        this.loadCoursesFromServer(0, ind, this.search);
+      });
 
     this.closePopup();
   }
@@ -127,13 +131,6 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
   public closePopup(): void {
     this.popupControls.close();
   }
-
-  // public onSearchValueChanged(value): void {
-  //   console.log(value);
-  //   this.emmiter.next(value);
-  //   // this.searchValueChanged
-  //   // this.searchValueChanged.next(value);
-  // }
 
   private initPopup(): void {
     this.popupControls = this.popupService.create();
