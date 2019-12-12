@@ -1,18 +1,23 @@
-import { Injectable, ChangeDetectorRef } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { Subject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoadingService {
-  public showLoading: boolean;
+  private subject = new Subject<boolean>();
 
   constructor() { }
 
+  public getLoadingState(): Observable<boolean> {
+    return this.subject.asObservable();
+  }
+
   public showLoadingWindow(): void {
-    this.showLoading = true;
+    this.subject.next(true);
   }
 
   public hideLoadingWindow(): void {
-    this.showLoading = false;
+    this.subject.next(false);
   }
 }

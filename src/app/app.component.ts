@@ -11,7 +11,7 @@ export class AppComponent implements OnInit{
   public title = 'courses-app';
   public showLoading: boolean;
 
-  constructor(private loadingService: LoadingService) {}
+  // constructor(private loadingService: LoadingService) {}
 
   ngOnInit(): void {}
 }

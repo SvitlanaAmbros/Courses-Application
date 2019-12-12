@@ -30,7 +30,9 @@ export class LoginComponent implements OnInit {
     this.loadingService.showLoadingWindow();
     this.authService.login(this.user)
       .pipe(
-        finalize(() => this.loadingService.hideLoadingWindow())
+        finalize(() => 
+          this.loadingService.hideLoadingWindow()
+        )
       )
       .subscribe(
         res => this.router.navigateByUrl('/courses'),

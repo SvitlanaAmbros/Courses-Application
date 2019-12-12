@@ -85,7 +85,9 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loadingService.showLoadingWindow();
     this.coursesService.getCourses(startInd, count, textFragment)
       .pipe(
-        finalize(() => this.loadingService.hideLoadingWindow())
+        finalize(() => 
+        this.loadingService.hideLoadingWindow()
+        )
       )
       .subscribe(res => {
         this.courses = this.courses.concat(res);
