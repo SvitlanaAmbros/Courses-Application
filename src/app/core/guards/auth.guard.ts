@@ -7,7 +7,7 @@ import {
   Router,
   CanActivateChild
 } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import {AuthService} from '@core/services/auth.service';
 
@@ -27,7 +27,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       }
     });
 
-    return Observable.create(observer => observer.next(isAuthenticatedRes));
+    return of(isAuthenticatedRes);
   }
 
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): 
