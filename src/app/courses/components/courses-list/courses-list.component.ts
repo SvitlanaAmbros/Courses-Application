@@ -8,8 +8,8 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, fromEvent, Subscription } from 'rxjs';
-import { map, filter, startWith, debounceTime, distinctUntilChanged, finalize, tap } from 'rxjs/operators';
+import { Observable, fromEvent, Subscription, Subject } from 'rxjs';
+import { map, filter, startWith, debounceTime, distinctUntilChanged, finalize, tap, takeUntil } from 'rxjs/operators';
 
 import { SortByDatePipe } from '@shared/pipes/sort-by-date.pipe';
 import { PopupService, PopupControls } from '@shared/services/popup.service';
@@ -24,7 +24,7 @@ import { Course } from '@courses/models/course.model';
 export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('searchValue', {static: false}) searchValue: ElementRef;
   public searchValueChanged$: Observable<string>;
-  public subscription: Subscription;
+  public unsubscribe = new Subject();
 
   public courses: Course[] = [];
   public allCourses: Course[];
@@ -55,6 +55,7 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.searchValueChanged$ = fromEvent<any>(this.searchValue.nativeElement, 'keyup')
       .pipe(
+        takeUntil(this.unsubscribe),
         map(event => event.target.value),
         startWith(''),
         filter(res => res.length >= 3),
@@ -62,7 +63,7 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
         distinctUntilChanged()
       )
   
-    this.subscription = this.searchValueChanged$.subscribe(res => {
+    this.searchValueChanged$.subscribe(res => {
       this.search = res;
       this.searchCourses();
     });
@@ -127,6 +128,7 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 }
