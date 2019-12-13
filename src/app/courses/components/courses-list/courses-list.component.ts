@@ -1,8 +1,15 @@
 import {
   Component,
-  OnInit
+  OnInit,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+  OnDestroy,
+  ChangeDetectorRef
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable, fromEvent, Subscription, Subject } from 'rxjs';
+import { map, filter, startWith, debounceTime, distinctUntilChanged, finalize, tap, takeUntil } from 'rxjs/operators';
 
 import { SortByDatePipe } from '@shared/pipes/sort-by-date.pipe';
 import { PopupService, PopupControls } from '@shared/services/popup.service';
@@ -14,7 +21,11 @@ import { Course } from '@courses/models/course.model';
   templateUrl: './courses-list.component.html',
   styleUrls: ['./courses-list.component.scss']
 })
-export class CoursesListComponent implements OnInit {
+export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('searchValue', {static: false}) searchValue: ElementRef;
+  public searchValueChanged$: Observable<string>;
+  public unsubscribe = new Subject();
+
   public courses: Course[] = [];
   public allCourses: Course[];
   public search = '';
@@ -25,17 +36,38 @@ export class CoursesListComponent implements OnInit {
   public popupControls: PopupControls;
   public deletedItemId: string;
 
+  public emmiter;
+
   constructor(private sortByDatePipe: SortByDatePipe,
               private coursesService: CoursesService,
               private popupService: PopupService,
-              private router: Router) {
-               }
+              private router: Router,
+              private cdref: ChangeDetectorRef) {
+  }
 
   public testDate = 'blue';
 
   ngOnInit() {
     this.initPopup();
     this.loadCoursesFromServer(this.startLoadingFromIndex, this.countLoadingCourses);
+  }
+  
+  ngAfterViewInit(): void {
+    this.searchValueChanged$ = fromEvent<any>(this.searchValue.nativeElement, 'keyup')
+      .pipe(
+        takeUntil(this.unsubscribe),
+        map(event => event.target.value),
+        startWith(''),
+        filter(res => res.length >= 3),
+        debounceTime(700),
+        distinctUntilChanged()
+      )
+  
+    this.searchValueChanged$.subscribe(res => {
+      this.search = res;
+      this.searchCourses();
+    });
+    
   }
 
   // courses list with sort logic
@@ -50,9 +82,9 @@ export class CoursesListComponent implements OnInit {
 
   public loadCoursesFromServer(startInd: number, count: number, textFragment: string = ''): void {
     this.coursesService.getCourses(startInd, count, textFragment)
-    .subscribe(res => {
-      this.courses = this.courses.concat(res);
-      this.startLoadingFromIndex = this.courses.length;
+      .subscribe(res => {
+        this.courses = this.courses.concat(res);
+        this.startLoadingFromIndex = this.courses.length;
       });
   }
 
@@ -73,11 +105,12 @@ export class CoursesListComponent implements OnInit {
 
   // courses list with editing logic from child component
   public deleteCourse(): void {
-    this.coursesService.deleteCourse(this.deletedItemId).subscribe(res => {
-      const ind = this.courses.length;
-      this.courses = [];
-      this.loadCoursesFromServer(0, ind, this.search);
-    });
+    this.coursesService.deleteCourse(this.deletedItemId)
+      .subscribe(res => {
+        const ind = this.courses.length;
+        this.courses = [];
+        this.loadCoursesFromServer(0, ind, this.search);
+      });
 
     this.closePopup();
   }
@@ -92,5 +125,10 @@ export class CoursesListComponent implements OnInit {
 
   private initPopup(): void {
     this.popupControls = this.popupService.create();
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 }

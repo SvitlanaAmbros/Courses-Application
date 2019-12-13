@@ -3,12 +3,10 @@
     <div class="courses-search">
       <label class="courses-search__box">
         <img src="assets/images/ic-search.svg" alt="search">
-        <input type="text" [(ngModel)]="search" class="courses-search__field" placeholder="Text to search" #load>
+        <input type="text" class="courses-search__field" 
+          placeholder="Text to search" #searchValue>
       </label>
-      <div class="courses-search__btn">
-        <app-action-btn [title]="'Search'" (clicked)="searchCourses()">
-        </app-action-btn>
-      </div>
+      <div class="courses-search__btn"></div>
     </div>
     <div class="courses-list-wrap">
       <div class="courses-add">
@@ -46,6 +44,5 @@
   (onAction)="deleteCourse()"
   (onClose)="closePopup()">
 </app-popup>
-
 
 

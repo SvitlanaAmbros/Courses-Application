@@ -1,6 +1,8 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import { finalize } from 'rxjs/operators';
 
+import { LoadingService } from '@shared/services/loading.service';
 import { Course } from '@courses/models/course.model';
 import {CoursesService} from "@courses/services/courses.service";
 import {CourseInfo} from "@courses/models/course-info.model";
@@ -16,7 +18,8 @@ export class AddCourseComponent implements OnInit {
   public pageType: FORM_TYPE;
   public course: Course;
 
-  constructor(private router: Router, private  activatedRoute: ActivatedRoute,
+  constructor(private router: Router, 
+    private  activatedRoute: ActivatedRoute,
     private courseService: CoursesService) { }
 
   ngOnInit() {
@@ -34,7 +37,8 @@ export class AddCourseComponent implements OnInit {
 
   public saveCourse(): void {
     if (this.pageType === 'add') {
-      this.courseService.createCourse(this.course).subscribe(res => console.log('Create', res))
+      this.courseService.createCourse(this.course)
+        .subscribe(res => console.log('Create', res))
       this.navigateToBaseCoursesPage();
     } else {
       this.courseService.updateCourse(this.course);

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 
 import { AuthService } from '@core/services/auth.service';
 import { LoginUser } from '@shared/models/user.model';
+import { LoadingService } from '@shared/services/loading.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,10 @@ export class LoginComponent implements OnInit {
     password: 'user'
   };
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private authService: AuthService, 
+    private router: Router,
+    private loadingService: LoadingService) { }
 
   ngOnInit() {
   }
@@ -24,8 +29,8 @@ export class LoginComponent implements OnInit {
     // set user data to local storage and navigate to courses page
     this.authService.login(this.user)
       .subscribe(
-      res => this.router.navigateByUrl('/courses'),
-          err =>  alert('Not right credentials. Please, try again')
+        res => this.router.navigateByUrl('/courses'),
+        err =>  alert('Not right credentials. Please, try again')
       );
   }
 }

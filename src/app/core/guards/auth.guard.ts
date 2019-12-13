@@ -7,7 +7,8 @@ import {
   Router,
   CanActivateChild
 } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import {AuthService} from '@core/services/auth.service';
 
@@ -18,16 +19,10 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    let isAuthenticatedRes: boolean | UrlTree;
-    this.authService.isAuthenticated().subscribe(isAuthenticated => {
-      if (isAuthenticated === true) {
-        isAuthenticatedRes = isAuthenticated;
-      } else {
-        isAuthenticatedRes = this.router.parseUrl('/login');
-      }
-    });
-
-    return isAuthenticatedRes;
+    return this.authService.isAuthenticated()
+      .pipe(
+        map(isAuthenticated => isAuthenticated || this.router.parseUrl('/login'))
+      )
   }
 
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): 

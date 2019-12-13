@@ -2,14 +2,16 @@
   <div class="container">
     <div class="header">
       <img src="assets/images/logo.png" class="header__logo" alt="logo">
-      <div class="header__login login" *ngIf="isAuthenticated">
-        <div class="login__item  login__item_user">
-          <img src="assets/images/ic-user.svg" class="login__icon">
-          {{ login }}
-        </div>
-        <div class="login__item login__item_log-off" (click)="logoff()">
-          <img src="assets/images/ic-exit.svg" class="login__icon">
-          Log off
+      <div *ngIf="isAuthenticated">
+        <div class="header__login login" *ngIf="(user$ | async) as user">
+          <div class="login__item  login__item_user">
+            <img src="assets/images/ic-user.svg" class="login__icon">
+            {{ user?.login }}
+          </div>
+          <div class="login__item login__item_log-off" (click)="logoff()">
+            <img src="assets/images/ic-exit.svg" class="login__icon">
+            Log off
+          </div>
         </div>
       </div>
     </div>
