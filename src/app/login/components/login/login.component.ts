@@ -27,13 +27,7 @@ export class LoginComponent implements OnInit {
 
   public logIn(): void {
     // set user data to local storage and navigate to courses page
-    this.loadingService.showLoadingWindow();
     this.authService.login(this.user)
-      .pipe(
-        finalize(() => 
-          this.loadingService.hideLoadingWindow()
-        )
-      )
       .subscribe(
         res => this.router.navigateByUrl('/courses'),
         err =>  alert('Not right credentials. Please, try again')

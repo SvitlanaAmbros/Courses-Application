@@ -13,7 +13,6 @@ import { map, filter, startWith, debounceTime, distinctUntilChanged, finalize, t
 
 import { SortByDatePipe } from '@shared/pipes/sort-by-date.pipe';
 import { PopupService, PopupControls } from '@shared/services/popup.service';
-import { LoadingService } from '@shared/services/loading.service';
 import { CoursesService } from '@courses/services/courses.service';
 import { Course } from '@courses/models/course.model';
 
@@ -43,9 +42,8 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
               private coursesService: CoursesService,
               private popupService: PopupService,
               private router: Router,
-              private loadingService: LoadingService,
               private cdref: ChangeDetectorRef) {
-               }
+  }
 
   public testDate = 'blue';
 
@@ -82,13 +80,7 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public loadCoursesFromServer(startInd: number, count: number, textFragment: string = ''): void {
-    this.loadingService.showLoadingWindow();
     this.coursesService.getCourses(startInd, count, textFragment)
-      .pipe(
-        finalize(() => 
-        this.loadingService.hideLoadingWindow()
-        )
-      )
       .subscribe(res => {
         this.courses = this.courses.concat(res);
         this.startLoadingFromIndex = this.courses.length;
@@ -112,11 +104,7 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // courses list with editing logic from child component
   public deleteCourse(): void {
-    this.loadingService.showLoadingWindow();
     this.coursesService.deleteCourse(this.deletedItemId)
-      .pipe(
-        finalize(() => this.loadingService.hideLoadingWindow())
-      )
       .subscribe(res => {
         const ind = this.courses.length;
         this.courses = [];

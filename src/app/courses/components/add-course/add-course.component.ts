@@ -20,8 +20,7 @@ export class AddCourseComponent implements OnInit {
 
   constructor(private router: Router, 
     private  activatedRoute: ActivatedRoute,
-    private courseService: CoursesService,
-    private loadingService: LoadingService) { }
+    private courseService: CoursesService) { }
 
   ngOnInit() {
     const newCourse: Course = new CourseInfo();
@@ -38,11 +37,7 @@ export class AddCourseComponent implements OnInit {
 
   public saveCourse(): void {
     if (this.pageType === 'add') {
-      this.loadingService.showLoadingWindow();
       this.courseService.createCourse(this.course)
-        .pipe(
-          finalize(() => this.loadingService.hideLoadingWindow())
-        )
         .subscribe(res => console.log('Create', res))
       this.navigateToBaseCoursesPage();
     } else {
