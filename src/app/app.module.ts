@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
 
 import { AppRoutingModule } from '@app/app-routing.module';
 import { AppComponent } from '@app/app.component';
@@ -11,6 +12,9 @@ import { RequestHttpInterceptor } from '@core/interceptors/http-interceptor';
 import { SharedModule } from '@shared/shared.module';
 import { LoginModule } from '@login/login.module';
 import { CoursesModule } from '@courses/courses.module';
+import {reducer} from '@store/reducers/user.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { UserEffects } from '@store/effects/user.effects';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,9 @@ import { CoursesModule } from '@courses/courses.module';
     AppRoutingModule,
     CoreModule,
     SharedModule,
-    LoginModule
+    LoginModule,
+    StoreModule.forRoot({reducer}),
+    EffectsModule.forRoot([UserEffects])
   ],
   providers: [
     AuthService,

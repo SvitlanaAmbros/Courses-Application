@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {map} from 'rxjs/operators';
+import {map, finalize, catchError} from 'rxjs/operators';
 
 import { LocalStorageService } from '@shared/services/local-storage.service';
-import {AuthResponse, LoginUser} from '@app/models/user.model';
+import { LoginUser, AuthResponse } from '@app/models/user.model';
 
 export const LOGIN_URL = 'auth/login';
 export const USER_INFO_URL = 'auth/userinfo';
@@ -16,6 +16,7 @@ export class AuthService {
               private http: HttpClient) { }
 
   public login(user: LoginUser): Observable<AuthResponse> {
+    console.log('auth servce', user);
     return this.http.post(LOGIN_URL, user)
       .pipe(
         map((res: AuthResponse) => {
