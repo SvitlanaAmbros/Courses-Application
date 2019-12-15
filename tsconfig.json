@@ -33,6 +33,9 @@
       ],
       "@courses/*": [
         "app/courses/*"
+      ],
+      "@store/*": [
+        "app/store/*"
       ]
     }
   },

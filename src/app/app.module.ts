@@ -22,7 +22,7 @@ import { CoursesModule } from '@courses/courses.module';
     AppRoutingModule,
     CoreModule,
     SharedModule,
-    LoginModule,
+    LoginModule
   ],
   providers: [
     AuthService,

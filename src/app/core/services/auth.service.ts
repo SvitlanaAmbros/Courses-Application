@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 
 import { LocalStorageService } from '@shared/services/local-storage.service';
-import {AuthResponse, LoginUser} from '@shared/models/user.model';
+import {AuthResponse, LoginUser} from '@app/models/user.model';
 
 export const LOGIN_URL = 'auth/login';
 export const USER_INFO_URL = 'auth/userinfo';

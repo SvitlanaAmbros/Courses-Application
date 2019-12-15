@@ -14,4 +14,3 @@ export interface LoginUser {
 export interface AuthResponse {
   token: string;
 }
-
