@@ -15,6 +15,7 @@ import { CoursesModule } from '@courses/courses.module';
 import {reducer} from '@store/reducers/user.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { UserEffects } from '@store/effects/user.effects';
+import { AppReducers } from './store/reducers/app.reducers';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import { UserEffects } from '@store/effects/user.effects';
     CoreModule,
     SharedModule,
     LoginModule,
-    StoreModule.forRoot({reducer}),
+    StoreModule.forRoot(AppReducers),
     EffectsModule.forRoot([UserEffects])
   ],
   providers: [

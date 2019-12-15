@@ -1,9 +1,9 @@
 import { LoginUser } from '@app/models/user.model'
 
-export interface UserState {
+export interface State {
     user: LoginUser;
   }
-export const initialState: UserState = {
+export const initialState: State = {
     user: {
         id: '',
         login: '',

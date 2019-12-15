@@ -16,12 +16,9 @@ export class AuthService {
               private http: HttpClient) { }
 
   public login(user: LoginUser): Observable<AuthResponse> {
-    console.log('auth servce', user);
     return this.http.post(LOGIN_URL, user)
       .pipe(
         map((res: AuthResponse) => {
-          user.token = res.token;
-          this.localStorageService.setUserToStorage(user);
           this.updateAuthentication(true);
 
           return res;
@@ -34,13 +31,7 @@ export class AuthService {
   }
 
   public logout(): void {
-    // alredy implemented clearing user
-    this.localStorageService.deleteUserFromStorage();
     this.updateAuthentication(false);
-  }
-
-  public getUserInfoFromStorage(): LoginUser {
-    return this.localStorageService.getUserFromStorage();
   }
 
   public isAuthenticated(): Observable<boolean> {

@@ -1,40 +1,65 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
-import { tap, mergeMap, concatMap, mapTo } from 'rxjs/operators';
+import { tap, mergeMap, concatMap, mapTo, withLatestFrom, finalize } from 'rxjs/operators';
 
 import * as userActions from '@store/actions/user.actions';
 import { AuthService } from '@core/services/auth.service';
 import { Observable, of } from 'rxjs';
-import { Action } from '@ngrx/store';
+import { Action, Store, select } from '@ngrx/store';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { AuthResponse, LoginUser } from '@app/models/user.model';
 import { Router } from '@angular/router';
+import { State } from '@store/state/user.state';
+import { selectUser } from '../selectors/user.selector';
+import { AppState } from '../reducers/app.reducers';
+import { LocalStorageService } from '@app/shared/services/local-storage.service';
 
 @Injectable()
 export class UserEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private store: Store<AppState>,
+    private localStorageService: LocalStorageService
   ) {}
 
   @Effect() 
   login$ = this.actions$
     .pipe(
       ofType(userActions.LOGIN),
-      concatMap((action: any) => this.authService.login(action.payload)),
-      // concatMap((auth: AuthResponse) => this.authService.getFullUserInfo(auth.token)), 
-      map((res: AuthResponse) => new userActions.LoginSuccessfull(res)),
-      catchError(err => of(new userActions.LoginFailed(err)))
+      withLatestFrom(this.store.pipe(select(selectUser))),
+      switchMap(([action, user]) => {
+        return this.authService.login(user)
+          .pipe(
+            map((res: AuthResponse) => {
+              user.token = res.token;
+              this.localStorageService.setUserToStorage(user);
+
+              return new userActions.LoginSuccessfull(res)
+            }),
+            catchError(err => of(new userActions.LoginFailed(err)))
+          );
+      }),
     );
 
-  @Effect({dispatch: false}) 
+  @Effect() 
   loginSuccess$ = this.actions$
   .pipe(
     ofType(userActions.LOGIN_SUCCESS),
-    concatMap((action: any) => this.authService.getFullUserInfo(action.payload.token)), 
-    map((res: LoginUser) => new userActions.GetUserInfo(res)),
-    // GET_USER_INFO_SUCCESS
+    withLatestFrom(this.store.pipe(select(selectUser))),
+    switchMap(([action, user]) =>  {
+      return this.authService.getFullUserInfo(user.token)
+        .pipe(
+          map((res: LoginUser) => new userActions.SetUserInfo(res))
+        )
+    })
+  );
+
+  @Effect({dispatch: false}) 
+  setUserInfo$ = this.actions$
+  .pipe(
+    ofType(userActions.SET_USER_INFO),
     tap(() => this.router.navigateByUrl('/courses'))
   );
 
@@ -45,4 +70,12 @@ export class UserEffects {
     tap(() => alert('Not right credentials. Please, try again'))
   );
 
+  @Effect({dispatch: false}) 
+  logoff$ = this.actions$
+  .pipe(
+    ofType(userActions.LOGOFF),
+    tap(() => {
+      this.localStorageService.deleteUserFromStorage();
+    })
+  );
 }

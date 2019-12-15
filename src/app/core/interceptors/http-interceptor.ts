@@ -7,18 +7,19 @@ import { finalize } from 'rxjs/operators';
 
 import {AuthService} from '@core/services/auth.service';
 import { LoadingService } from '@shared/services/loading.service';
+import { LocalStorageService } from '@app/shared/services/local-storage.service';
 
 export const BASE_URL = 'http://localhost:3004/'
 
 @Injectable()
 export class RequestHttpInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService, private loadingService: LoadingService) {
+  constructor(private localStorage: LocalStorageService, private loadingService: LoadingService) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let params = req.params;
     if (!req.url.includes('login')) {
-      params = params.append('token=', this.authService.getUserInfoFromStorage().token);
+      params = params.append('token=', this.localStorage.getUserFromStorage().token);
     }
     const dupReq = req.clone({url: BASE_URL + req.url, params});
 
