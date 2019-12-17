@@ -4,9 +4,10 @@ import { LoginUser, AuthResponse } from '@app/models/user.model';
 export const LOGIN = '[Login] set user to store';
 export const LOGOFF = '[Logoff] clear user from store';
 export const LOGIN_SUCCESS = '[Login sucess] call server';
-export const LOGIN_FAILED = '[Login failed] show failed message';
-export const SET_USER_INFO = '[Set user info] call server';
+export const REQUEST_FAILED = '[Login failed] show failed message';
+export const LOAD_USER_INFO = '[Set user info] call server';
 export const GET_USER_INFO = '[Get user info] call server';
+export const GET_USER_SUCCESSFUL = '[User info] loaded';
 
 export class Login implements Action {
     readonly type = LOGIN;
@@ -19,22 +20,33 @@ export class Logoff implements Action {
 
 export class LoginSuccessful implements Action {
     readonly type = LOGIN_SUCCESS;
-    // constructor(public payload: LoginUser) { }
-}
-
-export class LoginFailed implements Action {
-    readonly type = LOGIN_FAILED;
-    constructor(public payload: string) { }
-}
-
-export class SetUserInfo implements Action {
-    readonly type = SET_USER_INFO;
     constructor(public payload: LoginUser) { }
 }
 
-export class GetUserInfo implements Action {
-  readonly type = GET_USER_INFO;
-  constructor(public payload: string) { }
+export class RequestFailed implements Action {
+    readonly type = REQUEST_FAILED;
+    constructor(public payload: string) { }
 }
 
-export type UserAction = Login | Logoff | LoginSuccessful | LoginFailed | SetUserInfo | GetUserInfo;
+// export class LoadUserInfo implements Action {
+//     readonly type = LOAD_USER_INFO;
+//     constructor(public payload: string) { }
+// }
+
+export class GetUserInfo implements Action {
+  readonly type = GET_USER_INFO;
+//   constructor(public payload: string) { }
+}
+
+export class GetUserSuccessful implements Action {
+    readonly type = GET_USER_SUCCESSFUL;
+    constructor(public payload: LoginUser) { }
+  }
+
+export type UserAction = Login 
+    | Logoff 
+    | LoginSuccessful 
+    | RequestFailed 
+    // | LoadUserInfo 
+    | GetUserInfo 
+    | GetUserSuccessful;

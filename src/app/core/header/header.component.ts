@@ -29,14 +29,17 @@ export class HeaderComponent implements OnInit {
       .subscribe((res: boolean) => {
         this.isAuthenticated = res;
         this.cdref.detectChanges();
-        // if (res) {
-        //   this.user$ = this.authService.getFullUserInfo(this.localStorage.getUserFromStorage().token);
-        // }
+        if (res) {
+          console.log('is authenticated ', res);
+          this.store.dispatch(new userActions.GetUserInfo());
+          // this.store.pipe(select(selectUser)).subscribe(res => console.log('pipe subscribe', res)
+          // )
+          this.user$ = this.store.pipe(select(selectUser));
+          // this.user$ = this.authService.getFullUserInfo(this.localStorage.getUserFromStorage().token);
+        }
 
-        this.store.dispatch(new userActions.getUserInfo$());
       });
 
-    // this.user$ = this.store.pipe(select(selectUser));
   }
 
   public logoff(): void {

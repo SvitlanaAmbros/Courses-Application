@@ -1,12 +1,12 @@
-import { State } from '@store/state/user.state';
+import { LoginPageState } from '@store/state/user.state';
 import { createSelector } from '@ngrx/store';
 import { LoginUser } from '@app/models/user.model';
 import { AppState } from '../reducers/app.reducers';
 
-export const user = (state: AppState) => state.user;
+export const login = (state: AppState) => state.login;
 
 export const selectUser = createSelector(
-    user,
-    (state: State) => state.user
+    login,
+    (state: LoginPageState) => state.user
 );
   

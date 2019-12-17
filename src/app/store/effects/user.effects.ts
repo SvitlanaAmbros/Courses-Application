@@ -9,7 +9,7 @@ import { Action, Store, select } from '@ngrx/store';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { AuthResponse, LoginUser } from '@app/models/user.model';
 import { Router } from '@angular/router';
-import { State } from '@store/state/user.state';
+import { LoginPageState } from '@store/state/user.state';
 import { selectUser } from '../selectors/user.selector';
 import { AppState } from '../reducers/app.reducers';
 import { LocalStorageService } from '@app/shared/services/local-storage.service';
@@ -36,33 +36,31 @@ export class UserEffects {
               user.token = res.token;
               this.localStorageService.setUserToStorage(user);
 
-              return new userActions.LoginSuccessful();
+              return new userActions.LoginSuccessful(user);
             }),
-            catchError(err => of(new userActions.LoginFailed(err)))
+            catchError(err => of(new userActions.RequestFailed(err)))
           );
       }),
     );
 
-  @Effect({dispatch: false})
+  @Effect()
   loginSuccess$ = this.actions$
   .pipe(
     ofType(userActions.LOGIN_SUCCESS),
-    // withLatestFrom(this.store.pipe(select(selectUser))),
     tap(() =>  {
-      this.router.navigateByUrl('/courses');
-      // return of(new userActions.SetUserInfo(user));
-      // return this.authService.getFullUserInfo(user.token)
-      //   .pipe(
-      //     map((res: LoginUser) => new userActions.SetUserInfo(res))
-      //   )
+      this.router.navigateByUrl('/courses')
+    }),
+    withLatestFrom(this.store.pipe(select(selectUser))),
+    switchMap(([action, user]) => {
+      return of(new userActions.GetUserInfo());
     })
   );
 
   @Effect({dispatch: false})
-  loginFailed$ = this.actions$
+  requestFailed$ = this.actions$
   .pipe(
-    ofType(userActions.LOGIN_FAILED),
-    tap(() => alert('Not right credentials. Please, try again'))
+    ofType(userActions.REQUEST_FAILED),
+    tap(() => alert('Something went wrong! Please, try again'))
   );
 
   @Effect({dispatch: false})
@@ -74,25 +72,19 @@ export class UserEffects {
     })
   );
 
-  // @Effect({dispatch: false})
-  // setUserInfo$ = this.actions$
-  // .pipe(
-  //   ofType(userActions.SET_USER_INFO),
-  //   tap(() => this.router.navigateByUrl('/courses'))
-  // );
-
-  @Effect({dispatch: false})
+  @Effect()
   getUserInfo$ = this.actions$
   .pipe(
     ofType(userActions.GET_USER_INFO),
     withLatestFrom(this.store.pipe(select(selectUser))),
     switchMap(([action, user]) => {
-      return this.authService.getFullUserInfo(user.token)
+      let token = !user.token ? this.localStorageService.getUserFromStorage().token : user.token;
+
+      return this.authService.getFullUserInfo(token)
         .pipe(
-          map((res: LoginUser) => new userActions.SetUserInfo(res))
+          map((res: LoginUser) => new userActions.GetUserSuccessful(res)),
+          catchError(err => of(new userActions.RequestFailed(err)))
         );
     })
-
-    // tap(() => this.router.navigateByUrl('/courses'))
   );
 }
