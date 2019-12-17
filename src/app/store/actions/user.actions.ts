@@ -17,9 +17,9 @@ export class Logoff implements Action {
     readonly type = LOGOFF;
 }
 
-export class LoginSuccessfull implements Action {
+export class LoginSuccessful implements Action {
     readonly type = LOGIN_SUCCESS;
-    constructor(public payload: AuthResponse) { }
+    // constructor(public payload: LoginUser) { }
 }
 
 export class LoginFailed implements Action {
@@ -32,4 +32,9 @@ export class SetUserInfo implements Action {
     constructor(public payload: LoginUser) { }
 }
 
-export type UserAction = Login | Logoff | LoginSuccessfull | LoginFailed | SetUserInfo;
+export class GetUserInfo implements Action {
+  readonly type = GET_USER_INFO;
+  constructor(public payload: string) { }
+}
+
+export type UserAction = Login | Logoff | LoginSuccessful | LoginFailed | SetUserInfo | GetUserInfo;

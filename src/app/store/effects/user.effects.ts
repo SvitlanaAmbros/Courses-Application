@@ -24,7 +24,7 @@ export class UserEffects {
     private localStorageService: LocalStorageService
   ) {}
 
-  @Effect() 
+  @Effect()
   login$ = this.actions$
     .pipe(
       ofType(userActions.LOGIN),
@@ -36,46 +36,63 @@ export class UserEffects {
               user.token = res.token;
               this.localStorageService.setUserToStorage(user);
 
-              return new userActions.LoginSuccessfull(res)
+              return new userActions.LoginSuccessful();
             }),
             catchError(err => of(new userActions.LoginFailed(err)))
           );
       }),
     );
 
-  @Effect() 
+  @Effect({dispatch: false})
   loginSuccess$ = this.actions$
   .pipe(
     ofType(userActions.LOGIN_SUCCESS),
-    withLatestFrom(this.store.pipe(select(selectUser))),
-    switchMap(([action, user]) =>  {
-      return this.authService.getFullUserInfo(user.token)
-        .pipe(
-          map((res: LoginUser) => new userActions.SetUserInfo(res))
-        )
+    // withLatestFrom(this.store.pipe(select(selectUser))),
+    tap(() =>  {
+      this.router.navigateByUrl('/courses');
+      // return of(new userActions.SetUserInfo(user));
+      // return this.authService.getFullUserInfo(user.token)
+      //   .pipe(
+      //     map((res: LoginUser) => new userActions.SetUserInfo(res))
+      //   )
     })
   );
 
-  @Effect({dispatch: false}) 
-  setUserInfo$ = this.actions$
-  .pipe(
-    ofType(userActions.SET_USER_INFO),
-    tap(() => this.router.navigateByUrl('/courses'))
-  );
-
-  @Effect({dispatch: false}) 
+  @Effect({dispatch: false})
   loginFailed$ = this.actions$
   .pipe(
     ofType(userActions.LOGIN_FAILED),
     tap(() => alert('Not right credentials. Please, try again'))
   );
 
-  @Effect({dispatch: false}) 
+  @Effect({dispatch: false})
   logoff$ = this.actions$
   .pipe(
     ofType(userActions.LOGOFF),
     tap(() => {
       this.localStorageService.deleteUserFromStorage();
     })
+  );
+
+  // @Effect({dispatch: false})
+  // setUserInfo$ = this.actions$
+  // .pipe(
+  //   ofType(userActions.SET_USER_INFO),
+  //   tap(() => this.router.navigateByUrl('/courses'))
+  // );
+
+  @Effect({dispatch: false})
+  getUserInfo$ = this.actions$
+  .pipe(
+    ofType(userActions.GET_USER_INFO),
+    withLatestFrom(this.store.pipe(select(selectUser))),
+    switchMap(([action, user]) => {
+      return this.authService.getFullUserInfo(user.token)
+        .pipe(
+          map((res: LoginUser) => new userActions.SetUserInfo(res))
+        );
+    })
+
+    // tap(() => this.router.navigateByUrl('/courses'))
   );
 }

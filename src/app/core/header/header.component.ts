@@ -18,8 +18,8 @@ import { LocalStorageService } from '@app/shared/services/local-storage.service'
 export class HeaderComponent implements OnInit {
   public user$: Observable<LoginUser>;
   public isAuthenticated = false;
-  constructor(private router: Router, 
-      private authService: AuthService, 
+  constructor(private router: Router,
+      private authService: AuthService,
       private cdref: ChangeDetectorRef,
       private localStorage: LocalStorageService,
       private store: Store<AppState>) { }
@@ -32,8 +32,8 @@ export class HeaderComponent implements OnInit {
         // if (res) {
         //   this.user$ = this.authService.getFullUserInfo(this.localStorage.getUserFromStorage().token);
         // }
-        
-        // this.store.dispatch(new userActions.UserInfo(this.authService.getUserInfoFromStorage().token));
+
+        this.store.dispatch(new userActions.getUserInfo$());
       });
 
     // this.user$ = this.store.pipe(select(selectUser));
