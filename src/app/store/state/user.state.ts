@@ -1,8 +1,8 @@
-import { LoginUser } from '@app/models/user.model'
+import { LoginUser } from '@app/models/user.model';
 
 export interface LoginPageState {
-    user: LoginUser;
-  }
+  user: LoginUser;
+}
 export const initialState: LoginPageState = {
     user: {
         id: '',

@@ -7,14 +7,18 @@ import {
   OnDestroy,
   ChangeDetectorRef
 } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, fromEvent, Subscription, Subject } from 'rxjs';
-import { map, filter, startWith, debounceTime, distinctUntilChanged, finalize, tap, takeUntil } from 'rxjs/operators';
+import {Router} from '@angular/router';
+import {Observable, fromEvent, Subscription, Subject} from 'rxjs';
+import {map, filter, startWith, debounceTime, distinctUntilChanged, finalize, tap, takeUntil} from 'rxjs/operators';
 
-import { SortByDatePipe } from '@shared/pipes/sort-by-date.pipe';
-import { PopupService, PopupControls } from '@shared/services/popup.service';
-import { CoursesService } from '@courses/services/courses.service';
-import { Course } from '@courses/models/course.model';
+import {SortByDatePipe} from '@shared/pipes/sort-by-date.pipe';
+import {PopupService, PopupControls} from '@shared/services/popup.service';
+import {CoursesService} from '@courses/services/courses.service';
+import {Course} from '@courses/models/course.model';
+import {select, Store} from '@ngrx/store';
+import {AppState} from '@store/reducers/app.reducers';
+import {coursesState, selectCourses} from '@store/selectors/courses.selector';
+import * as coursesActions from '@store/actions/courses.actions';
 
 @Component({
   selector: 'app-courses-list',
@@ -26,6 +30,7 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
   public searchValueChanged$: Observable<string>;
   public unsubscribe = new Subject();
 
+  public courses$: Observable<Course[]>;
   public courses: Course[] = [];
   public allCourses: Course[];
   public search = '';
@@ -42,16 +47,21 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
               private coursesService: CoursesService,
               private popupService: PopupService,
               private router: Router,
-              private cdref: ChangeDetectorRef) {
+              private cdref: ChangeDetectorRef,
+              private store: Store<AppState>) {
   }
 
   public testDate = 'blue';
 
   ngOnInit() {
     this.initPopup();
-    this.loadCoursesFromServer(this.startLoadingFromIndex, this.countLoadingCourses);
+    // this.loadCoursesFromServer(this.startLoadingFromIndex, this.countLoadingCourses);
+
+    this.courses$ = this.store.pipe(select(selectCourses));
+    this.store.dispatch(new coursesActions.LoadCourses());
+    // this.store.pipe(select(coursesState)).subscribe(res => console.log('!!', res));
   }
-  
+
   ngAfterViewInit(): void {
     this.searchValueChanged$ = fromEvent<any>(this.searchValue.nativeElement, 'keyup')
       .pipe(
@@ -60,24 +70,30 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
         startWith(''),
         filter(res => res.length >= 3),
         debounceTime(700),
-        distinctUntilChanged()
+        distinctUntilChanged()/**/
       )
-  
+
     this.searchValueChanged$.subscribe(res => {
       this.search = res;
       this.searchCourses();
     });
-    
+
   }
 
   // courses list with sort logic
   public searchCourses(): void {
+    // this.
     this.courses = [];
     this.loadCoursesFromServer(0, 2, this.search);
   }
 
   public loadMore(): void {
-    this.loadCoursesFromServer(this.startLoadingFromIndex, this.countLoadingCourses, this.search);
+    this.store.dispatch(new coursesActions.ChangeSearchParams({
+      startInd: this.startLoadingFromIndex,
+      endInd: this.countLoadingCourses,
+      searchFragment: this.search
+    }));
+    // this.loadCoursesFromServer(this.startLoadingFromIndex, this.countLoadingCourses, this.search);
   }
 
   public loadCoursesFromServer(startInd: number, count: number, textFragment: string = ''): void {

@@ -1,9 +1,9 @@
 <div class="courses-wrap">
-  <div class="courses">
+  <div class="courses" *ngIf="(courses$ | async) as courses">
     <div class="courses-search">
       <label class="courses-search__box">
         <img src="assets/images/ic-search.svg" alt="search">
-        <input type="text" class="courses-search__field" 
+        <input type="text" class="courses-search__field"
           placeholder="Text to search" #searchValue>
       </label>
       <div class="courses-search__btn"></div>

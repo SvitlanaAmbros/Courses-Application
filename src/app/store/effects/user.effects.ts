@@ -45,46 +45,46 @@ export class UserEffects {
 
   @Effect()
   loginSuccess$ = this.actions$
-  .pipe(
-    ofType(userActions.LOGIN_SUCCESS),
-    tap(() =>  {
-      this.router.navigateByUrl('/courses')
-    }),
-    withLatestFrom(this.store.pipe(select(selectUser))),
-    switchMap(([action, user]) => {
-      return of(new userActions.GetUserInfo());
-    })
-  );
+    .pipe(
+      ofType(userActions.LOGIN_SUCCESS),
+      tap(() =>  {
+        this.router.navigateByUrl('/courses')
+      }),
+      withLatestFrom(this.store.pipe(select(selectUser))),
+      switchMap(([action, user]) => {
+        return of(new userActions.GetUserInfo());
+      })
+    );
 
   @Effect({dispatch: false})
   requestFailed$ = this.actions$
-  .pipe(
-    ofType(userActions.REQUEST_FAILED),
-    tap(() => alert('Something went wrong! Please, try again'))
-  );
+    .pipe(
+      ofType(userActions.REQUEST_FAILED),
+      tap(() => alert('Something went wrong! Please, try again'))
+    );
 
   @Effect({dispatch: false})
   logoff$ = this.actions$
-  .pipe(
-    ofType(userActions.LOGOFF),
-    tap(() => {
-      this.localStorageService.deleteUserFromStorage();
-    })
-  );
+    .pipe(
+      ofType(userActions.LOGOFF),
+      tap(() => {
+        this.localStorageService.deleteUserFromStorage();
+      })
+    );
 
   @Effect()
   getUserInfo$ = this.actions$
-  .pipe(
-    ofType(userActions.GET_USER_INFO),
-    withLatestFrom(this.store.pipe(select(selectUser))),
-    switchMap(([action, user]) => {
-      let token = !user.token ? this.localStorageService.getUserFromStorage().token : user.token;
+    .pipe(
+      ofType(userActions.GET_USER_INFO),
+      withLatestFrom(this.store.pipe(select(selectUser))),
+      switchMap(([action, user]) => {
+        const token = !user.token ? this.localStorageService.getUserFromStorage().token : user.token;
 
-      return this.authService.getFullUserInfo(token)
-        .pipe(
-          map((res: LoginUser) => new userActions.GetUserSuccessful(res)),
-          catchError(err => of(new userActions.RequestFailed(err)))
-        );
-    })
-  );
+        return this.authService.getFullUserInfo(token)
+          .pipe(
+            map((res: LoginUser) => new userActions.GetUserSuccessful(res)),
+            catchError(err => of(new userActions.RequestFailed(err)))
+          );
+      })
+    );
 }

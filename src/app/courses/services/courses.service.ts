@@ -27,9 +27,12 @@ export class CoursesService {
       httpParams = httpParams.set('textFragment', textFragment);
     }
 
+    console.warn('COURSES');
     return this.http.get<CourseDB[]>(COURSES_URL, {params: httpParams})
       .pipe(
         map((res: CourseDB[]) => {
+          console.log('@', res);
+          // return res;
           return res.map((courseDb: CourseDB) => new CourseInfo(courseDb));
         })
       );

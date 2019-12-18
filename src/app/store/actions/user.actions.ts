@@ -1,5 +1,5 @@
-import { Action } from '@ngrx/store';
-import { LoginUser, AuthResponse } from '@app/models/user.model';
+import {Action} from '@ngrx/store';
+import {LoginUser, AuthResponse} from '@app/models/user.model';
 
 export const LOGIN = '[Login] set user to store';
 export const LOGOFF = '[Logoff] clear user from store';
@@ -10,22 +10,28 @@ export const GET_USER_INFO = '[Get user info] call server';
 export const GET_USER_SUCCESSFUL = '[User info] loaded';
 
 export class Login implements Action {
-    readonly type = LOGIN;
-    constructor(public payload: LoginUser) { }
+  readonly type = LOGIN;
+
+  constructor(public payload: LoginUser) {
+  }
 }
 
 export class Logoff implements Action {
-    readonly type = LOGOFF;
+  readonly type = LOGOFF;
 }
 
 export class LoginSuccessful implements Action {
-    readonly type = LOGIN_SUCCESS;
-    constructor(public payload: LoginUser) { }
+  readonly type = LOGIN_SUCCESS;
+
+  constructor(public payload: LoginUser) {
+  }
 }
 
 export class RequestFailed implements Action {
-    readonly type = REQUEST_FAILED;
-    constructor(public payload: string) { }
+  readonly type = REQUEST_FAILED;
+
+  constructor(public payload: string) {
+  }
 }
 
 // export class LoadUserInfo implements Action {
@@ -39,14 +45,15 @@ export class GetUserInfo implements Action {
 }
 
 export class GetUserSuccessful implements Action {
-    readonly type = GET_USER_SUCCESSFUL;
-    constructor(public payload: LoginUser) { }
-  }
+  readonly type = GET_USER_SUCCESSFUL;
 
-export type UserAction = Login 
-    | Logoff 
-    | LoginSuccessful 
-    | RequestFailed 
-    // | LoadUserInfo 
-    | GetUserInfo 
-    | GetUserSuccessful;
+  constructor(public payload: LoginUser) {
+  }
+}
+
+export type UserAction = Login
+  | Logoff
+  | LoginSuccessful
+  | RequestFailed
+  | GetUserInfo
+  | GetUserSuccessful;
