@@ -9,3 +9,13 @@ export const selectCourses = createSelector(
   (state: CoursesState) => state.courses
 );
 
+export const selectCoursesLength = createSelector(
+  coursesState,
+  (state: CoursesState) => state.courses.length
+);
+
+export const selectCurrentCourse = createSelector(
+  coursesState,
+  (state: CoursesState) => state.currentCourse
+);
+

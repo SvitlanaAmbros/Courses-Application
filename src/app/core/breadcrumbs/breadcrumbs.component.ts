@@ -41,8 +41,8 @@ export class BreadcrumbsComponent implements OnInit {
     for (const child of children) {
       const routeURL: string = child.snapshot.url.map(segment => segment.path).join('/');
       if (!!child.snapshot.params.id) {
-        const currentCourse:Course = this.coursesService.getCourseById(child.snapshot.params.id);
-        breadcrumbs.push({ label: currentCourse.title, url: routeURL });
+        // const currentCourse:Course = this.coursesService.getCourseById(child.snapshot.params.id);
+        // breadcrumbs.push({ label: currentCourse.title, url: routeURL });
       } else {
         if (!!child.snapshot.data[ROUTE_DATA_BREADCRUMB]) {
           breadcrumbs.push({label: child.snapshot.data.breadcrumb, url: routeURL });

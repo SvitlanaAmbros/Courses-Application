@@ -39,16 +39,24 @@ export class CoursesService {
   }
 
   public createCourse(course: Course): Observable<CourseDB> {
-    return this.http.post<CourseDB>(COURSES_URL, course.getDbObj());
+    // let courseInfo: CourseInfo = new CourseInfo();
+    // courseInfo = course as CourseInfo;
+    // let body = courseInfo.getDbObj();
+    return this.http.post<CourseDB>(COURSES_URL, {});
   }
 
-  public getCourseById(id: number): Course {
-    return this.courseList.find((item: Course) => item.id === id);
+  public getCourseById(id: number): Observable<Course> {
+    // return this.courseList.find((item: Course) => item.id === id);
+    return this.http.get<CourseDB>(`${COURSES_URL}/${id}`)
+      .pipe(
+        map((course: CourseDB) => new CourseInfo(course))
+      );
   }
 
-  public updateCourse(course: Course): void {
-    let updatedElement = this.courseList.find((item: Course) => item.id === course.id);
-    updatedElement = course;
+  public updateCourse(course: Course): Observable<any> {
+    return this.http.patch(`${COURSES_URL}/${course.id}`, course.getDbObj());
+    // let updatedElement = this.courseList.find((item: Course) => item.id === course.id);
+    // updatedElement = course;
   }
 
   public deleteCourse(id: string): Observable<any> {
