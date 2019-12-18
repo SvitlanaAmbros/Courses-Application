@@ -13,3 +13,5 @@ export const initialState: CoursesState = {
   searchFragment: '',
   courses: []
 };
+
+// entity
