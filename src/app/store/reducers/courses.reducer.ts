@@ -40,6 +40,13 @@ export function coursesReducer(state = initialState,
         }
       };
     }
+    case coursesActions.SET_CURRENT_COURSE_ID: {
+      console.log('current course', action.payload);
+      return {
+        ...state,
+        currentCourseId: action.payload
+      }
+    }
     case coursesActions.DELETE_COURSE: {
       return {
         ...state,

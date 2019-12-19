@@ -9,3 +9,8 @@ export const selectUser = createSelector(
   login,
   (state: LoginPageState) => state.user
 );
+
+export const selectUserToken = createSelector(
+  login,
+  (state: LoginPageState) => state.user.token
+);

@@ -10,6 +10,6 @@ export interface Course {
     topRated?: boolean;
     authors?: Author[];
 
-    setCourse(course: Course): void;
-    getDbObj(): CourseDB;
+    setCourse?(course: Course): void;
+    getDbObj?(): CourseDB;
 }

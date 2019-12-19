@@ -9,6 +9,7 @@ export const LOAD_COURSES_SUCCESSFUL = '[Load courses successful] load courses f
 export const CLEAR_COURSES = '[Clear courses] clear courses from storage';
 export const DELETE_COURSE = '[Delete course] delete course from storage';
 export const CLEAR_CURRENT_COURSE = '[Clear current courses] clear curent courses from storage';
+export const SET_CURRENT_COURSE_ID = '[Set current course id] set id';
 
 export const GET_COURSE_DETAIL = '[Get current course] get course';
 export const GET_COURSE_BY_ID = '[Get course] get course by id';
@@ -43,6 +44,11 @@ export class ClearCourses implements Action {
 
 export class ClearCurrentCourse implements Action {
   readonly type = CLEAR_CURRENT_COURSE;
+}
+
+export class SetCurrentCourseId implements Action {
+  readonly type = SET_CURRENT_COURSE_ID;
+  constructor(public payload: number) { }
 }
 
 export class DeleteCourse implements Action {
@@ -86,4 +92,5 @@ export type CoursesAction = ChangeSearchParams
   | CreateCourse
   | ClearCurrentCourse
   | UpdateCourse
-  | ChangedCourseSuccessful;
+  | ChangedCourseSuccessful
+  | SetCurrentCourseId;

@@ -5,6 +5,10 @@ import { filter } from 'rxjs/operators';
 import { BreadCrumb } from '@core/models/breadcrumb.model';
 import { CoursesService } from '@courses/services/courses.service';
 import { Course } from '@courses/models/course.model';
+import { Store, select } from '@ngrx/store';
+import { AppState } from '@app/store/reducers/app.reducers';
+import { selectCourseById } from '@app/store/selectors/courses.selector';
+import * as coursesActions from '@store/actions/courses.actions';
 
 const ROUTE_DATA_BREADCRUMB: string = 'breadcrumb';
 
@@ -19,7 +23,8 @@ export class BreadcrumbsComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
     private router: Router,
     private cdref: ChangeDetectorRef,
-    private coursesService: CoursesService) {}
+    private coursesService: CoursesService,
+    private store: Store<AppState>) {}
 
   ngOnInit() {
     this.router.events.pipe(
@@ -41,8 +46,13 @@ export class BreadcrumbsComponent implements OnInit {
     for (const child of children) {
       const routeURL: string = child.snapshot.url.map(segment => segment.path).join('/');
       if (!!child.snapshot.params.id) {
-        // const currentCourse:Course = this.coursesService.getCourseById(child.snapshot.params.id);
-        // breadcrumbs.push({ label: currentCourse.title, url: routeURL });
+        // let currentCourse:Course;;
+        this.store.dispatch(new coursesActions.SetCurrentCourseId(child.snapshot.params.id));
+        this.store.pipe(select(selectCourseById)).subscribe((res: Course) => {
+          console.log('Bread crumbs', res)
+          breadcrumbs.push({ label: res.title, url: routeURL });
+        });
+        // 
       } else {
         if (!!child.snapshot.data[ROUTE_DATA_BREADCRUMB]) {
           breadcrumbs.push({label: child.snapshot.data.breadcrumb, url: routeURL });
