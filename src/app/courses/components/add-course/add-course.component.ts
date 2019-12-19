@@ -6,7 +6,6 @@ import { AppState } from '@store/reducers/app.reducers';
 import * as coursesActions from '@store/actions/courses.actions';
 import { selectCurrentCourse } from '@store/selectors/courses.selector';
 import { Course } from '@courses/models/course.model';
-import {CoursesService} from "@courses/services/courses.service";
 
 export type FORM_TYPE = 'edit' | 'add';
 
@@ -21,7 +20,6 @@ export class AddCourseComponent implements OnInit {
 
   constructor(private router: Router, 
     private  activatedRoute: ActivatedRoute,
-    private courseService: CoursesService,
     private store: Store<AppState>) { }
 
   ngOnInit() {
