@@ -9,7 +9,14 @@ export function coursesReducer(state = initialState,
         ...state
       };
     }
+    case coursesActions.LOAD_COURSES: {
+      return {
+        ...state,
+        searchFragment: action.payload.searchFragment
+      };
+    }
     case coursesActions.LOAD_COURSES_SUCCESSFUL: {
+      console.log('SUCCESSful', state);
       return {
         ...state,
 

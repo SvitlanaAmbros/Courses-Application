@@ -19,3 +19,9 @@ export const selectCurrentCourse = createSelector(
   (state: CoursesState) => state.currentCourse
 );
 
+
+export const selectSearchFragment = createSelector(
+  coursesState,
+  (state: CoursesState) => state.searchFragment
+);
+

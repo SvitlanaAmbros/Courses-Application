@@ -21,6 +21,16 @@ export class CourseInfo implements Course {
         this.authors = (!!courseDb && courseDb.authors) || [];
     }
 
+    public setCourse(course: Course): void {
+      this.id = (!!course && course.id) || this.generateId();
+      this.title = (!!course && course.title) || '';
+      this.creationDate = (!!course && new Date(course.creationDate)) || new Date();
+      this.duration = (!!course && course.duration) || 0;
+      this.description = (!!course && course.description) || '';
+      this.topRated = (!!course && course.topRated) || false;
+      this.authors = (!!course && course.authors) || [];
+    }
+
     public getDbObj(): CourseDB {
       return {
         id: this.id ? this.id : this.generateId(),

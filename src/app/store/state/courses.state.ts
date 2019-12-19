@@ -6,6 +6,7 @@ export interface CoursesState {
   // searchFragment: string;
   courses: Course[];
   currentCourse: Course;
+  searchFragment: string;
 }
 
 export const initialState: CoursesState = {
@@ -18,7 +19,8 @@ export const initialState: CoursesState = {
     creationDate: new Date(),
     description: '',
     duration: 0
-  }
+  },
+  searchFragment: ''
 };
 
 // entity

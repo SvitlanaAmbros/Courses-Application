@@ -9,7 +9,7 @@ import { of } from "rxjs";
 import { CoursesService } from '@courses/services/courses.service';
 import * as coursesActions from '@store/actions/courses.actions';
 import { AppState } from '@store/reducers/app.reducers';
-import { coursesState, selectCoursesLength } from '@store/selectors/courses.selector';
+import { coursesState, selectCoursesLength, selectSearchFragment } from '@store/selectors/courses.selector';
 import { Course } from '@courses/models/course.model';
 import { CourseDB } from "@courses/models/course-db.model";
 import { CourseInfo } from "@courses/models/course-info.model";
@@ -36,7 +36,8 @@ export class CoursesEffects {
               return of();
             })
           );
-      }));
+      })
+    );
 
   @Effect()
   changeSearchParams$ = this.actions$
@@ -44,7 +45,8 @@ export class CoursesEffects {
       ofType(coursesActions.CHANGE_SEARCH_PARAMS),
       switchMap((action: any) => {
         return of(new coursesActions.LoadCourses(action.payload))
-      }));
+      })
+    );
 
   @Effect()
   deleteCourse$ = this.actions$
@@ -64,66 +66,75 @@ export class CoursesEffects {
             //   return of();
             // })
           );
-      }));
+      })
+    );
 
-      @Effect()
-      getCourseById$ = this.actions$
-      .pipe(
+  @Effect()
+  getCourseById$ = this.actions$
+    .pipe(
       ofType(coursesActions.GET_COURSE_BY_ID),
       switchMap((action: any) => {
-      return this.coursesService.getCourseById(action.payload)
-      .pipe(
-      map((res) => {
-        return new coursesActions.GetCourseByIdSuccess(res)
-      }),
-      // catchError(err => {
-      //   return of();
-      // })
-      );
-      }));
-      @Effect()
-      createCourse$ = this.actions$
-      .pipe(
+        return this.coursesService.getCourseById(action.payload)
+          .pipe(
+            map((res) => {
+              return new coursesActions.GetCourseByIdSuccess(res)
+            }),
+            // catchError(err => {
+            //   return of();
+            // })
+          );
+      })
+    );
+    
+  @Effect()
+  createCourse$ = this.actions$
+    .pipe(
       ofType(coursesActions.CREATE_COURSE),
       withLatestFrom(this.store.pipe(select(selectCoursesLength))),
       switchMap(([action, length]) => {
-      return this.coursesService.createCourse((action as any).payload)
-        .pipe(
-          map((res) => {
-            console.log('Sucess create');
-            return new coursesActions.ChangedCourseSuccessful(length);
-          }),
-          catchError(err => {
-            return of();
-          })
-        );
-      }));
+        console.log('create course', (action as any).payload)
+        return this.coursesService.createCourse((action as any).payload)
+          .pipe(
+            map((res) => {
+              console.log('Sucess create', res);
+              return new coursesActions.ChangedCourseSuccessful(length);
+            }),
+            catchError(err => {
+              return of();
+            })
+          );
+      })
+    );
 
-      @Effect()
-      updateCourse$ = this.actions$
-      .pipe(
+  @Effect()
+  updateCourse$ = this.actions$
+    .pipe(
       ofType(coursesActions.UPDATE_COURSE),
       withLatestFrom(this.store.pipe(select(selectCoursesLength))),
       switchMap(([action, length]) => {
         console.log('Length', length);
-      return this.coursesService.updateCourse((action as any).payload)
-        .pipe(
-          map((res) => {
-            console.log('Sucess update');
-            return new coursesActions.ChangedCourseSuccessful(length);
-            // return new coursesActions.LoadCourses({startInd: 0, endInd: length, searchFragment: ''});
-          }),
-          catchError(err => {
-            return of();
-          })
-        );
-      }));
+        return this.coursesService.updateCourse((action as any).payload)
+          .pipe(
+            map((res) => {
+              console.log('Sucess update');
+              return new coursesActions.ChangedCourseSuccessful(length);
+              // return new coursesActions.LoadCourses({startInd: 0, endInd: length, searchFragment: ''});
+            }),
+            catchError(err => {
+              return of();
+            })
+          );
+      })
+    );
 
-      @Effect()
-      changedCourseSuccessful$ = this.actions$
-        .pipe(
-          ofType(coursesActions.CHANGED_COURSE_SUCCESSFUL),
-          switchMap((action: any) => {
-            return of(new coursesActions.LoadCourses({startInd: 0, endInd: action.payload, searchFragment: ''}));
-          }));
+  @Effect()
+  changedCourseSuccessful$ = this.actions$
+    .pipe(
+      ofType(coursesActions.CHANGED_COURSE_SUCCESSFUL),
+      withLatestFrom(this.store.pipe(select(selectSearchFragment))),
+      switchMap(([action, searchFragment]) => {
+        // console.log('!!!!!!!!!!!!!', action.payload)
+        return of(new coursesActions.LoadCourses({ startInd: 0, endInd: (action as any).payload, searchFragment: searchFragment }));
+      })
+    );
 }

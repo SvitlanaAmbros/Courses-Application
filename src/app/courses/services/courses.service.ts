@@ -27,26 +27,21 @@ export class CoursesService {
       httpParams = httpParams.set('textFragment', textFragment);
     }
 
-    console.warn('COURSES');
     return this.http.get<CourseDB[]>(COURSES_URL, {params: httpParams})
       .pipe(
         map((res: CourseDB[]) => {
-          console.log('@', res);
-          // return res;
           return res.map((courseDb: CourseDB) => new CourseInfo(courseDb));
         })
       );
   }
 
   public createCourse(course: Course): Observable<CourseDB> {
-    // let courseInfo: CourseInfo = new CourseInfo();
-    // courseInfo = course as CourseInfo;
-    // let body = courseInfo.getDbObj();
-    return this.http.post<CourseDB>(COURSES_URL, {});
+    const courseInfo: Course = new CourseInfo();
+    courseInfo.setCourse(course);
+    return this.http.post<CourseDB>(COURSES_URL, courseInfo.getDbObj());
   }
 
   public getCourseById(id: number): Observable<Course> {
-    // return this.courseList.find((item: Course) => item.id === id);
     return this.http.get<CourseDB>(`${COURSES_URL}/${id}`)
       .pipe(
         map((course: CourseDB) => new CourseInfo(course))
@@ -54,9 +49,10 @@ export class CoursesService {
   }
 
   public updateCourse(course: Course): Observable<any> {
-    return this.http.patch(`${COURSES_URL}/${course.id}`, course.getDbObj());
-    // let updatedElement = this.courseList.find((item: Course) => item.id === course.id);
-    // updatedElement = course;
+    const courseInfo: Course = new CourseInfo();
+    courseInfo.setCourse(course);
+
+    return this.http.patch(`${COURSES_URL}/${course.id}`, courseInfo.getDbObj());
   }
 
   public deleteCourse(id: string): Observable<any> {

@@ -17,7 +17,7 @@ import {CoursesService} from '@courses/services/courses.service';
 import {Course} from '@courses/models/course.model';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '@store/reducers/app.reducers';
-import {coursesState, selectCourses, selectCoursesLength} from '@store/selectors/courses.selector';
+import {coursesState, selectCourses, selectCoursesLength, selectSearchFragment} from '@store/selectors/courses.selector';
 import * as coursesActions from '@store/actions/courses.actions';
 
 @Component({
@@ -58,6 +58,7 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.initPopup();
 
     this.courses$ = this.store.pipe(select(selectCourses));
+    this.store.pipe(select(selectSearchFragment)).subscribe(res => this.search = res);
     this.store.pipe(select(selectCoursesLength)).subscribe(res => this.startLoadingFromIndex = res);
 
     this.loadCourses();

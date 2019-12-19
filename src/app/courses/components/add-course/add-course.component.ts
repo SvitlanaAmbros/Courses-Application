@@ -46,11 +46,8 @@ export class AddCourseComponent implements OnInit {
   public saveCourse(): void {
     if (this.pageType === 'add') {
       this.store.dispatch(new coursesActions.CreateCourse(this.course));
-      // this.courseService.createCourse(this.course)
-      //   .subscribe(res => console.log('Create', res))
       } else {
         this.store.dispatch(new coursesActions.UpdateCourse(this.course));
-        // this.courseService.updateCourse(this.course).subscribe(res => console.log('Sucess'));
       }
       this.navigateToBaseCoursesPage();
   }
