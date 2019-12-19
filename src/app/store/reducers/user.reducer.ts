@@ -11,14 +11,12 @@ export function reducer(state = initialState,
       };
     }
     case userActions.LOGIN_SUCCESS: {
-      console.log('LOGIN SUCCESS', action.payload);
       return {
         ...state,
         user: action.payload
       };
     }
     case userActions.LOGOFF: {
-      console.log('logoff red', state);
       return {
         ...state,
         user: {

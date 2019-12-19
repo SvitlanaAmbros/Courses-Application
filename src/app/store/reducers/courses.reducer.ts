@@ -16,7 +16,6 @@ export function coursesReducer(state = initialState,
       };
     }
     case coursesActions.LOAD_COURSES_SUCCESSFUL: {
-      console.log('SUCCESSful', state);
       return {
         ...state,
 
@@ -41,7 +40,6 @@ export function coursesReducer(state = initialState,
       };
     }
     case coursesActions.SET_CURRENT_COURSE_ID: {
-      console.log('current course', action.payload);
       return {
         ...state,
         currentCourseId: action.payload
@@ -60,7 +58,6 @@ export function coursesReducer(state = initialState,
       };
     }
     case coursesActions.CHANGED_COURSE_SUCCESSFUL: {
-      console.log('@@@@@@@@@@@@@@@@@@@@@@@');
       return {
         ...state,
         courses: []

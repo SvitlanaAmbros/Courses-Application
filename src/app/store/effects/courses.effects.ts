@@ -1,18 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import * as userActions from "@store/actions/user.actions";
-import { catchError, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
-import { selectUser } from "@store/selectors/user.selector";
-import { AuthResponse, LoginUser } from "@app/models/user.model";
+import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { of } from "rxjs";
-import { CoursesService } from '@courses/services/courses.service';
+
 import * as coursesActions from '@store/actions/courses.actions';
 import { AppState } from '@store/reducers/app.reducers';
-import { coursesState, selectCoursesLength, selectSearchFragment } from '@store/selectors/courses.selector';
-import { Course } from '@courses/models/course.model';
-import { CourseDB } from "@courses/models/course-db.model";
-import { CourseInfo } from "@courses/models/course-info.model";
+import { selectCoursesLength, selectSearchFragment } from '@store/selectors/courses.selector';
+import { CoursesService } from '@courses/services/courses.service';
 
 @Injectable()
 export class CoursesEffects {
@@ -52,19 +47,12 @@ export class CoursesEffects {
   deleteCourse$ = this.actions$
     .pipe(
       ofType(coursesActions.DELETE_COURSE),
-      // withLatestFrom(this.store.pipe(select(coursesState))),
       switchMap((action: any) => {
-        console.log('delete course', action.payload.deleteId);
         return this.coursesService.deleteCourse(action.payload.deleteId)
           .pipe(
             map((res) => {
-              console.log('success', res);
               return new coursesActions.LoadCourses(action.payload);
-            }),
-            // catchError(err => {
-            //   console.log('error', err);
-            //   return of();
-            // })
+            })
           );
       })
     );
@@ -78,29 +66,21 @@ export class CoursesEffects {
           .pipe(
             map((res) => {
               return new coursesActions.GetCourseByIdSuccess(res)
-            }),
-            // catchError(err => {
-            //   return of();
-            // })
+            })
           );
       })
     );
-    
+
   @Effect()
   createCourse$ = this.actions$
     .pipe(
       ofType(coursesActions.CREATE_COURSE),
       withLatestFrom(this.store.pipe(select(selectCoursesLength))),
       switchMap(([action, length]) => {
-        console.log('create course', (action as any).payload)
         return this.coursesService.createCourse((action as any).payload)
           .pipe(
             map((res) => {
-              console.log('Sucess create', res);
               return new coursesActions.ChangedCourseSuccessful(length);
-            }),
-            catchError(err => {
-              return of();
             })
           );
       })
@@ -112,13 +92,10 @@ export class CoursesEffects {
       ofType(coursesActions.UPDATE_COURSE),
       withLatestFrom(this.store.pipe(select(selectCoursesLength))),
       switchMap(([action, length]) => {
-        console.log('Length', length);
         return this.coursesService.updateCourse((action as any).payload)
           .pipe(
             map((res) => {
-              console.log('Sucess update');
               return new coursesActions.ChangedCourseSuccessful(length);
-              // return new coursesActions.LoadCourses({startInd: 0, endInd: length, searchFragment: ''});
             }),
             catchError(err => {
               return of();
@@ -133,7 +110,6 @@ export class CoursesEffects {
       ofType(coursesActions.CHANGED_COURSE_SUCCESSFUL),
       withLatestFrom(this.store.pipe(select(selectSearchFragment))),
       switchMap(([action, searchFragment]) => {
-        // console.log('!!!!!!!!!!!!!', action.payload)
         return of(new coursesActions.LoadCourses({ startInd: 0, endInd: (action as any).payload, searchFragment: searchFragment }));
       })
     );

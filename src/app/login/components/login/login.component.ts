@@ -1,16 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import { AuthService } from '@core/services/auth.service';
-import { LoginUser } from '@app/models/user.model';
 import { LoadingService } from '@shared/services/loading.service';
-
-import * as userReducers from '@store/reducers/user.reducer';
+import { AuthService } from '@core/services/auth.service';
+import { AppState } from '@store/reducers/app.reducers';
 import * as userActions from '@store/actions/user.actions';
-import * as userState from '@store/state/user.state';
-import { AppState } from '@app/store/reducers/app.reducers';
+import { LoginUser } from '@app/models/user.model';
 
 @Component({
   selector: 'app-login',

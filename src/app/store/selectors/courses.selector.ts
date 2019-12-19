@@ -1,7 +1,8 @@
 import {createSelector} from '@ngrx/store';
+
 import {AppState} from '@store/reducers/app.reducers';
 import {CoursesState} from '@store/state/courses.state';
-import { Course } from '@app/courses/models/course.model';
+import { Course } from '@courses/models/course.model';
 
 export const coursesState = (state: AppState) => state.courses;
 

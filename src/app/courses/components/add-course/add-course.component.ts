@@ -1,16 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { finalize } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
 
-import { LoadingService } from '@shared/services/loading.service';
+import { AppState } from '@store/reducers/app.reducers';
+import * as coursesActions from '@store/actions/courses.actions';
+import { selectCurrentCourse } from '@store/selectors/courses.selector';
 import { Course } from '@courses/models/course.model';
 import {CoursesService} from "@courses/services/courses.service";
-import {CourseInfo} from "@courses/models/course-info.model";
-import { Observable, of } from 'rxjs';
-import { Store, select } from '@ngrx/store';
-import { AppState } from '@app/store/reducers/app.reducers';
-import { selectCurrentCourse } from '@app/store/selectors/courses.selector';
-import * as coursesActions from '@store/actions/courses.actions';
 
 export type FORM_TYPE = 'edit' | 'add';
 
@@ -22,7 +18,6 @@ export type FORM_TYPE = 'edit' | 'add';
 export class AddCourseComponent implements OnInit {
   public pageType: FORM_TYPE;
   public course: Course;
-  // public course$: Observable<Course>;
 
   constructor(private router: Router, 
     private  activatedRoute: ActivatedRoute,
@@ -30,7 +25,6 @@ export class AddCourseComponent implements OnInit {
     private store: Store<AppState>) { }
 
   ngOnInit() {
-    // const newCourse: Course = new CourseInfo();
     const courseId = this.activatedRoute.snapshot.params.id;
 
     this.store.pipe(select(selectCurrentCourse)).subscribe(res => this.course = res);

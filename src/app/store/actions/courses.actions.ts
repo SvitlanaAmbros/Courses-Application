@@ -1,4 +1,5 @@
 import {Action} from '@ngrx/store';
+
 import {SearchCourseModel} from '@store/model/search-course.model';
 import {Course} from "@courses/models/course.model";
 

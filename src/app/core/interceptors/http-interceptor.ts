@@ -4,13 +4,12 @@ import {
 } from '@angular/common/http';
 import {Observable} from 'rxjs';
 import { finalize } from 'rxjs/operators';
-
-import {AuthService} from '@core/services/auth.service';
-import { LoadingService } from '@shared/services/loading.service';
-import { LocalStorageService } from '@app/shared/services/local-storage.service';
 import { Store, select } from '@ngrx/store';
-import { AppState } from '@app/store/reducers/app.reducers';
-import { selectUser, selectUserToken } from '@app/store/selectors/user.selector';
+
+import { LoadingService } from '@shared/services/loading.service';
+import { LocalStorageService } from '@shared/services/local-storage.service';
+import { AppState } from '@store/reducers/app.reducers';
+import { selectUserToken } from '@store/selectors/user.selector';
 
 export const BASE_URL = 'http://localhost:3004/'
 

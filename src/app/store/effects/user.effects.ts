@@ -1,18 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Effect, Actions, ofType } from '@ngrx/effects';
-import { tap, mergeMap, concatMap, mapTo, withLatestFrom, finalize } from 'rxjs/operators';
-
-import * as userActions from '@store/actions/user.actions';
-import { AuthService } from '@core/services/auth.service';
-import { Observable, of } from 'rxjs';
-import { Action, Store, select } from '@ngrx/store';
-import { map, switchMap, catchError } from 'rxjs/operators';
-import { AuthResponse, LoginUser } from '@app/models/user.model';
 import { Router } from '@angular/router';
-import { LoginPageState } from '@store/state/user.state';
-import { selectUser } from '../selectors/user.selector';
-import { AppState } from '../reducers/app.reducers';
-import { LocalStorageService } from '@app/shared/services/local-storage.service';
+import { Effect, Actions, ofType } from '@ngrx/effects';
+import { Store, select } from '@ngrx/store';
+import { tap, withLatestFrom } from 'rxjs/operators';
+import { map, switchMap, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+
+import { LocalStorageService } from '@shared/services/local-storage.service';
+import * as userActions from '@store/actions/user.actions';
+import { selectUser } from '@store/selectors/user.selector';
+import { AppState } from '@store/reducers/app.reducers';
+import { AuthResponse, LoginUser } from '@app/models/user.model';
+import { AuthService } from '@core/services/auth.service';
 
 @Injectable()
 export class UserEffects {

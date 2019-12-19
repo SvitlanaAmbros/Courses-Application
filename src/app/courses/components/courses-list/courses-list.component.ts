@@ -4,21 +4,18 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
-  OnDestroy,
-  ChangeDetectorRef
+  OnDestroy
 } from '@angular/core';
 import {Router} from '@angular/router';
-import {Observable, fromEvent, Subscription, Subject} from 'rxjs';
-import {map, filter, startWith, debounceTime, distinctUntilChanged, finalize, tap, takeUntil} from 'rxjs/operators';
-
-import {SortByDatePipe} from '@shared/pipes/sort-by-date.pipe';
-import {PopupService, PopupControls} from '@shared/services/popup.service';
-import {CoursesService} from '@courses/services/courses.service';
-import {Course} from '@courses/models/course.model';
+import {Observable, fromEvent, Subject} from 'rxjs';
+import {map, filter, startWith, debounceTime, distinctUntilChanged, takeUntil} from 'rxjs/operators';
 import {select, Store} from '@ngrx/store';
-import {AppState} from '@store/reducers/app.reducers';
-import {coursesState, selectCourses, selectCoursesLength, selectSearchFragment} from '@store/selectors/courses.selector';
+
+import {PopupService, PopupControls} from '@shared/services/popup.service';
 import * as coursesActions from '@store/actions/courses.actions';
+import {AppState} from '@store/reducers/app.reducers';
+import {selectCourses, selectCoursesLength, selectSearchFragment} from '@store/selectors/courses.selector';
+import {Course} from '@courses/models/course.model';
 
 @Component({
   selector: 'app-courses-list',
@@ -44,11 +41,8 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public emmiter;
 
-  constructor(private sortByDatePipe: SortByDatePipe,
-              private coursesService: CoursesService,
-              private popupService: PopupService,
+  constructor(private popupService: PopupService,
               private router: Router,
-              private cdref: ChangeDetectorRef,
               private store: Store<AppState>) {
   }
 
@@ -82,7 +76,6 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
-  // courses list with sort logic
   public searchCourses(): void {
     this.store.dispatch(new coursesActions.ClearCourses());
     this.loadCourses();
@@ -100,18 +93,15 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.navigate(['courses', 'new']);
   }
 
-  // courses list with editing logic from child component
   public editCourse(id: string): void {
     this.router.navigate(['courses', id]);
   }
 
-  // courses list with editing logic from child component
   public deleteClicked(id: string): void {
     this.deletedItemId = id;
     this.openPopup();
   }
 
-  // courses list with editing logic from child component
   public deleteCourse(): void {
     this.store.dispatch(new coursesActions.DeleteCourse({
       startInd: 0,

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {map, finalize, catchError} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 
 import { LocalStorageService } from '@shared/services/local-storage.service';
 import { LoginUser, AuthResponse } from '@app/models/user.model';
