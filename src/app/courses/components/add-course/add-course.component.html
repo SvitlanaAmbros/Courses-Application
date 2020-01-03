@@ -1,63 +1,93 @@
 <div class="add-wrap">
-    <div class="add" *ngIf="!!course">
-        <div class="add-form">
-            <div class="add-form__header">Create new Course</div>
-            <div class="add-form__row">
-                <div class="add-form__label">
-                    <label class="add-form__label-title">Title:</label>
-                    <label class="add-form__label-required">*required</label>
-                </div>
-                <input type="text" class="form-input" [(ngModel)]="course.title">
-            </div>
-            <div class="add-form__row">
-                <div class="add-form__label">
-                    <label class="add-form__label-title">Description:</label>
-                    <label class="add-form__label-required">*required</label>
-                </div>
-                <input type="text" class="form-input" [(ngModel)]="course.description">
-            </div>
-            <div class="add-form__row">
-                <div class="add-form__short-col">
-                    <div class="add-form__label">
-                        <label class="add-form__label-title">Date:</label>
-                        <label class="add-form__label-required">*required</label>
-                    </div>
-                    <input type="date" class="form-input" 
-                        [ngModel]="course.creationDate | date:'yyyy-MM-dd'"
-                        (ngModelChange)="dateChanged($event)">
-                    <!-- <app-date [date]="course.creationDate.toISOString().split('T')[0]"></app-date> -->
-                </div>
-                
-            </div>
-            <div class="add-form__row">
-                <!-- <div class="add-form__short-col"> -->
-                    <div class="add-form__label">
-                        <label class="add-form__label-title">Duration:</label>
-                        <label class="add-form__label-required">*required</label>
-                    </div>
-                    <!-- <input type="text" class="form-input" [(ngModel)]="course.duration"> -->
-                    <app-duration [duration]="course.duration"></app-duration>
-                <!-- </div> -->
-            </div>
-            <div class="add-form__row">
-                <div class="add-form__label">
-                    <label class="add-form__label-title">Authors:</label>
-                    <label class="add-form__label-required">*required</label>
-                </div>
-                <input type="text" class="form-input" [(ngModel)]="course.authors">
-                <!-- will be authors tags box -->
-                <!-- <app-tag-box></app-tag-box> -->
-            </div>
-            <div class="add-form__btns-row">
-                <div class="add-form__btn">
-                    <app-action-btn [title]="'Cancel'" (clicked)="cancel()">
-                        </app-action-btn>
-                </div>
-                <div class="add-form__btn">
-                    <app-action-btn [title]="'Save'" (clicked)="saveCourse()">
-                        </app-action-btn>
-                </div>
-            </div>
+  <div class="add" *ngIf="!!course">
+    <form class="add-form" [formGroup]="addCourseForm">
+      <div class="add-form__header">Create new Course</div>
+      <div class="add-form__row">
+
+        <div class="add-form__label">
+          <div>
+            <label class="add-form__label-title">Title:</label>
+            <label class="add-form__error-message" *ngIf="isFormInvalid(addCourseForm, 'title')">
+              <label *ngIf="addCourseForm?.controls['title']?.errors?.maxLength">Max length is 50 symbols</label>
+            </label>
+          </div>
+          <label class="add-form__label-required">*required</label>
         </div>
-    </div>
+        <input type="text" class="form-input" formControlName="title">
+      </div>
+
+      <div class="add-form__row">
+        <div class="add-form__label">
+          <div>
+            <label class="add-form__label-title">Description:</label>
+            <label class="add-form__error-message" *ngIf="isFormInvalid(addCourseForm, 'description')">
+              <label *ngIf="addCourseForm?.controls['description']?.errors?.maxLength">Max length is 500 symbols</label>
+            </label>
+          </div>
+          <label class="add-form__label-required">*required</label>
+        </div>
+        <input type="text" class="form-input" formControlName="description">
+        <!--              [(ngModel)]="course.description"-->
+      </div>
+
+      <div class="add-form__row">
+        <div class="add-form__short-col">
+          <div class="add-form__label">
+            <div>
+              <label class="add-form__label-title">Date:</label>
+              <label class="add-form__error-message" *ngIf="isFormInvalid(addCourseForm, 'date')">
+                <label *ngIf="addCourseForm?.controls['date']?.errors?.required">Required</label>
+              </label>
+            </div>
+            <label class="add-form__label-required">*required</label>
+          </div>
+          <!--                    <input type="date" class="form-input"-->
+          <!--                        [ngModel]="course.creationDate | date:'yyyy-MM-dd'"-->
+          <!--                        (ngModelChange)="dateChanged($event)">-->
+          <!--                     <app-date [date]="course.creationDate.toISOString().split('T')[0]"></app-date>-->
+        </div>
+
+      </div>
+
+      <div class="add-form__row">
+        <!-- <div class="add-form__short-col"> -->
+        <div class="add-form__label">
+          <div>
+            <label class="add-form__label-title">Duration:</label>
+            <label class="add-form__error-message" *ngIf="isFormInvalid(addCourseForm, 'duration')">
+              <label *ngIf="addCourseForm?.controls['duration']?.errors?.required">Required</label>
+            </label>
+          </div>
+          <label class="add-form__label-required">*required</label>
+        </div>
+        <!-- <input type="text" class="form-input" [(ngModel)]="course.duration"> -->
+        <app-duration [value]="course.duration" formControlName="duration"></app-duration>
+        {{this.addCourseForm.controls['duration']?.value}}
+        <!-- </div> -->
+      </div>
+
+      <div class="add-form__row">
+        <div class="add-form__label">
+          <label class="add-form__label-title">Authors:</label>
+          <label class="add-form__label-required">*required</label>
+        </div>
+        <input type="text" class="form-input" formControlName="authors">
+        <!--              [(ngModel)]="course.authors"-->
+        <!-- will be authors tags box -->
+        <!-- <app-tag-box></app-tag-box> -->
+      </div>
+
+      <div class="add-form__btns-row">
+        <div class="add-form__btn">
+          <app-action-btn [title]="'Cancel'" (clicked)="cancel()">
+          </app-action-btn>
+        </div>
+        <div class="add-form__btn">
+          <app-action-btn [title]="'Save'" (clicked)="saveCourse()">
+          </app-action-btn>
+        </div>
+      </div>
+
+    </form>
+  </div>
 </div>
