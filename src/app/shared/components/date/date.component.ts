@@ -24,8 +24,8 @@ export class DateComponent implements ControlValueAccessor {
   set value(value: Date) {
     console.log('Date value', value);
     // this.innerValue = new Date(value).toISOString().split('T')[0];
-    this.onChange(value);
-    this.onTouched();
+    // this.onChange(value);
+    // this.onTouched();
   }
 
   get value(): Date {
