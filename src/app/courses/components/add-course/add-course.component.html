@@ -8,26 +8,24 @@
           <div>
             <label class="add-form__label-title">Title:</label>
             <label class="add-form__error-message" *ngIf="isFormInvalid(addCourseForm, 'title')">
-              <label *ngIf="addCourseForm?.controls['title']?.errors?.maxLength">Max length is 50 symbols</label>
+              <label *ngIf="addCourseForm?.controls['title']?.hasError('maxlength')">Max length is 50 symbols</label>
             </label>
           </div>
           <label class="add-form__label-required">*required</label>
         </div>
-        <input type="text" class="form-input" formControlName="title">
+        <input type="text" class="form-input" formControlName="title" [ngClass]="{ 'error-field': isFormInvalid(addCourseForm, 'title')}">
       </div>
-
       <div class="add-form__row">
         <div class="add-form__label">
           <div>
             <label class="add-form__label-title">Description:</label>
             <label class="add-form__error-message" *ngIf="isFormInvalid(addCourseForm, 'description')">
-              <label *ngIf="addCourseForm?.controls['description']?.errors?.maxLength">Max length is 500 symbols</label>
+              <label *ngIf="addCourseForm?.controls['description']?.hasError('maxlength')">Max length is 500 symbols</label>
             </label>
           </div>
           <label class="add-form__label-required">*required</label>
         </div>
-        <input type="text" class="form-input" formControlName="description">
-        <!--              [(ngModel)]="course.description"-->
+        <input type="text" class="form-input" formControlName="description" [ngClass]="{ 'error-field': isFormInvalid(addCourseForm, 'description')}">
       </div>
 
       <div class="add-form__row">
@@ -44,7 +42,8 @@
           <!--                    <input type="date" class="form-input"-->
           <!--                        [ngModel]="course.creationDate | date:'yyyy-MM-dd'"-->
           <!--                        (ngModelChange)="dateChanged($event)">-->
-          <!--                     <app-date [date]="course.creationDate.toISOString().split('T')[0]"></app-date>-->
+<!--          course.creationDate.toISOString().split('T')[0]-->
+           <app-date formControlName="date"></app-date>
         </div>
 
       </div>
@@ -55,27 +54,24 @@
           <div>
             <label class="add-form__label-title">Duration:</label>
             <label class="add-form__error-message" *ngIf="isFormInvalid(addCourseForm, 'duration')">
-              <label *ngIf="addCourseForm?.controls['duration']?.errors?.required">Required</label>
+              <label *ngIf="addCourseForm?.controls['duration']?.errors?.pattern">Should contain only numbers</label>
             </label>
           </div>
           <label class="add-form__label-required">*required</label>
         </div>
-        <!-- <input type="text" class="form-input" [(ngModel)]="course.duration"> -->
-        <app-duration [value]="course.duration" formControlName="duration"></app-duration>
-        {{this.addCourseForm.controls['duration']?.value}}
-        <!-- </div> -->
+        <app-duration formControlName="duration"></app-duration>
       </div>
 
-      <div class="add-form__row">
-        <div class="add-form__label">
-          <label class="add-form__label-title">Authors:</label>
-          <label class="add-form__label-required">*required</label>
-        </div>
-        <input type="text" class="form-input" formControlName="authors">
-        <!--              [(ngModel)]="course.authors"-->
-        <!-- will be authors tags box -->
-        <!-- <app-tag-box></app-tag-box> -->
-      </div>
+<!--      <div class="add-form__row">-->
+<!--        <div class="add-form__label">-->
+<!--          <label class="add-form__label-title">Authors:</label>-->
+<!--          <label class="add-form__label-required">*required</label>-->
+<!--        </div>-->
+<!--        <input type="text" class="form-input" formControlName="authors">-->
+<!--        &lt;!&ndash;              [(ngModel)]="course.authors"&ndash;&gt;-->
+<!--        &lt;!&ndash; will be authors tags box &ndash;&gt;-->
+<!--        &lt;!&ndash; <app-tag-box></app-tag-box> &ndash;&gt;-->
+<!--      </div>-->
 
       <div class="add-form__btns-row">
         <div class="add-form__btn">
@@ -83,7 +79,7 @@
           </app-action-btn>
         </div>
         <div class="add-form__btn">
-          <app-action-btn [title]="'Save'" (clicked)="saveCourse()">
+          <app-action-btn [title]="'Save'" (clicked)="saveCourse()" [isButtonDisabled]="addCourseForm.invalid">
           </app-action-btn>
         </div>
       </div>

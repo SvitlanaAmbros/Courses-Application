@@ -1,15 +1,23 @@
 @import 'color';
 
 .action-btn {
-    width: 100px;
-    height: 48px;
-    border-radius: 3px;
-    background: $green-btn-color;
-    color: $white-color;
-    font-weight: 600;
+  width: 100px;
+  height: 48px;
+  border-radius: 3px;
+  background: $green-btn-color;
+  color: $white-color;
+  font-weight: 600;
+
+  &:hover {
+    background: $green-dark-btn-color;
+  }
+
+  &:disabled {
+    background: grey;
+    //border: 1px solid grey;
 
     &:hover {
-        background: $green-dark-btn-color;
+      background: grey;
     }
+  }
 }
-    

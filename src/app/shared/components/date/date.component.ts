@@ -13,22 +13,23 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
     }
   ]
 })
-export class DateComponent implements OnInit, ControlValueAccessor {
-  @Input('value') innerValue: Date;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class DateComponent implements ControlValueAccessor {
+  private innerValue: string;
+  //
+  // constructor() { }
+  //
+  // ngOnInit() {
+  // }
+  //
   set value(value: Date) {
-    this.innerValue = value;
+    console.log('Date value', value);
+    // this.innerValue = new Date(value).toISOString().split('T')[0];
     this.onChange(value);
     this.onTouched();
   }
 
   get value(): Date {
-    return this.innerValue;
+    return new Date(this.innerValue);
   }
 
   onChange: any = (value) => { };
@@ -43,7 +44,11 @@ export class DateComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(obj: Date): void {
-    this.value = obj;
+    // this.value = obj;
   }
 
+  public dateChanged(value): void {
+    console.log('Date changed', value);
+    // this.value = new Date(value);
+  }
 }

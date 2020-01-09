@@ -13,13 +13,8 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
     }
   ]
 })
-export class DurationComponent implements OnInit, ControlValueAccessor {
-  @Input('value') innerValue: number;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
+export class DurationComponent implements ControlValueAccessor {
+  private innerValue: number;
 
   set value(value: number) {
     this.innerValue = value;

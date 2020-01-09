@@ -26,11 +26,11 @@ export class AddCourseComponent implements OnInit {
               private store: Store<AppState>,
               private fb: FormBuilder) {
     this.addCourseForm = this.fb.group({
-      title: ['', [Validators.required, Validators.maxLength(2)]],
+      title: ['', [Validators.required, Validators.maxLength(50)]],
       description: ['', [Validators.required, Validators.maxLength(500)]],
-      duration: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
-      date: ['', Validators.required, Validators.pattern],
-      authors: ['', Validators.required]
+      duration: [123, [Validators.required, Validators.pattern('^[0-9]+$')]],
+      date: ['', [Validators.required]],
+      // authors: ['', Validators.required]
     });
   }
 
