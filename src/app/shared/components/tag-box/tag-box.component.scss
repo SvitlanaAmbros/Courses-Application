@@ -1,0 +1,38 @@
+.tag-box {
+  //width: 300px;
+
+  &__input {
+    width: 100%;
+  }
+
+  &__author {
+    cursor: pointer;
+    border: 1px solid grey;
+  }
+
+  &__authors {
+    max-height: 200px;
+    overflow-y: scroll;
+  }
+
+  &-tags {
+    margin: 20px 0;
+    padding: 2px 0;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 4px;
+    border: 1px solid grey;
+
+    &__item {
+      margin: 0 1px;
+      padding: 10px 2px;
+      border-radius: 4px;
+      border: 1px solid grey;
+      cursor: pointer;
+    }
+
+    &__delete-icon {
+      margin: 0 5px;
+    }
+  }
+}

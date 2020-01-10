@@ -1,1 +1,14 @@
-<p>tag-box works!</p>
+<div class="tag-box">
+  <input type="text" class="tag-box__input" [(ngModel)]="searchParam" (ngModelChange)="searchParamChanged($event)">
+  <div *ngIf="(allAuthors | async) as authors" class="tag-box__authors">
+    <div *ngFor="let author of authors" class="tag-box__author" (click)="authorSelected(author)">
+      {{author.name}}
+    </div>
+  </div>
+</div>
+<div class="tag-box-tags" *ngIf="selectedAuthors.length > 0">
+  <div *ngFor="let selectedAuthor of selectedAuthors" class="tag-box-tags__item">
+    {{selectedAuthor.name}}
+    <i class="fa fa-times tag-box-tags__delete-icon" (click)="deleteAuthor(selectedAuthor)"></i>
+  </div>
+</div>

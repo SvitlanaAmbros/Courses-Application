@@ -7,6 +7,9 @@ import {AppState} from '@store/reducers/app.reducers';
 import * as coursesActions from '@store/actions/courses.actions';
 import {selectCurrentCourse} from '@store/selectors/courses.selector';
 import {Course} from '@courses/models/course.model';
+import {CoursesService} from "@courses/services/courses.service";
+import {Observable} from "rxjs";
+import {Author} from "@courses/models/author.model";
 
 export type FORM_TYPE = 'edit' | 'add';
 
@@ -28,9 +31,9 @@ export class AddCourseComponent implements OnInit {
     this.addCourseForm = this.fb.group({
       title: ['', [Validators.required, Validators.maxLength(50)]],
       description: ['', [Validators.required, Validators.maxLength(500)]],
-      duration: [123, [Validators.required, Validators.pattern('^[0-9]+$')]],
-      date: ['', [Validators.required]],
-      // authors: ['', Validators.required]
+      duration: [null, [Validators.required, Validators.pattern('^[0-9]+$')]],
+      // date: ['', [Validators.required]],
+      authors: [[], this.hasAtLeastOneElement]
     });
   }
 
@@ -38,11 +41,6 @@ export class AddCourseComponent implements OnInit {
     const courseId = this.activatedRoute.snapshot.params.id;
     this.store.pipe(select(selectCurrentCourse)).subscribe(res => {
       this.course = res;
-      // this.addCourseForm = this.fb.group({
-      //   title: [this.course.title, [Validators.required, Validators.maxLength(2)]],
-      //   description: [this.course.description, [Validators.required, Validators.maxLength(500)]],
-      //   duration: [this.course.duration, Validators.required],
-      // });
     });
 
     if (courseId) {
@@ -52,11 +50,10 @@ export class AddCourseComponent implements OnInit {
       this.pageType = 'add';
       this.store.dispatch(new coursesActions.ClearCurrentCourse());
     }
-
   }
 
   public saveCourse(): void {
-    console.log(this.addCourseForm.value)
+    console.log(this.addCourseForm.value);
     if (this.pageType === 'add') {
       this.store.dispatch(new coursesActions.CreateCourse(this.course));
     } else {
@@ -79,6 +76,16 @@ export class AddCourseComponent implements OnInit {
 
   public isFormInvalid(form: FormGroup, field): boolean {
     return form.controls[field].invalid && form.controls[field].touched;
+  }
+
+  public hasAtLeastOneElement(control: AbstractControl ) {
+    if (!!control.value && control.value.length === 0) {
+
+      console.log('Length', control.value.length === 0);
+      return { invalidSize: true };
+    }
+
+    return null;
   }
 }
 

@@ -18,8 +18,8 @@ export class DurationComponent implements ControlValueAccessor {
 
   set value(value: number) {
     this.innerValue = value;
-    this.onChange(value);
-    this.onTouched();
+    // this.onChange(value);
+    // this.onTouched();
   }
 
   get value(): number {
@@ -39,5 +39,6 @@ export class DurationComponent implements ControlValueAccessor {
 
   writeValue(value: number): void {
     this.value = value;
+    this.onChange(this.value);
   }
 }
