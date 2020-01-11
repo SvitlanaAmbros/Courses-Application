@@ -4,6 +4,10 @@ import {Observable} from 'rxjs';
 import {Author} from '@courses/models/author.model';
 import {CoursesService} from '@courses/services/courses.service';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import { AppState } from '@app/store/reducers/app.reducers';
+import { Store, select } from '@ngrx/store';
+import { selectAuthors } from '@app/store/selectors/courses.selector';
+import * as coursesActions from '@store/actions/courses.actions';
 
 @Component({
   selector: 'app-tag-box',
@@ -22,20 +26,24 @@ export class TagBoxComponent implements OnInit, ControlValueAccessor {
   public allAuthors: Observable<Author[]>;
   public selectedAuthors: Author[] = [];
 
-  constructor(private coursesService: CoursesService, private cdref: ChangeDetectorRef) {
+  constructor(private coursesService: CoursesService,
+    private store: Store<AppState>, 
+    private cdref: ChangeDetectorRef) {
   }
 
   ngOnInit() {
+    this.allAuthors = this.store.pipe(select(selectAuthors));
     this.searchParamChanged(this.searchParam);
-    this.selectedAuthors = [];
+    // this.selectedAuthors = [];
   }
 
   public searchParamChanged(e): void {
-    this.searchAuthorsByParam(e);
+    this.store.dispatch(new coursesActions.LoadAuthors(e));
+    // this.searchAuthorsByParam(e);
   }
 
   public searchAuthorsByParam(searchParam: string): void {
-    this.allAuthors = this.coursesService.getAuthors(searchParam);
+    // this.allAuthors = this.coursesService.getAuthors(searchParam);
   }
 
   public authorSelected(author: Author): void {

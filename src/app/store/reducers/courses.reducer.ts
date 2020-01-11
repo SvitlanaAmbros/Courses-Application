@@ -63,6 +63,12 @@ export function coursesReducer(state = initialState,
         courses: []
       };
     }
+    case coursesActions.UPDATE_AUTHORS: {
+      return {
+        ...state,
+        authorsList: action.payload
+      };
+    }
     default:
       return state;
   }

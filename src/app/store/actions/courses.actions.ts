@@ -2,6 +2,7 @@ import {Action} from '@ngrx/store';
 
 import {SearchCourseModel} from '@store/model/search-course.model';
 import {Course} from "@courses/models/course.model";
+import { Author } from '@app/courses/models/author.model';
 
 export const CHANGE_SEARCH_PARAMS = '[Change search params] update search value in store';
 export const SEARCH_PARAMS_UPDATED = '[Search params updated]updated params';
@@ -19,6 +20,8 @@ export const GET_COURSE_BY_ID_SUCCESS = '[Get course by id success] sucess';
 export const CREATE_COURSE = '[Create course] create new course';
 export const UPDATE_COURSE = '[Update course] create new course';
 export const CHANGED_COURSE_SUCCESSFUL = '[Changed course] changed course successfull';
+export const LOAD_AUTHORS = '[Load authors from server]';
+export const UPDATE_AUTHORS = '[Update authors in store]';
 
 export class ChangeSearchParams implements Action {
   readonly type = CHANGE_SEARCH_PARAMS;
@@ -82,6 +85,16 @@ export class ChangedCourseSuccessful implements Action {
   constructor(public payload: number) { }
 }
 
+export class LoadAuthors implements Action {
+  readonly type = LOAD_AUTHORS;
+  constructor(public payload: string) { }
+}
+
+export class UpdateAuthorsInStore implements Action {
+  readonly type = UPDATE_AUTHORS;
+  constructor(public payload: Author[]) { }
+}
+
 export type CoursesAction = ChangeSearchParams
   | SearchParamsUpdated
   | LoadCourses
@@ -94,4 +107,6 @@ export type CoursesAction = ChangeSearchParams
   | ClearCurrentCourse
   | UpdateCourse
   | ChangedCourseSuccessful
-  | SetCurrentCourseId;
+  | SetCurrentCourseId
+  | LoadAuthors
+  | UpdateAuthorsInStore;
