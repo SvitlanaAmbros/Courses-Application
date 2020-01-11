@@ -41,4 +41,8 @@ export class DurationComponent implements ControlValueAccessor {
     this.value = value;
     this.onChange(this.value);
   }
+
+  public updateValue(e): void {
+    this.writeValue(e);
+  }
 }

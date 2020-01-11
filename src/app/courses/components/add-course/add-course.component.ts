@@ -31,9 +31,10 @@ export class AddCourseComponent implements OnInit {
     this.addCourseForm = this.fb.group({
       title: ['', [Validators.required, Validators.maxLength(50)]],
       description: ['', [Validators.required, Validators.maxLength(500)]],
-      duration: [null, [Validators.required, Validators.pattern('^[0-9]+$')]],
+      duration: [10, [Validators.required, this.shouldMoreThanZero]],
       // date: ['', [Validators.required]],
-      authors: [[], this.hasAtLeastOneElement]
+      // , Validators.pattern('^[0-9]+$')
+      authors: [[], [Validators.required, this.hasAtLeastOneElement]]
     });
   }
 
@@ -41,6 +42,11 @@ export class AddCourseComponent implements OnInit {
     const courseId = this.activatedRoute.snapshot.params.id;
     this.store.pipe(select(selectCurrentCourse)).subscribe(res => {
       this.course = res;
+      this.updateFormControlValue('title', this.course.title);
+      this.updateFormControlValue('description', this.course.description);
+      this.updateFormControlValue('duration', this.course.duration);
+      console.log('DURATION', this.course.duration);
+      this.updateFormControlValue('authors', this.course.authors);
     });
 
     if (courseId) {
@@ -80,12 +86,25 @@ export class AddCourseComponent implements OnInit {
 
   public hasAtLeastOneElement(control: AbstractControl ) {
     if (!!control.value && control.value.length === 0) {
-
-      console.log('Length', control.value.length === 0);
       return { invalidSize: true };
     }
 
     return null;
+  }
+
+  public shouldMoreThanZero(control: AbstractControl ) {
+    console.log('Duration', control.value);
+    if (!control.value || control.value === 0) {
+
+    //   console.log('Length', control.value.length === 0);
+      return { invalidFormat: true };
+    }
+
+    return null;
+  }
+
+  public updateFormControlValue(control: string, value: any):void {
+    this.addCourseForm.controls[control].setValue(value);
   }
 }
 

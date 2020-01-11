@@ -31,7 +31,6 @@ export class TagBoxComponent implements OnInit, ControlValueAccessor {
   }
 
   public searchParamChanged(e): void {
-    console.log('!!!', e);
     this.searchAuthorsByParam(e);
   }
 
@@ -40,27 +39,22 @@ export class TagBoxComponent implements OnInit, ControlValueAccessor {
   }
 
   public authorSelected(author: Author): void {
-    // if (this.selectedAuthors.filter((item: Author) => item.id === author.id).length === 0) {
-    // this.selectedAuthors = [];
-    //   this.selectedAuthors.push(author);
-    const arr = [...this.selectedAuthors];
-    arr.push(author);
-    this.writeValue(arr);
-    // }
-    // else {
-    //   alert(`Author ${author.name} already in list`);
-    // }
+    if (this.selectedAuthors.filter((item: Author) => item.id === author.id).length === 0) {
+      const arr = [...this.selectedAuthors];
+      arr.push(author);
+      this.writeValue(arr);
+    }
+    else {
+      alert(`Author ${author.name} already in list`);
+    }
   }
 
   public deleteAuthor(author: Author): void {
     this.writeValue([...this.selectedAuthors].filter((item: Author) => item.id !== author.id));
-    console.log('Delete author', author);
   }
 
   set value(value: Author[]) {
     this.selectedAuthors = value;
-    // this.onChange(value);
-    // this.onTouched();
   }
 
   get value(): Author[] {
@@ -81,8 +75,9 @@ export class TagBoxComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(obj: Author[]): void {
-    console.log('!!', obj);
-    this.value = obj;
-    this.onChange(this.value);
+    if (!!obj) {
+      this.value = obj;
+      this.onChange(this.value);
+    }
   }
 }

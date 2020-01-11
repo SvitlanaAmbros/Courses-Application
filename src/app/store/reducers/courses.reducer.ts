@@ -34,7 +34,7 @@ export function coursesReducer(state = initialState,
         currentCourse: {
           title: '',
           description: '',
-          duration: 0,
+          duration: 10,
           creationDate: new Date()
         }
       };

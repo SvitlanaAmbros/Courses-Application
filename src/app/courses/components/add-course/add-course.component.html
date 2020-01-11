@@ -49,12 +49,12 @@
 <!--      </div>-->
 
       <div class="add-form__row">
-        <!-- <div class="add-form__short-col"> -->
+        
         <div class="add-form__label">
           <div>
             <label class="add-form__label-title">Duration:</label>
-            <label class="add-form__error-message" *ngIf="isFormInvalid(addCourseForm, 'duration')">
-              <label *ngIf="addCourseForm?.controls['duration']?.errors?.pattern">Should contain only numbers</label>
+            <label class="add-form__error-message" *ngIf="addCourseForm?.controls['duration']?.hasError('invalidFormat')">
+              Invalid format
             </label>
           </div>
           <label class="add-form__label-required">*required</label>
@@ -64,12 +64,14 @@
 
       <div class="add-form__row">
         <div class="add-form__label">
-          <label class="add-form__label-title">Authors:</label>
+          <div>
+            <label class="add-form__label-title">Authors:</label>
+            <label class="add-form__error-message" *ngIf="addCourseForm?.controls['authors']?.hasError('invalidSize')">
+              Should have at least one author
+            </label>
+          </div>
           <label class="add-form__label-required">*required</label>
         </div>
-<!--        <input type="text" class="form-input" formControlName="authors">-->
-        <!--              [(ngModel)]="course.authors"-->
-        <!-- will be authors tags box -->
          <app-tag-box formControlName="authors"></app-tag-box>
       </div>
 

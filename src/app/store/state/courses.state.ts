@@ -13,7 +13,8 @@ export const initialState: CoursesState = {
     title: '',
     creationDate: new Date(),
     description: '',
-    duration: 0
+    duration: 10,
+    authors: []
   },
   searchFragment: '',
   currentCourseId: 0

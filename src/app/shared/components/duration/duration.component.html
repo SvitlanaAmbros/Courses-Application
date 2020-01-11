@@ -1,4 +1,4 @@
 <div class="duration">
-    <input type="number" class="duration__input form-input" [(ngModel)]="value">
+    <input type="number" class="duration__input form-input" [(ngModel)]="value" (ngModelChange)="updateValue($event)">
     <div class="duration__period">{{ value | duration }}</div>
 </div>
