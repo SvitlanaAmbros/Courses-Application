@@ -28,26 +28,22 @@
         <input type="text" class="form-input" formControlName="description" [ngClass]="{ 'error-field': isFormInvalid(addCourseForm, 'description')}">
       </div>
 
-<!--      <div class="add-form__row">-->
-<!--        <div class="add-form__short-col">-->
-<!--          <div class="add-form__label">-->
-<!--            <div>-->
-<!--              <label class="add-form__label-title">Date:</label>-->
-<!--              <label class="add-form__error-message" *ngIf="isFormInvalid(addCourseForm, 'date')">-->
-<!--                <label *ngIf="addCourseForm?.controls['date']?.errors?.required">Required</label>-->
-<!--              </label>-->
-<!--            </div>-->
-<!--            <label class="add-form__label-required">*required</label>-->
-<!--          </div>-->
-<!--          &lt;!&ndash;                    <input type="date" class="form-input"&ndash;&gt;-->
-<!--          &lt;!&ndash;                        [ngModel]="course.creationDate | date:'yyyy-MM-dd'"&ndash;&gt;-->
-<!--          &lt;!&ndash;                        (ngModelChange)="dateChanged($event)">&ndash;&gt;-->
-<!--&lt;!&ndash;          course.creationDate.toISOString().split('T')[0]&ndash;&gt;-->
-<!--&lt;!&ndash;           <app-date formControlName="date"></app-date>&ndash;&gt;-->
-<!--        </div>-->
+     <div class="add-form__row">
+       <div class="add-form__short-col">
+         <div class="add-form__label">
+           <div>
+             <label class="add-form__label-title">Date:</label>
+             <label class="add-form__error-message" *ngIf="isFormInvalid(addCourseForm, 'date')">
+               <label *ngIf="addCourseForm?.controls['date']?.errors?.required">Required</label>
+             </label>
+           </div>
+           <label class="add-form__label-required">*required</label>
+         </div>
+          <app-date formControlName="date"></app-date>
+       </div>
 
-<!--      </div>-->
-
+     </div> 
+     
       <div class="add-form__row">
         
         <div class="add-form__label">

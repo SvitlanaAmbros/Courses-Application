@@ -1,3 +1,3 @@
-<input type="date" class="form-input"
-       [ngModel]="value"
-       (ngModelChange)="dateChanged($event)">{{ value }}
+<input type="date" class="input"
+       [ngModel]="value | date:'yyyy-MM-dd'"
+       (ngModelChange)="dateChanged($event)">

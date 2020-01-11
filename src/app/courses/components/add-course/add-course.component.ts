@@ -7,9 +7,6 @@ import {AppState} from '@store/reducers/app.reducers';
 import * as coursesActions from '@store/actions/courses.actions';
 import {selectCurrentCourse} from '@store/selectors/courses.selector';
 import {Course} from '@courses/models/course.model';
-import {CoursesService} from "@courses/services/courses.service";
-import {Observable} from "rxjs";
-import {Author} from "@courses/models/author.model";
 
 export type FORM_TYPE = 'edit' | 'add';
 
@@ -32,8 +29,7 @@ export class AddCourseComponent implements OnInit {
       title: ['', [Validators.required, Validators.maxLength(50)]],
       description: ['', [Validators.required, Validators.maxLength(500)]],
       duration: [10, [Validators.required, this.shouldMoreThanZero]],
-      // date: ['', [Validators.required]],
-      // , Validators.pattern('^[0-9]+$')
+      date: ['', [Validators.required]],
       authors: [[], [Validators.required, this.hasAtLeastOneElement]]
     });
   }
@@ -45,7 +41,7 @@ export class AddCourseComponent implements OnInit {
       this.updateFormControlValue('title', this.course.title);
       this.updateFormControlValue('description', this.course.description);
       this.updateFormControlValue('duration', this.course.duration);
-      console.log('DURATION', this.course.duration);
+      this.updateFormControlValue('date', this.course.creationDate);
       this.updateFormControlValue('authors', this.course.authors);
     });
 
@@ -59,7 +55,12 @@ export class AddCourseComponent implements OnInit {
   }
 
   public saveCourse(): void {
-    console.log(this.addCourseForm.value);
+    this.course.title = this.addCourseForm.get('title').value;
+    this.course.description = this.addCourseForm.get('description').value;
+    this.course.duration = this.addCourseForm.get('duration').value;
+    this.course.creationDate = this.addCourseForm.get('date').value;
+    this.course.authors = this.addCourseForm.get('authors').value;
+
     if (this.pageType === 'add') {
       this.store.dispatch(new coursesActions.CreateCourse(this.course));
     } else {
@@ -93,10 +94,7 @@ export class AddCourseComponent implements OnInit {
   }
 
   public shouldMoreThanZero(control: AbstractControl ) {
-    console.log('Duration', control.value);
-    if (!control.value || control.value === 0) {
-
-    //   console.log('Length', control.value.length === 0);
+    if (!control.value || control.value === 0) {  
       return { invalidFormat: true };
     }
 
@@ -107,13 +105,3 @@ export class AddCourseComponent implements OnInit {
     this.addCourseForm.controls[control].setValue(value);
   }
 }
-
-// export function ValidateContainingNumbers(control: AbstractControl) {
-//   // console.log('Matching', control.value);
-//   new RegExp('^[0-9]*$').test(control.value)
-//   if (!!control.value && !control.value.match('^[0-9]*$')) {
-//     // !Validators.pattern()
-//     return { notOnlyNumbers: true };
-//   }
-//   return null;
-// }

@@ -14,7 +14,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
   ]
 })
 export class DateComponent implements ControlValueAccessor {
-  private innerValue: string;
+  private innerValue: Date;
   //
   // constructor() { }
   //
@@ -22,14 +22,11 @@ export class DateComponent implements ControlValueAccessor {
   // }
   //
   set value(value: Date) {
-    console.log('Date value', value);
-    // this.innerValue = new Date(value).toISOString().split('T')[0];
-    // this.onChange(value);
-    // this.onTouched();
+    this.innerValue = value;
   }
 
   get value(): Date {
-    return new Date(this.innerValue);
+    return this.innerValue;
   }
 
   onChange: any = (value) => { };
@@ -44,11 +41,11 @@ export class DateComponent implements ControlValueAccessor {
   }
 
   writeValue(obj: Date): void {
-    // this.value = obj;
+    this.value = obj;
   }
 
   public dateChanged(value): void {
-    console.log('Date changed', value);
-    // this.value = new Date(value);
+    this.writeValue(value);
+    this.onChange(value);
   }
 }
