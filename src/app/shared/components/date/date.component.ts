@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, forwardRef} from '@angular/core';
+import {Component, forwardRef} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
@@ -15,12 +15,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 })
 export class DateComponent implements ControlValueAccessor {
   private innerValue: Date;
-  //
-  // constructor() { }
-  //
-  // ngOnInit() {
-  // }
-  //
+
   set value(value: Date) {
     this.innerValue = value;
   }
