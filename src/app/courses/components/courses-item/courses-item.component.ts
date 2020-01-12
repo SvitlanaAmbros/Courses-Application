@@ -6,7 +6,6 @@ import {
   OnInit,
   OnChanges,
   ChangeDetectionStrategy,
-  SimpleChange,
   SimpleChanges,
 } from '@angular/core';
 

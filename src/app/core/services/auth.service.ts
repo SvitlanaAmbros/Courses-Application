@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 
 import { LocalStorageService } from '@shared/services/local-storage.service';
-import {AuthResponse, LoginUser} from '@shared/models/user.model';
+import { LoginUser, AuthResponse } from '@app/models/user.model';
 
 export const LOGIN_URL = 'auth/login';
 export const USER_INFO_URL = 'auth/userinfo';
@@ -19,8 +19,6 @@ export class AuthService {
     return this.http.post(LOGIN_URL, user)
       .pipe(
         map((res: AuthResponse) => {
-          user.token = res.token;
-          this.localStorageService.setUserToStorage(user);
           this.updateAuthentication(true);
 
           return res;
@@ -33,13 +31,7 @@ export class AuthService {
   }
 
   public logout(): void {
-    // alredy implemented clearing user
-    this.localStorageService.deleteUserFromStorage();
     this.updateAuthentication(false);
-  }
-
-  public getUserInfoFromStorage(): LoginUser {
-    return this.localStorageService.getUserFromStorage();
   }
 
   public isAuthenticated(): Observable<boolean> {

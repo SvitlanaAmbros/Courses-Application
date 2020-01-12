@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 
-import { AuthService } from '@core/services/auth.service';
-import { LoginUser } from '@shared/models/user.model';
 import { LoadingService } from '@shared/services/loading.service';
+import { AuthService } from '@core/services/auth.service';
+import { AppState } from '@store/reducers/app.reducers';
+import * as userActions from '@store/actions/user.actions';
+import { LoginUser } from '@app/models/user.model';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +20,7 @@ export class LoginComponent implements OnInit {
   };
 
   constructor(
+    private store: Store<AppState>,
     private authService: AuthService, 
     private router: Router,
     private loadingService: LoadingService) { }
@@ -26,11 +29,6 @@ export class LoginComponent implements OnInit {
   }
 
   public logIn(): void {
-    // set user data to local storage and navigate to courses page
-    this.authService.login(this.user)
-      .subscribe(
-        res => this.router.navigateByUrl('/courses'),
-        err =>  alert('Not right credentials. Please, try again')
-      );
+    this.store.dispatch(new userActions.Login(this.user));
   }
 }

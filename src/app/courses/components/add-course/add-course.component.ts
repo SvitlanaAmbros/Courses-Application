@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { finalize } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
 
-import { LoadingService } from '@shared/services/loading.service';
+import { AppState } from '@store/reducers/app.reducers';
+import * as coursesActions from '@store/actions/courses.actions';
+import { selectCurrentCourse } from '@store/selectors/courses.selector';
 import { Course } from '@courses/models/course.model';
-import {CoursesService} from "@courses/services/courses.service";
-import {CourseInfo} from "@courses/models/course-info.model";
 
 export type FORM_TYPE = 'edit' | 'add';
 
@@ -20,29 +20,28 @@ export class AddCourseComponent implements OnInit {
 
   constructor(private router: Router, 
     private  activatedRoute: ActivatedRoute,
-    private courseService: CoursesService) { }
+    private store: Store<AppState>) { }
 
   ngOnInit() {
-    const newCourse: Course = new CourseInfo();
     const courseId = this.activatedRoute.snapshot.params.id;
 
+    this.store.pipe(select(selectCurrentCourse)).subscribe(res => this.course = res);
     if (courseId) {
       this.pageType = 'edit';
-      this.course = this.courseService.getCourseById(courseId) || newCourse;
+      this.store.dispatch(new coursesActions.GetCourseById(courseId));
     } else {
       this.pageType = 'add';
-      this.course = newCourse;
+      this.store.dispatch(new coursesActions.ClearCurrentCourse());
     }
   }
 
   public saveCourse(): void {
     if (this.pageType === 'add') {
-      this.courseService.createCourse(this.course)
-        .subscribe(res => console.log('Create', res))
+      this.store.dispatch(new coursesActions.CreateCourse(this.course));
+      } else {
+        this.store.dispatch(new coursesActions.UpdateCourse(this.course));
+      }
       this.navigateToBaseCoursesPage();
-    } else {
-      this.courseService.updateCourse(this.course);
-    }
   }
 
   public cancel(): void {

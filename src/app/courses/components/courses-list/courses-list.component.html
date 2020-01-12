@@ -1,10 +1,10 @@
 <div class="courses-wrap">
-  <div class="courses">
+  <div class="courses" *ngIf="(courses$ | async) as courses">
     <div class="courses-search">
       <label class="courses-search__box">
         <img src="assets/images/ic-search.svg" alt="search">
-        <input type="text" class="courses-search__field" 
-          placeholder="Text to search" #searchValue>
+        <input type="text" class="courses-search__field"
+          placeholder="Text to search" [(ngModel)]="search" #searchValue>
       </label>
       <div class="courses-search__btn"></div>
     </div>
@@ -21,7 +21,7 @@
             <app-courses-item [item]="item" (edited)="editCourse($event)" (deleted)="deleteClicked($event)">
             </app-courses-item>
           </div>
-          <div class="courses__action-btn link" (click)="loadMore()" id="load">
+          <div class="courses__action-btn link" (click)="loadCourses()" id="load">
             Load more
           </div>
         </div>

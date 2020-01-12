@@ -4,17 +4,18 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
-  OnDestroy,
-  ChangeDetectorRef
+  OnDestroy
 } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, fromEvent, Subscription, Subject } from 'rxjs';
-import { map, filter, startWith, debounceTime, distinctUntilChanged, finalize, tap, takeUntil } from 'rxjs/operators';
+import {Router} from '@angular/router';
+import {Observable, fromEvent, Subject} from 'rxjs';
+import {map, filter, startWith, debounceTime, distinctUntilChanged, takeUntil} from 'rxjs/operators';
+import {select, Store} from '@ngrx/store';
 
-import { SortByDatePipe } from '@shared/pipes/sort-by-date.pipe';
-import { PopupService, PopupControls } from '@shared/services/popup.service';
-import { CoursesService } from '@courses/services/courses.service';
-import { Course } from '@courses/models/course.model';
+import {PopupService, PopupControls} from '@shared/services/popup.service';
+import * as coursesActions from '@store/actions/courses.actions';
+import {AppState} from '@store/reducers/app.reducers';
+import {selectCourses, selectCoursesLength, selectSearchFragment} from '@store/selectors/courses.selector';
+import {Course} from '@courses/models/course.model';
 
 @Component({
   selector: 'app-courses-list',
@@ -26,6 +27,8 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
   public searchValueChanged$: Observable<string>;
   public unsubscribe = new Subject();
 
+  public courses$: Observable<Course[]>;
+  public coursesSize: number;
   public courses: Course[] = [];
   public allCourses: Course[];
   public search = '';
@@ -38,20 +41,23 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public emmiter;
 
-  constructor(private sortByDatePipe: SortByDatePipe,
-              private coursesService: CoursesService,
-              private popupService: PopupService,
+  constructor(private popupService: PopupService,
               private router: Router,
-              private cdref: ChangeDetectorRef) {
+              private store: Store<AppState>) {
   }
 
   public testDate = 'blue';
 
   ngOnInit() {
     this.initPopup();
-    this.loadCoursesFromServer(this.startLoadingFromIndex, this.countLoadingCourses);
+
+    this.courses$ = this.store.pipe(select(selectCourses));
+    this.store.pipe(select(selectSearchFragment)).subscribe(res => this.search = res);
+    this.store.pipe(select(selectCoursesLength)).subscribe(res => this.startLoadingFromIndex = res);
+
+    this.loadCourses();
   }
-  
+
   ngAfterViewInit(): void {
     this.searchValueChanged$ = fromEvent<any>(this.searchValue.nativeElement, 'keyup')
       .pipe(
@@ -62,55 +68,47 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
         debounceTime(700),
         distinctUntilChanged()
       )
-  
+
     this.searchValueChanged$.subscribe(res => {
       this.search = res;
       this.searchCourses();
     });
-    
+
   }
 
-  // courses list with sort logic
   public searchCourses(): void {
-    this.courses = [];
-    this.loadCoursesFromServer(0, 2, this.search);
+    this.store.dispatch(new coursesActions.ClearCourses());
+    this.loadCourses();
   }
 
-  public loadMore(): void {
-    this.loadCoursesFromServer(this.startLoadingFromIndex, this.countLoadingCourses, this.search);
-  }
-
-  public loadCoursesFromServer(startInd: number, count: number, textFragment: string = ''): void {
-    this.coursesService.getCourses(startInd, count, textFragment)
-      .subscribe(res => {
-        this.courses = this.courses.concat(res);
-        this.startLoadingFromIndex = this.courses.length;
-      });
+  public loadCourses(): void {
+    this.store.dispatch(new coursesActions.ChangeSearchParams({
+      startInd: this.startLoadingFromIndex,
+      endInd: this.countLoadingCourses,
+      searchFragment: this.search
+    }));
   }
 
   public addNewCourse(): void {
     this.router.navigate(['courses', 'new']);
   }
 
-  // courses list with editing logic from child component
   public editCourse(id: string): void {
     this.router.navigate(['courses', id]);
   }
 
-  // courses list with editing logic from child component
   public deleteClicked(id: string): void {
     this.deletedItemId = id;
     this.openPopup();
   }
 
-  // courses list with editing logic from child component
   public deleteCourse(): void {
-    this.coursesService.deleteCourse(this.deletedItemId)
-      .subscribe(res => {
-        const ind = this.courses.length;
-        this.courses = [];
-        this.loadCoursesFromServer(0, ind, this.search);
-      });
+    this.store.dispatch(new coursesActions.DeleteCourse({
+      startInd: 0,
+      endInd: this.startLoadingFromIndex,
+      searchFragment: this.search,
+      deleteId: this.deletedItemId
+    }));
 
     this.closePopup();
   }
