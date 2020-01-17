@@ -14,6 +14,7 @@ import { DurationComponent } from '@shared/components/duration/duration.componen
 import { TagBoxComponent } from '@shared/components/tag-box/tag-box.component';
 import { NotFoundComponent } from '@shared/components/not-found/not-found.component';
 import { LoadingComponent } from '@shared/components/loading/loading.component';
+import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { LoadingComponent } from '@shared/components/loading/loading.component';
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    TranslateModule.forChild()
   ],
   exports: [
     ActionBtnComponent,
@@ -47,7 +49,8 @@ import { LoadingComponent } from '@shared/components/loading/loading.component';
     DurationComponent,
     TagBoxComponent,
     NotFoundComponent,
-    LoadingComponent
+    LoadingComponent,
+    TranslateModule
   ]
 })
 export class SharedModule { }

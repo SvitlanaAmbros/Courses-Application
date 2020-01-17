@@ -1,0 +1,11 @@
+{
+  "PAGES": {
+    "LOGIN": {
+      "LOGIN_TITLE": "Login Component",
+      "LOGIN_BUTTON_TITLE": "Login"
+    }
+  },
+  "SHARED": {
+
+  }
+}

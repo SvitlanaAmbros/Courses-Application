@@ -8,6 +8,7 @@ import {AppState} from '@store/reducers/app.reducers';
 import {selectUser} from '@store/selectors/user.selector';
 import * as userActions from '@store/actions/user.actions';
 import {LoginUser} from '@app/models/user.model';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-header',
@@ -17,11 +18,20 @@ import {LoginUser} from '@app/models/user.model';
 export class HeaderComponent implements OnInit {
   public user$: Observable<LoginUser>;
   public isAuthenticated = false;
+  public currentLanguage = 'en';
+  public languages = [{
+    key: 'en',
+    title: 'English'
+  }, {
+    key: 'ukr',
+    title: 'Українська'
+  }];
 
   constructor(private router: Router,
               private authService: AuthService,
               private cdref: ChangeDetectorRef,
-              private store: Store<AppState>) {
+              private store: Store<AppState>,
+              private translate: TranslateService) {
   }
 
   ngOnInit() {
@@ -41,5 +51,9 @@ export class HeaderComponent implements OnInit {
     this.store.dispatch(new userActions.Logoff());
     this.authService.logout();
     this.router.navigateByUrl('/login');
+  }
+
+  public onLanguageChanged(language: string): void {
+    this.translate.use(this.currentLanguage);
   }
 }
