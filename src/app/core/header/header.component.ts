@@ -2,13 +2,13 @@ import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {Store, select} from '@ngrx/store';
+import {TranslateService} from "@ngx-translate/core";
 
 import {AuthService} from '@core/services/auth.service';
 import {AppState} from '@store/reducers/app.reducers';
 import {selectUser} from '@store/selectors/user.selector';
 import * as userActions from '@store/actions/user.actions';
 import {LoginUser} from '@app/models/user.model';
-import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-header',

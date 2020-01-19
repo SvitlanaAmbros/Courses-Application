@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { Store, select } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
 
 import { AppState } from '@store/reducers/app.reducers';
 import * as coursesActions from '@store/actions/courses.actions';
@@ -18,11 +19,18 @@ export class AddCourseComponent implements OnInit {
   public pageType: FORM_TYPE;
   public course: Course;
 
+  public saveAction;
+  public cancelAction;
+
   constructor(private router: Router, 
     private  activatedRoute: ActivatedRoute,
-    private store: Store<AppState>) { }
+    private store: Store<AppState>, 
+    private translate: TranslateService) { }
 
   ngOnInit() {
+    this.initTranslateConfig();
+    this.translate.onLangChange.subscribe((e) => this.initTranslateConfig());
+
     const courseId = this.activatedRoute.snapshot.params.id;
 
     this.store.pipe(select(selectCurrentCourse)).subscribe(res => this.course = res);
@@ -54,5 +62,11 @@ export class AddCourseComponent implements OnInit {
 
   public dateChanged(value): void {
     this.course.creationDate = new Date(value);
+  }
+
+  public initTranslateConfig(): void {
+    this.saveAction = this.translate.instant('POPUP.SAVE');
+    this.cancelAction = this.translate.instant('POPUP.CANCEL');
+    this.cancelAction = this.translate.instant('POPUP.CANCEL');
   }
 }

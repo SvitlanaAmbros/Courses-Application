@@ -4,7 +4,7 @@
       <label class="courses-search__box">
         <img src="assets/images/ic-search.svg" alt="search">
         <input type="text" class="courses-search__field"
-          placeholder="Text to search" [(ngModel)]="search" #searchValue>
+          placeholder="{{searchPlaceholder}}" [(ngModel)]="search" #searchValue>
       </label>
       <div class="courses-search__btn"></div>
     </div>
@@ -12,7 +12,7 @@
       <div class="courses-add">
         <button class="courses-add__btn" (click)="addNewCourse()">
           <i class="fa fa-plus"></i>
-          Add course
+          {{ "PAGES.COURSES.ADD_COURSE" | translate }}
         </button>
       </div>
       <div class="courses-list">
@@ -22,12 +22,12 @@
             </app-courses-item>
           </div>
           <div class="courses__action-btn link" (click)="loadCourses()" id="load">
-            Load more
+            {{ "PAGES.COURSES.LOAD_MORE" | translate }}
           </div>
         </div>
         <ng-template #nocourses>
           <div class="courses__action-btn">
-            No courses. You can add courses
+            {{ "PAGES.COURSES.NO_COURSES" | translate }}
           </div>
         </ng-template>
       </div>
@@ -38,9 +38,9 @@
 <app-popup
   #popup
   *ngIf="popupControls.isOpened"
-  [header]="'Are you sure you want to delete this course?'"
-  [buttonAction]="'Yes'"
-  [buttonCancel]="'No'"
+  [header]="confirmnCourseDeleting"
+  [buttonAction]="popupAgreeAction"
+  [buttonCancel]="popupCancelAction"
   (onAction)="deleteCourse()"
   (onClose)="closePopup()">
 </app-popup>

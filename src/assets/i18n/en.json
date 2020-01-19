@@ -1,11 +1,32 @@
 {
   "PAGES": {
     "LOGIN": {
-      "LOGIN_TITLE": "Login Component",
+      "LOGIN_TITLE": "Login",
       "LOGIN_BUTTON_TITLE": "Login"
+    },
+    "HEADER": {
+      "LOG_OFF": "Log off"
+    },
+    "COURSES": {
+      "ADD_COURSE": "Add course",
+      "EDIT": "Edit",
+      "DELETE": "Delete",
+      "LOAD_MORE": "Load more",
+      "CONFIRM_DELETE_COURSE": "Are you sure you want to delete '{{name}}' course?",
+      "SEARCH_COURSE_PLACEHOLDER": "Text to search",
+      "NO_COURSES": "No courses. You can add courses"
+    },
+    "NEW_COURSE": {
+      "TITLE": "Create new Course"
     }
   },
   "SHARED": {
 
+  },
+  "POPUP": {
+    "NO": "No",
+    "YES": "Yes",
+    "SAVE": "Save",
+    "CANCEL": "Cancel"
   }
 }

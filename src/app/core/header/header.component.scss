@@ -22,6 +22,15 @@
     display: flex;
     justify-content: space-around;
   }
+
+  &__right-col {
+    display: flex;
+    align-items: center;
+  }
+
+  &__lang {
+    margin-left: 20px;
+  }
 }
 
 .login {

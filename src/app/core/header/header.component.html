@@ -2,20 +2,21 @@
   <div class="container">
     <div class="header">
       <img src="assets/images/logo.png" class="header__logo" alt="logo">
-      <div *ngIf="isAuthenticated">
-        <div class="header__login login">
-          <div class="login__item  login__item_user" *ngIf="(user$ | async) as user">
-            <img src="assets/images/ic-user.svg" class="login__icon">
-            {{ user?.login }}
-          </div>
-          <div class="login__item login__item_log-off" (click)="logoff()">
-            <img src="assets/images/ic-exit.svg" class="login__icon">
-            Log off
+      <div class="header__right-col">
+        <div *ngIf="isAuthenticated">
+          <div class="header__login login">
+            <div class="login__item  login__item_user" *ngIf="(user$ | async) as user">
+              <img src="assets/images/ic-user.svg" class="login__icon">
+              {{ user?.login }}
+            </div>
+            <div class="login__item login__item_log-off" (click)="logoff()">
+              <img src="assets/images/ic-exit.svg" class="login__icon">
+              {{ "PAGES.HEADER.LOG_OFF" | translate }}
+            </div>
           </div>
         </div>
-      </div>
-      <div>
-        <select [(ngModel)]="currentLanguage" (ngModelChange)="onLanguageChanged()"> {{currentLanguage}}
+        
+        <select [(ngModel)]="currentLanguage" (ngModelChange)="onLanguageChanged()" class="header__lang"> {{ currentLanguage }}
           <option *ngFor="let language of languages" [ngValue]="language.key">{{ language.title}}</option>
         </select>
       </div>

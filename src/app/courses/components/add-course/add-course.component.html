@@ -1,7 +1,7 @@
 <div class="add-wrap">
     <div class="add" *ngIf="!!course">
         <div class="add-form">
-            <div class="add-form__header">Create new Course</div>
+            <div class="add-form__header">{{ "PAGES.NEW_COURSE.TITLE" | translate}}</div>
             <div class="add-form__row">
                 <div class="add-form__label">
                     <label class="add-form__label-title">Title:</label>
@@ -25,19 +25,14 @@
                     <input type="date" class="form-input" 
                         [ngModel]="course.creationDate | date:'yyyy-MM-dd'"
                         (ngModelChange)="dateChanged($event)">
-                    <!-- <app-date [date]="course.creationDate.toISOString().split('T')[0]"></app-date> -->
                 </div>
-                
             </div>
             <div class="add-form__row">
-                <!-- <div class="add-form__short-col"> -->
-                    <div class="add-form__label">
-                        <label class="add-form__label-title">Duration:</label>
-                        <label class="add-form__label-required">*required</label>
-                    </div>
-                    <!-- <input type="text" class="form-input" [(ngModel)]="course.duration"> -->
-                    <app-duration [duration]="course.duration"></app-duration>
-                <!-- </div> -->
+                <div class="add-form__label">
+                    <label class="add-form__label-title">Duration:</label>
+                    <label class="add-form__label-required">*required</label>
+                </div>
+                <app-duration [duration]="course.duration"></app-duration>
             </div>
             <div class="add-form__row">
                 <div class="add-form__label">
@@ -45,16 +40,14 @@
                     <label class="add-form__label-required">*required</label>
                 </div>
                 <input type="text" class="form-input" [(ngModel)]="course.authors">
-                <!-- will be authors tags box -->
-                <!-- <app-tag-box></app-tag-box> -->
             </div>
             <div class="add-form__btns-row">
                 <div class="add-form__btn">
-                    <app-action-btn [title]="'Cancel'" (clicked)="cancel()">
+                    <app-action-btn [title]="cancelAction" (clicked)="cancel()">
                         </app-action-btn>
                 </div>
                 <div class="add-form__btn">
-                    <app-action-btn [title]="'Save'" (clicked)="saveCourse()">
+                    <app-action-btn [title]="saveAction" (clicked)="saveCourse()">
                         </app-action-btn>
                 </div>
             </div>

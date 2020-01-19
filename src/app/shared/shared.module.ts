@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from "@ngx-translate/core";
 
 import { BorderColorDirective } from '@shared/directives/border-color.directive';
 import { DurationPipe } from '@shared/pipes/duration.pipe';
@@ -14,7 +15,6 @@ import { DurationComponent } from '@shared/components/duration/duration.componen
 import { TagBoxComponent } from '@shared/components/tag-box/tag-box.component';
 import { NotFoundComponent } from '@shared/components/not-found/not-found.component';
 import { LoadingComponent } from '@shared/components/loading/loading.component';
-import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
