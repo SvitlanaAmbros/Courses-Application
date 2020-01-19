@@ -37,9 +37,6 @@ export class RequestHttpInterceptor implements HttpInterceptor {
     if (!req.url.includes('assets')) {
       dupReq = req.clone({url: BASE_URL + req.url, params});
     }
-    // else {
-    //   dupReq = req.clone({url: req.url, params});
-    // }
 
     this.loadingService.showLoadingWindow();
     return next.handle(dupReq)
