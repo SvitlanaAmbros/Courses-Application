@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {CoreModule} from '@core/core.module';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { SharedModule } from '@shared/shared.module';
@@ -22,6 +22,7 @@ import { AddCourseComponent } from '@courses/components/add-course/add-course.co
     CommonModule,
     FormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
     CoreModule,
     SharedModule,
     CoursesRoutingModule

@@ -34,7 +34,7 @@ export function coursesReducer(state = initialState,
         currentCourse: {
           title: '',
           description: '',
-          duration: 0,
+          duration: 10,
           creationDate: new Date()
         }
       };
@@ -61,6 +61,12 @@ export function coursesReducer(state = initialState,
       return {
         ...state,
         courses: []
+      };
+    }
+    case coursesActions.UPDATE_AUTHORS: {
+      return {
+        ...state,
+        authorsList: action.payload
       };
     }
     default:

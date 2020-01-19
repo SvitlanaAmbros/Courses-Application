@@ -78,6 +78,11 @@
                 background: $pale2-grey-color;
                 color: $battleship-grey-color; 
             }
+            
+            &:disabled {
+                background: grey;
+                color: black;
+            }
         }
     }
 }

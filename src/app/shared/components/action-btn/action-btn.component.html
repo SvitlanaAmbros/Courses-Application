@@ -1,5 +1,6 @@
-<button 
-    class="action-btn" 
-    (click)="onClick()">
+<button
+    class="action-btn"
+    (click)="onClick()"
+    [disabled]="isButtonDisabled">
     {{ title}}
 </button>

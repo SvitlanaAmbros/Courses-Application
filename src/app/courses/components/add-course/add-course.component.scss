@@ -71,5 +71,12 @@
         &__btn {
             margin-left: 10px;
         }
+
+        &__error-message {
+          padding: 0 10px;
+          font-size: 14px;
+          font-weight: bold;
+          color: $error-color;
+        }
     }
 }
