@@ -43,7 +43,7 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
   public popupControls: PopupControls;
   public popupAgreeAction;
   public popupCancelAction;
-  public deletedItemId: string;
+  public deletedItemId;
 
   public searchPlaceholder: string;
   public emmiter;
