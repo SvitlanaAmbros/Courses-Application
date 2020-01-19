@@ -38,3 +38,8 @@ export const selectCourseById = createSelector(
 );
 
 
+export const selectAuthors = createSelector(
+  coursesState,
+  (state: CoursesState) => state.authorsList
+);
+

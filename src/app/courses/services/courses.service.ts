@@ -8,6 +8,7 @@ import {CourseDB} from '@courses/models/course-db.model';
 import {CourseInfo} from '@courses/models/course-info.model';
 
 export const COURSES_URL = 'courses';
+export const AUTHORS = 'authors';
 
 @Injectable({
   providedIn: 'root'
@@ -57,5 +58,12 @@ export class CoursesService {
 
   public deleteCourse(id: string): Observable<any> {
     return this.http.delete(`${COURSES_URL}/${id}`);
+  }
+
+  public getAuthors(textFragment: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .append('textFragment', textFragment);
+
+    return this.http.get<CourseDB[]>(AUTHORS, {params: httpParams});
   }
 }

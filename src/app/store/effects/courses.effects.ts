@@ -113,4 +113,18 @@ export class CoursesEffects {
         return of(new coursesActions.LoadCourses({ startInd: 0, endInd: (action as any).payload, searchFragment: searchFragment }));
       })
     );
+  
+    @Effect()
+    loadAuthors$ = this.actions$
+      .pipe(
+        ofType(coursesActions.LOAD_AUTHORS),
+        switchMap((action: any) => {
+          return this.coursesService.getAuthors(action.payload)
+            .pipe(
+              map((res) => {
+                return new coursesActions.UpdateAuthorsInStore(res);
+              })
+            );
+        })
+      );
 }

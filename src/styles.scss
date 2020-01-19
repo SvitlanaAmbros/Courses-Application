@@ -38,3 +38,7 @@ input:focus {
     width: 100%;
   }
 }
+
+.error-field {
+  border: 1px solid $error-color;;
+}
