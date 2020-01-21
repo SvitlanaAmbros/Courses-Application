@@ -1,6 +1,6 @@
 <div class="login">
     <form class="login-form" #form="ngForm">
-        <div class="login-form__header">Login</div>
+        <div class="login-form__header">{{ "PAGES.LOGIN.LOGIN_TITLE" | translate }}</div>
         <div class="login-form__row">
             <div class="login-form__label">
                 <label class="login-form__label-title">E-mail:</label>
@@ -21,7 +21,7 @@
                 [disabled]="form.invalid"
                 [ngClass]="!!user.login && !!user.password ?
                     'login-form__login_active' : 'login-form__login_notactive'"
-                (click)="logIn()">Login</button>
+                (click)="logIn()">{{ "PAGES.LOGIN.LOGIN_BUTTON_TITLE" | translate }}</button>
         </div>
     </form>
 </div>

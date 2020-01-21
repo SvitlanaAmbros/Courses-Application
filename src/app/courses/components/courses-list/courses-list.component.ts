@@ -4,12 +4,14 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
-  OnDestroy
+  OnDestroy,
+  ChangeDetectorRef
 } from '@angular/core';
 import {Router} from '@angular/router';
 import {Observable, fromEvent, Subject} from 'rxjs';
 import {map, filter, startWith, debounceTime, distinctUntilChanged, takeUntil} from 'rxjs/operators';
 import {select, Store} from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
 
 import {PopupService, PopupControls} from '@shared/services/popup.service';
 import * as coursesActions from '@store/actions/courses.actions';
@@ -32,23 +34,31 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
   public courses: Course[] = [];
   public allCourses: Course[];
   public search = '';
+  public confirmnCourseDeleting;
+  public aproveDeletingMessage;
 
   public startLoadingFromIndex = 0;
   public countLoadingCourses = 2;
 
   public popupControls: PopupControls;
-  public deletedItemId: string;
+  public popupAgreeAction;
+  public popupCancelAction;
+  public deletedItemId;
 
+  public searchPlaceholder: string;
   public emmiter;
 
   constructor(private popupService: PopupService,
               private router: Router,
-              private store: Store<AppState>) {
+              private store: Store<AppState>,
+              private translate: TranslateService) {
   }
 
   public testDate = 'blue';
 
   ngOnInit() {
+    this.initTranslateConfig();
+    this.translate.onLangChange.subscribe((e) => this.initTranslateConfig());
     this.initPopup();
 
     this.courses$ = this.store.pipe(select(selectCourses));
@@ -97,8 +107,10 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.navigate(['courses', id]);
   }
 
-  public deleteClicked(id: string): void {
-    this.deletedItemId = id;
+  public deleteClicked(course:Course): void {
+    this.confirmnCourseDeleting = this.translate.instant('PAGES.COURSES.CONFIRM_DELETE_COURSE', {name: course.title});
+
+    this.deletedItemId = course.id;
     this.openPopup();
   }
 
@@ -119,6 +131,13 @@ export class CoursesListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public closePopup(): void {
     this.popupControls.close();
+  }
+
+  public initTranslateConfig(): void {
+    this.popupAgreeAction = this.translate.instant('POPUP.YES');
+    this.popupCancelAction = this.translate.instant('POPUP.NO');
+    this.confirmnCourseDeleting = this.translate.instant('PAGES.COURSES.CONFIRM_DELETE_COURSE', {name: ''});
+    this.searchPlaceholder = this.translate.instant('PAGES.COURSES.SEARCH_COURSE_PLACEHOLDER');
   }
 
   private initPopup(): void {

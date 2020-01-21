@@ -2,6 +2,7 @@ import {Component, forwardRef, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Store, select} from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
 
 import {AppState} from '@store/reducers/app.reducers';
 import * as coursesActions from '@store/actions/courses.actions';
@@ -19,12 +20,16 @@ export class AddCourseComponent implements OnInit {
   public pageType: FORM_TYPE;
   public course: Course;
 
-  public addCourseForm: FormGroup;
+  public saveAction;
+  public cancelAction;
+  
+public addCourseForm: FormGroup;
 
   constructor(private router: Router,
               private  activatedRoute: ActivatedRoute,
               private store: Store<AppState>,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private translate: TranslateService) {
     this.addCourseForm = this.fb.group({
       title: ['', [Validators.required, Validators.maxLength(50)]],
       description: ['', [Validators.required, Validators.maxLength(500)]],
@@ -35,6 +40,9 @@ export class AddCourseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.initTranslateConfig();
+    this.translate.onLangChange.subscribe((e) => this.initTranslateConfig());
+
     const courseId = this.activatedRoute.snapshot.params.id;
     this.store.pipe(select(selectCurrentCourse)).subscribe(res => {
       this.course = res;
@@ -79,6 +87,12 @@ export class AddCourseComponent implements OnInit {
 
   public dateChanged(value): void {
     this.course.creationDate = new Date(value);
+  }
+
+  public initTranslateConfig(): void {
+    this.saveAction = this.translate.instant('POPUP.SAVE');
+    this.cancelAction = this.translate.instant('POPUP.CANCEL');
+    this.cancelAction = this.translate.instant('POPUP.CANCEL');
   }
 
   public isFormInvalid(form: FormGroup, field): boolean {

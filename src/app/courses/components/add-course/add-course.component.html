@@ -1,7 +1,7 @@
 <div class="add-wrap">
   <div class="add" *ngIf="!!course">
     <form class="add-form" [formGroup]="addCourseForm">
-      <div class="add-form__header">Create new Course</div>
+      <div class="add-form__header">{{ "PAGES.NEW_COURSE.TITLE" | translate}}</div>
       <div class="add-form__row">
 
         <div class="add-form__label">
@@ -73,11 +73,11 @@
 
       <div class="add-form__btns-row">
         <div class="add-form__btn">
-          <app-action-btn [title]="'Cancel'" (clicked)="cancel()">
+          <app-action-btn [title]="cancelAction" (clicked)="cancel()">
           </app-action-btn>
         </div>
         <div class="add-form__btn">
-          <app-action-btn [title]="'Save'" (clicked)="saveCourse()" [isButtonDisabled]="addCourseForm.invalid">
+          <app-action-btn [title]="saveAction" (clicked)="saveCourse()" [isButtonDisabled]="addCourseForm.invalid">
           </app-action-btn>
           <label class="add-form__error-message" *ngIf="isFormInvalid(addCourseForm, 'authors')">
             <label *ngIf="addCourseForm?.controls['authors']?.errors?.invalidSize">Error</label>

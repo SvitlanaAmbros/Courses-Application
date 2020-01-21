@@ -1,0 +1,32 @@
+{
+  "PAGES": {
+    "LOGIN": {
+      "LOGIN_TITLE": "Логін",
+      "LOGIN_BUTTON_TITLE": "Увійти"
+    },
+    "HEADER": {
+      "LOG_OFF": "Вийти"
+    },
+    "COURSES": {
+      "ADD_COURSE": "Додати курс",
+      "EDIT": "Редагувати",
+      "DELETE": "Видалити",
+      "LOAD_MORE": "Завантажити більше",
+      "CONFIRM_DELETE_COURSE": "Ви впевнені, що хочете видалити '{{name}}' курс?",
+      "SEARCH_COURSE_PLACEHOLDER": "Текст для пошуку",
+      "NO_COURSES": "Курси відсутні. Ви можете додати курс"
+    },
+    "NEW_COURSE": {
+      "TITLE": "Створити новий курс"
+    }
+  },
+  "SHARED": {
+
+  },
+  "POPUP": {
+    "NO": "Ні",
+    "YES": "Так",
+    "SAVE": "Зберегти",
+    "CANCEL": "Відмінити"
+  }
+}

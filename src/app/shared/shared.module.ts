@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from "@ngx-translate/core";
 
 import { BorderColorDirective } from '@shared/directives/border-color.directive';
 import { DurationPipe } from '@shared/pipes/duration.pipe';
@@ -35,7 +36,8 @@ import { LoadingComponent } from '@shared/components/loading/loading.component';
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    TranslateModule.forChild()
   ],
   exports: [
     ActionBtnComponent,
@@ -47,7 +49,8 @@ import { LoadingComponent } from '@shared/components/loading/loading.component';
     DurationComponent,
     TagBoxComponent,
     NotFoundComponent,
-    LoadingComponent
+    LoadingComponent,
+    TranslateModule
   ]
 })
 export class SharedModule { }

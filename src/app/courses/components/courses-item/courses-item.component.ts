@@ -4,9 +4,7 @@ import {
   Output,
   EventEmitter,
   OnInit,
-  OnChanges,
   ChangeDetectionStrategy,
-  SimpleChanges,
 } from '@angular/core';
 
 import {Course} from '@courses/models/course.model';
@@ -17,29 +15,22 @@ import {Course} from '@courses/models/course.model';
   styleUrls: ['./courses-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CoursesItemComponent implements OnInit, OnChanges {
-  // Dump component
+export class CoursesItemComponent implements OnInit {
   @Input() item: Course;
 
   @Output() edited: EventEmitter<number> = new EventEmitter();
-  @Output() deleted: EventEmitter<number> = new EventEmitter();
+  @Output() deleted: EventEmitter<Course> = new EventEmitter();
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    // console.log('Ng on changes, Input was changed', this.item);
-  }
-
-  // Dump component
   public editCourse(): void {
     this.edited.emit(this.item.id);
   }
 
-  // Dump component
   public deleteCourse(): void {
-    this.deleted.emit(this.item.id);
+    this.deleted.emit(this.item);
   }
 }

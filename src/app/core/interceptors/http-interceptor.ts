@@ -3,21 +3,21 @@ import {
   HttpInterceptor, HttpRequest, HttpHandler, HttpEvent
 } from '@angular/common/http';
 import {Observable} from 'rxjs';
-import { finalize } from 'rxjs/operators';
-import { Store, select } from '@ngrx/store';
+import {finalize} from 'rxjs/operators';
+import {Store, select} from '@ngrx/store';
 
-import { LoadingService } from '@shared/services/loading.service';
-import { LocalStorageService } from '@shared/services/local-storage.service';
-import { AppState } from '@store/reducers/app.reducers';
-import { selectUserToken } from '@store/selectors/user.selector';
+import {LoadingService} from '@shared/services/loading.service';
+import {LocalStorageService} from '@shared/services/local-storage.service';
+import {AppState} from '@store/reducers/app.reducers';
+import {selectUserToken} from '@store/selectors/user.selector';
 
 export const BASE_URL = 'http://localhost:3004/'
 
 @Injectable()
 export class RequestHttpInterceptor implements HttpInterceptor {
-  constructor(private localStorage: LocalStorageService, 
-      private loadingService: LoadingService, 
-      private store: Store<AppState>) {
+  constructor(private localStorage: LocalStorageService,
+              private loadingService: LoadingService,
+              private store: Store<AppState>) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -28,16 +28,21 @@ export class RequestHttpInterceptor implements HttpInterceptor {
       userToken = token;
     });
 
-    if (!req.url.includes('login')) {
+
+    if (!req.url.includes('login') && !req.url.includes('assets')) {
       params = params.append('token', userToken);
     }
-    const dupReq = req.clone({url: BASE_URL + req.url, params});
+
+    let dupReq = req.clone();
+    if (!req.url.includes('assets')) {
+      dupReq = req.clone({url: BASE_URL + req.url, params});
+    }
 
     this.loadingService.showLoadingWindow();
     return next.handle(dupReq)
       .pipe(
         finalize(() => this.loadingService.hideLoadingWindow()
-      )
-    );
+        )
+      );
   }
 }
